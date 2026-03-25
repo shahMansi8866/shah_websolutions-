@@ -106,28 +106,6 @@ section {
   border-radius: 10px;
 }
 
-/* CONTACT */
-  form input, form textarea {
-  width: 90%;
-  max-width: 400px;
-  padding: 12px;
-  border-radius: 5px;
-  border: none;
-}
-
-form textarea {
-  height: 100px;
-  resize: none;
-}
-.contact a {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 12px 25px;
-  background: #ff3c00;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-}
 
 /* FOOTER */
 footer {
@@ -147,29 +125,7 @@ footer {
     margin: 30px auto;
 }
 
-.contact-form input,
-.contact-form textarea {
-    width: 90%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 6px;
-}
 
-.contact-form textarea {
-    height: 100px;
-}
-
-.contact-form button {
-    width: 95%;
-    padding: 12px;
-    background: #ff3c00;
-    border: none;
-    color: white;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-}
 </style>
 </head>
 
@@ -238,23 +194,43 @@ footer {
 
 
 <!-- CONTACT -->
+  <style>
+  form input, form textarea {
+  width: 90%;
+  max-width: 400px;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+}
+
+form textarea {
+  height: 100px;
+  resize: none;
+}
+    </style>
 <section id="contact" class="contact">
   <h2>Contact Me</h2>
   <p>Want a website for your business?</p>
 
-  <div class="contact-form">
-    <form action="https://formsubmit.co/alohomora1701@gmail.com" method="POST">
-        
-        <input type="text" name="name" placeholder="Your Name" required>
-        
-        <input type="email" name="email" placeholder="Your Email" required>
-        
-        <textarea name="message" placeholder="Your Message" required></textarea>
+  <form action="https://formsubmit.co/alohomora1701@gmail.com" method="POST">
+    
+    <input type="text" name="name" placeholder="Your Name" required><br><br>
+    
+    <input type="email" name="email" placeholder="Your Email" required><br><br>
+    
+    <textarea name="message" placeholder="Your Message" required></textarea><br><br>
+    
+    <button type="submit" class="btn">Send Message</button>
 
-        <button type="submit">Send Message</button>
+    <!-- Hidden settings -->
+    <input type="hidden" name="_subject" value="New Client Message - Shah Web Solutions">
+    <input type="hidden" name="_captcha" value="false">
 
-        <input type="hidden" name="_captcha" value="false">
-    </form>
+  </form>
+
+  <br>
+  <a href="https://wa.me/918866693020">Chat on WhatsApp</a>
+</section>
   </div>
 
   <br>
