@@ -107,6 +107,18 @@ section {
 }
 
 /* CONTACT */
+  form input, form textarea {
+  width: 90%;
+  max-width: 400px;
+  padding: 12px;
+  border-radius: 5px;
+  border: none;
+}
+
+form textarea {
+  height: 100px;
+  resize: none;
+}
 .contact a {
   display: inline-block;
   margin-top: 15px;
@@ -187,7 +199,25 @@ footer {
 <section id="contact" class="contact">
   <h2>Contact Me</h2>
   <p>Want a website for your business?</p>
-  <a href="https://wa.me/91YOURNUMBER">Chat on WhatsApp</a>
+
+  <form action="https://formsubmit.co/shahmamsi150@gmail.com" method="POST">
+    
+    <input type="text" name="name" placeholder="Your Name" required><br><br>
+    
+    <input type="email" name="email" placeholder="Your Email" required><br><br>
+    
+    <textarea name="message" placeholder="Your Message" required></textarea><br><br>
+    
+    <button type="submit" class="btn">Send Message</button>
+
+    <!-- Hidden settings -->
+    <input type="hidden" name="_subject" value="New Client Message - Shah Web Solutions">
+    <input type="hidden" name="_captcha" value="false">
+
+  </form>
+
+  <br>
+  <a href="https://wa.me/918866693020">Chat on WhatsApp</a>
 </section>
 
 <footer>
