@@ -201,21 +201,70 @@ footer {
   <p>Want a website for your business?</p>
 
 
-<form action="https://formsubmit.co/alohomora1701@gmail.com" method="POST">
-    
-    <input type="text" name="name" required>
-    <input type="email" name="email" required>
-    <textarea name="message" required></textarea>
+<style>
+.contact-form {
+    background: #111;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: auto;
+}
 
-    <button type="submit">Send</button>
+.contact-form h2 {
+    margin-bottom: 20px;
+    color: #ff3c00;
+}
 
-    <input type="hidden" name="_captcha" value="false">
-</form>
+.contact-form input,
+.contact-form textarea {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+}
 
-  <br>
-  <a href="https://wa.me/918866693020">Chat on WhatsApp</a>
-</section>
+.contact-form textarea {
+    height: 100px;
+    resize: none;
+}
 
+.contact-form button {
+    width: 95%;
+    padding: 12px;
+    background: #ff3c00;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.contact-form button:hover {
+    background: #ff5722;
+}
+</style>
+
+<div class="contact-form">
+    <h2>Contact Me</h2>
+
+    <form action="https://formsubmit.co/alohomora1701@gmail.com" method="POST">
+        
+        <input type="text" name="name" placeholder="Your Name" required>
+        
+        <input type="email" name="email" placeholder="Your Email" required>
+        
+        <textarea name="message" placeholder="Your Message" required></textarea>
+
+        <button type="submit">Send Message</button>
+
+        <input type="hidden" name="_captcha" value="false">
+    </form>
+</div>
 <footer>
   <p>© 2026 Shah Web Solutions</p>
 </footer>
