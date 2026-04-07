@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog | bitbyte</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f0f6ff;
+      --white: #ffffff;
+      --accent: #667eea;
+      --accent2: #764ba2;
+      --accent-light: #eef2ff;
+      --border: #c7d8f8;
+      --text: #1a1a2e;
+      --muted: #5a6a8a;
+      --shadow: 0 4px 24px rgba(102,126,234,0.10);
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 6%; height: 68px; background: var(--white);
+      border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 16px rgba(102,126,234,0.08);
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.76rem;
+      font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      transition: color 0.2s; padding-bottom: 4px; border-bottom: 2px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .hero {
+      text-align: center; padding: 64px 6% 48px;
+      background: linear-gradient(160deg, #ffffff 0%, #deeaff 100%);
+      border-bottom: 2px solid var(--border);
+    }
+    .badge {
+      display: inline-block; background: var(--accent-light);
+      border: 1.5px solid var(--border); color: var(--accent);
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 20px; margin-bottom: 18px;
+    }
+    h1 {
+      font-family: 'Orbitron', sans-serif; font-size: clamp(1.7rem, 4vw, 2.8rem);
+      font-weight: 900; line-height: 1.1; margin-bottom: 12px;
+    }
+    h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero p { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+    .filters {
+      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+      padding: 28px 6% 16px; background: var(--white); border-bottom: 1.5px solid var(--border);
+    }
+    .fbtn {
+      background: var(--accent-light); border: 1.5px solid var(--border);
+      color: var(--muted); padding: 7px 18px; border-radius: 20px;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif;
+    }
+    .fbtn:hover, .fbtn.active {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: var(--accent); color: #fff;
+    }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 6%; }
+
+    /* FEATURED */
+    .featured { padding: 36px 6% 0; max-width: 1100px; margin: 0 auto; }
+    .feat-card {
+      display: grid; grid-template-columns: 1fr 1fr;
+      background: var(--white); border: 2px solid var(--border); border-radius: 18px;
+      overflow: hidden; box-shadow: var(--shadow); text-decoration: none; color: inherit;
+      transition: border-color 0.3s, box-shadow 0.3s; margin-bottom: 48px;
+    }
+    .feat-card:hover { border-color: var(--accent); box-shadow: 0 8px 40px rgba(102,126,234,0.18); }
+    .feat-img {
+      background: linear-gradient(135deg, #d4e4ff, #b8caff);
+      min-height: 260px; display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative;
+    }
+    .feat-label {
+      position: absolute; top: 14px; left: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-size: 0.62rem; font-weight: 800; letter-spacing: 2px;
+      padding: 5px 12px; border-radius: 5px; text-transform: uppercase;
+    }
+    .feat-body { padding: 36px 32px; display: flex; flex-direction: column; justify-content: center; }
+    .meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .tag {
+      background: var(--accent-light); color: var(--accent);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+    }
+    .dt { color: var(--muted); font-size: 0.78rem; }
+    .feat-body h2 { font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin-bottom: 10px; }
+    .feat-body p { color: var(--muted); line-height: 1.7; font-size: 0.91rem; margin-bottom: 22px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px;
+      padding: 11px 22px; border-radius: 8px; text-decoration: none;
+      width: fit-content; transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.85; }
+
+    /* GRID */
+    .slabel {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 22px; margin-bottom: 56px;
+    }
+    .card {
+      background: var(--white); border: 2px solid var(--border); border-radius: 16px;
+      overflow: hidden; transition: all 0.3s; text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; box-shadow: var(--shadow);
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(102,126,234,0.15); }
+    .cimg { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .c1 { background: linear-gradient(135deg, #d4e4ff, #b8caff); }
+    .c2 { background: linear-gradient(135deg, #d4f0e8, #b3e0d0); }
+    .c3 { background: linear-gradient(135deg, #e8d4ff, #d4b3f0); }
+    .c4 { background: linear-gradient(135deg, #ffd4e8, #ffb3cf); }
+    .c5 { background: linear-gradient(135deg, #d4eeff, #b3d8f0); }
+    .c6 { background: linear-gradient(135deg, #fff3d4, #ffe0b3); }
+    .cbody { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+    .cbody h3 { font-size: 0.97rem; font-weight: 700; line-height: 1.35; margin-bottom: 8px; }
+    .cbody p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; flex: 1; margin-bottom: 14px; }
+    .clink { color: var(--accent); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* NEWSLETTER */
+    .newsletter {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 18px; padding: 48px 36px; text-align: center;
+      margin-bottom: 56px; box-shadow: 0 8px 40px rgba(102,126,234,0.25);
+    }
+    .newsletter h2 {
+      font-family: 'Orbitron', sans-serif; font-size: 1.5rem;
+      font-weight: 900; color: #fff; margin-bottom: 10px;
+    }
+    .newsletter p { color: rgba(255,255,255,0.88); margin-bottom: 26px; font-size: 0.93rem; }
+    .nform { display: flex; gap: 12px; max-width: 460px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .nform input {
+      flex: 1; min-width: 210px;
+      background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.4);
+      color: #fff; padding: 12px 16px; border-radius: 8px;
+      font-size: 0.88rem; outline: none; font-family: 'Inter', sans-serif;
+    }
+    .nform input::placeholder { color: rgba(255,255,255,0.65); }
+    .nform input:focus { border-color: rgba(255,255,255,0.9); }
+    .nform button {
+      background: #fff; color: var(--accent); border: none;
+      padding: 12px 24px; border-radius: 8px; font-size: 0.83rem;
+      font-weight: 800; cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: opacity 0.2s;
+    }
+    .nform button:hover { opacity: 0.9; }
+
+    footer { background: var(--white); border-top: 2px solid var(--border); padding: 48px 6% 26px; }
+    .fg { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; max-width: 1100px; margin: 0 auto 32px; }
+    .fb p { color: var(--muted); font-size: 0.85rem; line-height: 1.7; margin-top: 10px; }
+    footer h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 14px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    footer ul li a:hover { color: var(--accent); }
+    .fbot { max-width: 1100px; margin: 0 auto; padding-top: 20px; border-top: 1.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .fbot p { color: var(--muted); font-size: 0.78rem; }
+
+    @media(max-width:768px){
+      .feat-card { grid-template-columns: 1fr; }
+      .feat-img { min-height: 160px; }
+      .feat-body { padding: 22px 18px; }
+      .fg { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:480px){
+      .fg { grid-template-columns: 1fr; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.68rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">&lt;bitbyte/&gt;</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="servise.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="internships.html">Internships</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="badge">⚡ Knowledge Base</div>
+  <h1>THE <span>BITBYTE</span> BLOG</h1>
+  <p>Tips, guides & insights to level up your resume, portfolio, and digital presence.</p>
+</section>
+
+<div class="filters">
+  <button class="fbtn active">All Posts</button>
+  <button class="fbtn">Resume Tips</button>
+  <button class="fbtn">Portfolio</button>
+  <button class="fbtn">Web Dev</button>
+  <button class="fbtn">Branding</button>
+  <button class="fbtn">Career</button>
+</div>
+
+<div class="featured">
+  <a class="feat-card" href="#">
+    <div class="feat-img"><div class="feat-label">Featured</div>📄</div>
+    <div class="feat-body">
+      <div class="meta"><span class="tag">Resume Tips</span><span class="dt">Jan 15, 2025 · 5 min read</span></div>
+      <h2>How to Beat ATS Filters and Get Your Resume Seen by Real Humans</h2>
+      <p>90% of large companies use Applicant Tracking Systems. Here's exactly how to format your resume so it passes the bot and lands on the hiring manager's desk.</p>
+      <span class="btn">READ ARTICLE →</span>
+    </div>
+  </a>
+</div>
+
+<div class="wrap">
+  <p class="slabel">Recent Posts</p>
+  <div class="grid">
+    <a class="card" href="#"><div class="cimg c2">🎨</div><div class="cbody"><div class="meta"><span class="tag">Portfolio</span><span class="dt">Jan 10, 2025</span></div><h3>7 Portfolio Mistakes That Are Killing Your Freelance Career</h3><p>Your portfolio is your first impression. Here are the 7 most common mistakes — and how to fix them fast.</p><span class="clink">Read More →</span></div></a>
+    <a class="card" href="#"><div class="cimg c3">🌐</div><div class="cbody"><div class="meta"><span class="tag">Web Dev</span><span class="dt">Jan 5, 2025</span></div><h3>Why Every Small Business Needs a Website in 2025 (Not Just Instagram)</h3><p>Social media is rented land. Here's why owning your website is the smartest business move this year.</p><span class="clink">Read More →</span></div></a>
+    <a class="card" href="#"><div class="cimg c4">🎯</div><div class="cbody"><div class="meta"><span class="tag">Branding</span><span class="dt">Dec 28, 2024</span></div><h3>Personal Branding 101: How to Build a Brand That Opens Doors</h3><p>Your name is a brand. Learn how to define your niche, build your identity, and get noticed.</p><span class="clink">Read More →</span></div></a>
+    <a class="card" href="#"><div class="cimg c5">💼</div><div class="cbody"><div class="meta"><span class="tag">Career</span><span class="dt">Dec 20, 2024</span></div><h3>Fresher to Hired: Step-by-Step Guide to Landing Your First Tech Job</h3><p>No experience? No problem. Here's the exact roadmap freshers can follow to land their first job.</p><span class="clink">Read More →</span></div></a>
+    <a class="card" href="#"><div class="cimg c1">✍️</div><div class="cbody"><div class="meta"><span class="tag">Resume Tips</span><span class="dt">Dec 15, 2024</span></div><h3>One Page vs Two Page Resume: What Actually Works in 2025</h3><p>The debate is over. Here's the data-backed answer on resume length — and when to break the rules.</p><span class="clink">Read More →</span></div></a>
+    <a class="card" href="#"><div class="cimg c6">🚀</div><div class="cbody"><div class="meta"><span class="tag">Career</span><span class="dt">Dec 8, 2024</span></div><h3>How to Make the Most of Your Design Internship From Day 1</h3><p>Internships are what you make of them. Here's how to go from intern to full-time offer.</p><span class="clink">Read More →</span></div></a>
+  </div>
+
+  <div class="newsletter">
+    <h2>⚡ LEVEL UP YOUR INBOX</h2>
+    <p>Get weekly tips on resumes, portfolios & digital careers. No spam. Just power-ups.</p>
+    <div class="nform">
+      <form action="YOUR_MAILCHIMP_URL_HERE" method="POST" target="_blank" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;">
+        <input type="email" name="EMAIL" placeholder="Enter your email address" required/>
+        <button type="submit">SUBSCRIBE →</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fg">
+    <div class="fb"><a href="index.html" class="logo">&lt;bitbyte/&gt;</a><p>Build. Innovate. Dominate.<br>Game-changing digital services for modern professionals.</p></div>
+    <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="servise.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="internships.html">Internships</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4>Services</h4><ul><li><a href="servise.html">Resume Building</a></li><li><a href="servise.html">Portfolio Creation</a></li><li><a href="servise.html">Website Development</a></li><li><a href="servise.html">Posters & Branding</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms & Conditions</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <p>© 2025 bitbyte. All rights reserved. | Level Up Your Future</p>
+    <p>bitbyte.tech01@gmail.com · +91 8866693020</p>
+  </div>
+</footer>
+
+</body>
+</html>

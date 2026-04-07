@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | bitbyte</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f0f6ff;
+      --white: #ffffff;
+      --accent: #667eea;
+      --accent2: #764ba2;
+      --accent-light: #eef2ff;
+      --border: #c7d8f8;
+      --text: #1a1a2e;
+      --muted: #5a6a8a;
+      --shadow: 0 4px 24px rgba(102,126,234,0.10);
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 6%; height: 68px; background: var(--white); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(102,126,234,0.08); }
+    .logo { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.76rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .hero { text-align: center; padding: 64px 6% 48px; background: linear-gradient(160deg, #ffffff 0%, #deeaff 100%); border-bottom: 2px solid var(--border); }
+    .badge { display: inline-block; background: var(--accent-light); border: 1.5px solid var(--border); color: var(--accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 16px; border-radius: 20px; margin-bottom: 18px; }
+    h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.1; margin-bottom: 12px; }
+    h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 6%; }
+    .sbadge { display: inline-block; background: var(--accent-light); border: 1.5px solid var(--border); color: var(--accent); font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 4px; margin-bottom: 10px; }
+    .sh { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900; margin-bottom: 6px; }
+    .sp { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+
+    /* STORY */
+    .story { padding: 64px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: center; border-bottom: 1.5px solid var(--border); }
+    .story p { color: var(--muted); line-height: 1.8; font-size: 0.93rem; margin-bottom: 14px; }
+    .story-vis {
+      background: linear-gradient(135deg, #dce8ff, #c3d4ff);
+      border: 2px solid var(--border); border-radius: 18px;
+      min-height: 300px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px; padding: 36px; text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .story-vis .big { font-size: 4rem; }
+    .story-vis h3 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: var(--accent); }
+    .story-vis p { color: var(--muted); font-size: 0.88rem; font-style: italic; margin: 0; }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; border: 2px solid var(--border); border-radius: 16px; overflow: hidden; margin: 56px 0; box-shadow: var(--shadow); }
+    .scard { background: var(--white); padding: 32px 20px; text-align: center; border-right: 1.5px solid var(--border); }
+    .scard:last-child { border-right: none; }
+    .snum { font-family: 'Orbitron', sans-serif; font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; margin-bottom: 6px; }
+    .slbl { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+    /* TIMELINE */
+    .tl-sec { padding: 56px 0; border-bottom: 1.5px solid var(--border); }
+    .tl-head { margin-bottom: 36px; }
+    .timeline { position: relative; padding-left: 28px; border-left: 3px solid var(--border); display: flex; flex-direction: column; gap: 32px; }
+    .ti { position: relative; }
+    .tdot { position: absolute; left: -40px; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); border: 3px solid var(--bg); }
+    .tdate { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
+    .ti h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .ti p { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
+
+    /* VALUES */
+    .val-sec { padding: 56px 0; border-bottom: 1.5px solid var(--border); }
+    .vals { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+    .val { background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 26px 22px; box-shadow: var(--shadow); transition: border-color 0.3s; }
+    .val:hover { border-color: var(--accent); }
+    .vicon { font-size: 1.8rem; margin-bottom: 12px; display: block; }
+    .val h3 { font-size: 0.97rem; font-weight: 700; margin-bottom: 7px; }
+    .val p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+
+    /* FOUNDER */
+    .founder-sec { padding: 56px 0; border-bottom: 1.5px solid var(--border); }
+    .fcard { background: var(--white); border: 2px solid var(--border); border-radius: 18px; padding: 44px 36px; display: flex; gap: 40px; align-items: center; flex-wrap: wrap; box-shadow: var(--shadow); }
+    .favatar { width: 130px; height: 130px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 2.4rem; font-weight: 900; color: #fff; flex-shrink: 0; }
+    .finfo { flex: 1; min-width: 220px; }
+    .frole { color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .finfo h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900; margin-bottom: 14px; }
+    .finfo p { color: var(--muted); line-height: 1.8; font-size: 0.92rem; margin-bottom: 12px; }
+    .fquote { border-left: 3px solid var(--accent); padding-left: 18px; color: var(--text); font-style: italic; font-size: 0.97rem; line-height: 1.7; margin-top: 18px; }
+
+    /* CTA */
+    .cta { padding: 64px 0; text-align: center; }
+    .cta h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900; margin-bottom: 12px; }
+    .cta p { color: var(--muted); font-size: 0.93rem; margin-bottom: 28px; }
+    .cbtns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .cprimary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-size: 0.88rem; font-weight: 700; padding: 13px 30px; border-radius: 8px; text-decoration: none; letter-spacing: 0.5px; transition: opacity 0.2s; }
+    .cprimary:hover { opacity: 0.85; }
+    .cghost { background: var(--white); border: 2px solid var(--border); color: var(--text); font-size: 0.88rem; font-weight: 700; padding: 13px 30px; border-radius: 8px; text-decoration: none; transition: border-color 0.2s; }
+    .cghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    footer { background: var(--white); border-top: 2px solid var(--border); padding: 48px 6% 26px; }
+    .fg2 { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; max-width: 1100px; margin: 0 auto 32px; }
+    .fb p { color: var(--muted); font-size: 0.85rem; line-height: 1.7; margin-top: 10px; }
+    footer h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 14px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    footer ul li a:hover { color: var(--accent); }
+    .fbot { max-width: 1100px; margin: 0 auto; padding-top: 20px; border-top: 1.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .fbot p { color: var(--muted); font-size: 0.78rem; }
+
+    @media(max-width:768px){
+      .story { grid-template-columns: 1fr; gap: 28px; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .scard:nth-child(2) { border-right: none; }
+      .scard:nth-child(3) { border-right: 1.5px solid var(--border); border-top: 1.5px solid var(--border); }
+      .scard:nth-child(4) { border-top: 1.5px solid var(--border); }
+      .fcard { flex-direction: column; padding: 28px 22px; }
+      .fg2 { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:480px){
+      .fg2 { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">&lt;bitbyte/&gt;</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="servise.html">Services</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="internships.html">Internships</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="badge">Our Story</div>
+  <h1>WHO IS <span>BITBYTE?</span></h1>
+  <p>We're not just a service — we're your digital power-up. Built for ambitious people who refuse to blend in.</p>
+</section>
+
+<div class="wrap">
+
+  <div class="story">
+    <div>
+      <div class="sbadge">Our Story</div>
+      <h2 class="sh" style="margin-bottom:18px;">🎮 HOW IT ALL STARTED</h2>
+      <p>Bitbyte was born out of frustration. Watching talented people get overlooked because their resumes and portfolios didn't reflect their actual brilliance — that was unacceptable.</p>
+      <p>Founder Mansi Shah started bitbyte with a single client and a mission: make every professional look as strong on paper (and on screen) as they are in real life.</p>
+      <p>Today, bitbyte helps students, freelancers, and small businesses craft digital assets that truly represent who they are — and get results.</p>
+    </div>
+    <div class="story-vis">
+      <div class="big">⚡</div>
+      <h3>Started in 2024</h3>
+      <p>"One resume. One mission. Now we're just getting started."</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="scard"><span class="snum">50+</span><span class="slbl">Resumes Built</span></div>
+    <div class="scard"><span class="snum">20+</span><span class="slbl">Websites Launched</span></div>
+    <div class="scard"><span class="snum">100%</span><span class="slbl">Client Satisfaction</span></div>
+    <div class="scard"><span class="snum">3–7</span><span class="slbl">Days Delivery</span></div>
+  </div>
+
+  <div class="tl-sec">
+    <div class="tl-head">
+      <div class="sbadge">Journey</div>
+      <h2 class="sh">OUR JOURNEY SO FAR 🗺️</h2>
+      <p class="sp">From zero to building digital assets for real clients — here's how bitbyte levelled up.</p>
+    </div>
+    <div class="timeline">
+      <div class="ti"><div class="tdot"></div><div class="tdate">Early 2024</div><h3>The Origin Story</h3><p>Mansi builds her first client resume during college. The feedback? "I got 3 calls in a week." The idea for bitbyte is born.</p></div>
+      <div class="ti"><div class="tdot"></div><div class="tdate">Mid 2024</div><h3>First 10 Clients</h3><p>Word spreads. The first 10 clients come in — resumes, portfolios, and the first website project. bitbyte becomes a real thing.</p></div>
+      <div class="ti"><div class="tdot"></div><div class="tdate">Late 2024</div><h3>Website Launch & Brand Identity</h3><p>bitbyte.tech goes live. Services expand to include website development, poster design, and branding. The squad grows.</p></div>
+      <div class="ti"><div class="tdot"></div><div class="tdate">2025</div><h3>Internship Program Launches</h3><p>bitbyte opens its doors to passionate students. Real work, real learning, real results.</p></div>
+      <div class="ti"><div class="tdot"></div><div class="tdate">Future</div><h3>The Final Boss</h3><p>Expanding to a full-service digital studio. Bigger team. More impact. The mission stays the same: help people dominate.</p></div>
+    </div>
+  </div>
+
+  <div class="val-sec">
+    <div style="margin-bottom:32px;">
+      <div class="sbadge">What We Stand For</div>
+      <h2 class="sh">OUR CORE VALUES ⚡</h2>
+    </div>
+    <div class="vals">
+      <div class="val"><span class="vicon">🎯</span><h3>Quality Over Quantity</h3><p>We'd rather do fewer projects and do them exceptionally well than rush mediocre work.</p></div>
+      <div class="val"><span class="vicon">🤝</span><h3>Client First, Always</h3><p>Your success is our victory condition. We don't stop until you're genuinely satisfied.</p></div>
+      <div class="val"><span class="vicon">⚡</span><h3>Speed Without Compromise</h3><p>Fast delivery doesn't mean cutting corners. We move quickly because we've mastered what we do.</p></div>
+      <div class="val"><span class="vicon">🌱</span><h3>Growth for Everyone</h3><p>From interns to clients — everyone who works with bitbyte leaves more capable than when they arrived.</p></div>
+    </div>
+  </div>
+
+  <div class="founder-sec">
+    <div style="margin-bottom:32px;">
+      <div class="sbadge">Meet the Team</div>
+      <h2 class="sh">THE MIND BEHIND BITBYTE 🧠</h2>
+    </div>
+    <div class="fcard">
+      <div class="favatar">MS</div>
+      <div class="finfo">
+        <div class="frole">Founder & Creative Director</div>
+        <h2>Mansi Shah</h2>
+        <p>Mansi started bitbyte because she believed every professional deserves a digital presence that truly represents them — not a template anyone can buy for ₹50.</p>
+        <p>With a passion for design, strategy, and helping people win, she built bitbyte from scratch — one resume, one client, one power-up at a time.</p>
+        <div class="fquote">"Building digital experiences that help people win. That's the only mission that matters."</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta">
+    <h2>READY TO LEVEL UP? 🎮</h2>
+    <p>Join 50+ professionals who've already upgraded their digital presence with bitbyte.</p>
+    <div class="cbtns">
+      <a href="servise.html" class="cprimary">⚡ See Our Services</a>
+      <a href="contact.html" class="cghost">Contact Us →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="fg2">
+    <div class="fb"><a href="index.html" class="logo">&lt;bitbyte/&gt;</a><p>Build. Innovate. Dominate.<br>Game-changing digital services for modern professionals.</p></div>
+    <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="servise.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="internships.html">Internships</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4>Services</h4><ul><li><a href="servise.html">Resume Building</a></li><li><a href="servise.html">Portfolio Creation</a></li><li><a href="servise.html">Website Development</a></li><li><a href="servise.html">Posters & Branding</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms & Conditions</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <p>© 2025 bitbyte. All rights reserved. | Level Up Your Future</p>
+    <p>bitbyte.tech01@gmail.com · +91 8866693020</p>
+  </div>
+</footer>
+</body>
+</html>

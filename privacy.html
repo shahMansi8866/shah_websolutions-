@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy | bitbyte</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f0f6ff;
+      --white: #ffffff;
+      --accent: #667eea;
+      --accent2: #764ba2;
+      --accent-light: #eef2ff;
+      --border: #c7d8f8;
+      --text: #1a1a2e;
+      --muted: #5a6a8a;
+      --shadow: 0 4px 24px rgba(102,126,234,0.10);
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 6%; height: 68px; background: var(--white); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(102,126,234,0.08); }
+    .logo { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.76rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+    .nav-links a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .hero { text-align: center; padding: 60px 6% 44px; background: linear-gradient(160deg, #ffffff 0%, #deeaff 100%); border-bottom: 2px solid var(--border); }
+    .badge { display: inline-block; background: var(--accent-light); border: 1.5px solid var(--border); color: var(--accent); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 16px; border-radius: 20px; margin-bottom: 18px; }
+    .hero h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.4rem); font-weight: 900; margin-bottom: 10px; }
+    .hero p { color: var(--muted); font-size: 0.93rem; }
+
+    .layout { max-width: 1000px; margin: 0 auto; padding: 56px 6%; display: grid; grid-template-columns: 200px 1fr; gap: 48px; align-items: start; }
+
+    /* TOC */
+    .toc { position: sticky; top: 86px; background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 22px 18px; box-shadow: var(--shadow); }
+    .toc h3 { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .toc ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .toc ul li a { color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 6px 10px; border-radius: 6px; display: block; transition: all 0.2s; border-left: 2px solid transparent; }
+    .toc ul li a:hover { color: var(--accent); border-left-color: var(--accent); background: var(--accent-light); }
+
+    /* CONTENT */
+    .content { min-width: 0; }
+    .updated { color: var(--muted); font-size: 0.8rem; margin-bottom: 36px; padding: 12px 18px; background: var(--white); border: 2px solid var(--border); border-radius: 8px; border-left: 4px solid var(--accent); box-shadow: var(--shadow); }
+
+    .intro-box { background: var(--accent-light); border: 1.5px solid var(--border); border-radius: 12px; padding: 20px 22px; margin-bottom: 40px; }
+    .intro-box p { color: var(--text); font-size: 0.91rem; line-height: 1.7; }
+
+    .psec { margin-bottom: 44px; }
+    .psec h2 { font-size: 1.15rem; font-weight: 800; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1.5px solid var(--border); display: flex; align-items: center; gap: 10px; color: var(--text); }
+    .psec p { color: var(--muted); line-height: 1.8; font-size: 0.9rem; margin-bottom: 12px; }
+    .psec ul { list-style: none; display: flex; flex-direction: column; gap: 9px; margin: 12px 0; }
+    .psec ul li { color: var(--muted); font-size: 0.9rem; line-height: 1.7; padding-left: 18px; position: relative; }
+    .psec ul li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); font-size: 0.72rem; top: 4px; }
+    .psec strong { color: var(--text); font-weight: 700; }
+
+    .hbox { background: var(--white); border: 2px solid var(--border); border-left: 4px solid var(--accent); border-radius: 10px; padding: 16px 20px; margin: 18px 0; box-shadow: var(--shadow); }
+    .hbox p { color: var(--text) !important; font-size: 0.89rem !important; margin: 0 !important; line-height: 1.7; }
+
+    .contact-box { background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 16px; padding: 36px; margin-top: 44px; text-align: center; box-shadow: 0 8px 40px rgba(102,126,234,0.25); }
+    .contact-box h3 { font-family: 'Orbitron', sans-serif; font-size: 1.1rem; font-weight: 900; color: #fff; margin-bottom: 10px; }
+    .contact-box p { color: rgba(255,255,255,0.88); font-size: 0.9rem; margin-bottom: 6px; line-height: 1.7; }
+    .contact-box a { color: #fff; text-decoration: none; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.5); }
+
+    footer { background: var(--white); border-top: 2px solid var(--border); padding: 48px 6% 26px; }
+    .fg2 { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; max-width: 1100px; margin: 0 auto 32px; }
+    .fb p { color: var(--muted); font-size: 0.85rem; line-height: 1.7; margin-top: 10px; }
+    footer h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 14px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    footer ul li a:hover { color: var(--accent); }
+    .fbot { max-width: 1100px; margin: 0 auto; padding-top: 20px; border-top: 1.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .fbot p { color: var(--muted); font-size: 0.78rem; }
+
+    @media(max-width:768px){
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: static; display: none; }
+      .fg2 { grid-template-columns: 1fr 1fr; }
+    }
+    @media(max-width:480px){ .fg2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">&lt;bitbyte/&gt;</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="servise.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="internships.html">Internships</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="badge">Legal</div>
+  <h1>🔒 Privacy Policy</h1>
+  <p>We respect your privacy. Here's exactly how we handle your data — no fluff.</p>
+</div>
+
+<div class="layout">
+  <nav class="toc">
+    <h3>Contents</h3>
+    <ul>
+      <li><a href="#collect">Info We Collect</a></li>
+      <li><a href="#use">How We Use It</a></li>
+      <li><a href="#share">Data Sharing</a></li>
+      <li><a href="#cookies">Cookies</a></li>
+      <li><a href="#storage">Data Storage</a></li>
+      <li><a href="#rights">Your Rights</a></li>
+      <li><a href="#children">Children</a></li>
+      <li><a href="#changes">Policy Changes</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="content">
+    <div class="updated">📅 Last updated: January 2025 &nbsp;·&nbsp; Effective: January 1, 2025</div>
+
+    <div class="intro-box">
+      <p>This Privacy Policy explains how <strong>bitbyte</strong> ("we", "us", or "our") collects, uses, and protects your personal information when you use our website or services. By using our website, you agree to the terms described here.</p>
+    </div>
+
+    <div class="psec" id="collect">
+      <h2>📋 Information We Collect</h2>
+      <p>We collect information you directly provide when you:</p>
+      <ul>
+        <li>Fill out our contact or inquiry form (name, email, phone, project details)</li>
+        <li>Place an order or request a service</li>
+        <li>Apply for an internship (name, email, portfolio links, academic details)</li>
+        <li>Subscribe to our newsletter or blog updates</li>
+        <li>Communicate with us via email or WhatsApp</li>
+      </ul>
+      <p>We may also automatically collect your IP address, browser type, pages visited, and time on site when you browse our website.</p>
+    </div>
+
+    <div class="psec" id="use">
+      <h2>⚙️ How We Use Your Information</h2>
+      <p>We use the information we collect to:</p>
+      <ul>
+        <li>Deliver the services you've requested (resume, portfolio, website, etc.)</li>
+        <li>Communicate with you about your project, updates, or revisions</li>
+        <li>Process payments and send receipts or invoices</li>
+        <li>Respond to your questions and support requests</li>
+        <li>Review internship applications and contact shortlisted candidates</li>
+        <li>Send occasional marketing emails (only if you've opted in)</li>
+        <li>Improve our website and service quality</li>
+      </ul>
+    </div>
+
+    <div class="psec" id="share">
+      <h2>🔐 Sharing Your Data</h2>
+      <p>We do not sell, trade, or rent your personal information to third parties. Full stop.</p>
+      <p>We may share your information only in these limited circumstances:</p>
+      <ul>
+        <li><strong>Payment processors</strong> — to complete your transaction securely (e.g., Razorpay, UPI)</li>
+        <li><strong>Legal obligations</strong> — if required by law or government authority</li>
+        <li><strong>Service delivery</strong> — with team members who assist your project, under confidentiality agreements</li>
+      </ul>
+      <div class="hbox"><p>Your project files, personal details, and communication with bitbyte are kept strictly confidential and are never shared with other clients or third parties for marketing purposes.</p></div>
+    </div>
+
+    <div class="psec" id="cookies">
+      <h2>🍪 Cookies</h2>
+      <p>Our website may use basic cookies to improve your browsing experience.</p>
+      <ul>
+        <li><strong>Essential cookies</strong> — required for the site to function properly</li>
+        <li><strong>Analytics cookies</strong> — help us understand page visits and user behaviour (e.g., Google Analytics)</li>
+      </ul>
+      <p>You can control or disable cookies through your browser settings. Disabling cookies may affect some features of the website.</p>
+    </div>
+
+    <div class="psec" id="storage">
+      <h2>🗄️ Data Storage & Security</h2>
+      <p>We take reasonable technical and organisational measures to protect your information from unauthorised access.</p>
+      <ul>
+        <li>Project files are stored only for the duration of your project plus a 30-day post-delivery window</li>
+        <li>Payment information is handled exclusively by our payment partners — never stored on our servers</li>
+        <li>Contact form data is accessed only by authorised team members</li>
+      </ul>
+    </div>
+
+    <div class="psec" id="rights">
+      <h2>✅ Your Rights</h2>
+      <p>You have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Access</strong> — request a copy of the personal data we hold about you</li>
+        <li><strong>Correction</strong> — ask us to correct inaccurate or incomplete data</li>
+        <li><strong>Deletion</strong> — request deletion of your personal data</li>
+        <li><strong>Opt-out</strong> — unsubscribe from marketing emails at any time</li>
+        <li><strong>Portability</strong> — request your data in a portable format</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <strong>bitbyte.tech01@gmail.com</strong>. We'll respond within 7 business days.</p>
+    </div>
+
+    <div class="psec" id="children">
+      <h2>👦 Children's Privacy</h2>
+      <p>Our services are not directed at children under 13. We do not knowingly collect personal information from anyone under 13 years of age. If you believe a child has provided us with personal information, please contact us immediately.</p>
+    </div>
+
+    <div class="psec" id="changes">
+      <h2>🔄 Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. When we do, we'll update the "last updated" date at the top. Continued use of our website after changes are posted constitutes your acceptance of the updated policy.</p>
+    </div>
+
+    <div class="psec" id="contact">
+      <h2>📬 Contact Us</h2>
+      <p>Questions, concerns, or requests? We reply fast.</p>
+    </div>
+
+    <div class="contact-box">
+      <h3>🎮 QUESTIONS ABOUT YOUR PRIVACY?</h3>
+      <p>We're real people and we reply fast. Reach out anytime.</p>
+      <p>📧 <a href="mailto:bitbyte.tech01@gmail.com">bitbyte.tech01@gmail.com</a></p>
+      <p>📞 <a href="tel:+918866693020">+91 8866693020</a></p>
+      <p style="margin-top:6px; color:rgba(255,255,255,0.75); font-size:0.85rem;">📍 India (Remote — Worldwide)</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fg2">
+    <div class="fb"><a href="index.html" class="logo">&lt;bitbyte/&gt;</a><p>Build. Innovate. Dominate.<br>Game-changing digital services for modern professionals.</p></div>
+    <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="servise.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="internships.html">Internships</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4>Services</h4><ul><li><a href="servise.html">Resume Building</a></li><li><a href="servise.html">Portfolio Creation</a></li><li><a href="servise.html">Website Development</a></li><li><a href="servise.html">Posters & Branding</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms & Conditions</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <p>© 2025 bitbyte. All rights reserved. | Level Up Your Future</p>
+    <p>bitbyte.tech01@gmail.com · +91 8866693020</p>
+  </div>
+</footer>
+</body>
+</html>

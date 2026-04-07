@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAI MOTION — Motion & Animation Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root {
+  --bg: #02020a;
+  --surface: #080816;
+  --lift: #0f0f22;
+  --cyan: #00f5ff;
+  --magenta: #ff00aa;
+  --gold: #ffcc00;
+  --text: #f0eeff;
+  --muted: #5a587a;
+  --border: rgba(255,255,255,0.07);
+  --glow-c: rgba(0,245,255,0.15);
+  --glow-m: rgba(255,0,170,0.15);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── LOADER ── */
+#loader {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transition: opacity 0.8s ease, visibility 0.8s;
+}
+#loader.hide { opacity: 0; visibility: hidden; }
+.loader-ring {
+  width: 80px; height: 80px;
+  border: 1px solid var(--border);
+  border-top-color: var(--cyan);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 24px;
+}
+.loader-text {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.loader-pct {
+  font-family: 'Orbitron', monospace;
+  font-size: 48px;
+  font-weight: 900;
+  color: var(--cyan);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+/* ── CURSOR ── */
+#cur { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9000; mix-blend-mode: screen; transition: transform .1s; }
+#cur-ring { width: 44px; height: 44px; border: 1px solid rgba(0,245,255,0.4); border-radius: 50%; position: fixed; pointer-events: none; z-index: 8999; transition: transform .5s cubic-bezier(.23,1,.32,1), width .3s, height .3s, border-color .3s; }
+body:hover #cur-ring { }
+.cursor-big #cur { transform: scale(4); background: var(--magenta); }
+.cursor-big #cur-ring { width: 80px; height: 80px; border-color: rgba(255,0,170,0.3); margin-left: -18px; margin-top: -18px; }
+
+/* ── WEBGL CANVAS ── */
+#three-canvas {
+  position: fixed; inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 60px;
+}
+.nav-logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: var(--text);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--cyan); }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--cyan); }
+.nav-cta {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--cyan);
+  padding: 12px 28px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: box-shadow .3s, transform .2s;
+}
+.nav-cta:hover { box-shadow: 0 0 30px var(--glow-c); transform: translateY(-1px); }
+
+/* ── HERO ── */
+#home {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 0 60px;
+  position: relative; z-index: 1;
+}
+.hero-tag {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px; letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 24px;
+  opacity: 0; animation: fadeUp .7s .6s forwards;
+  display: flex; align-items: center; gap: 16px;
+}
+.hero-tag::before { content: ''; width: 40px; height: 1px; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+.hero-h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(90px, 13vw, 200px);
+  line-height: .9;
+  letter-spacing: -2px;
+  margin-bottom: 0;
+  opacity: 0; animation: fadeUp .9s .8s forwards;
+}
+.hero-h1 .stroke {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255,255,255,0.15);
+  display: block;
+}
+.hero-h1 .fill { color: var(--text); display: block; }
+.hero-h1 .cyan { color: var(--cyan); text-shadow: 0 0 60px rgba(0,245,255,0.5); display: block; }
+.hero-bottom {
+  display: flex; align-items: flex-end;
+  justify-content: space-between;
+  margin-top: 60px;
+  opacity: 0; animation: fadeUp .8s 1.1s forwards;
+}
+.hero-desc {
+  font-size: 17px; line-height: 1.8;
+  color: var(--muted); max-width: 420px;
+}
+.hero-desc strong { color: var(--text); }
+.hero-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 16px; }
+.btn-glow {
+  background: transparent;
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  padding: 18px 48px;
+  font-family: 'Orbitron', monospace;
+  font-size: 11px; letter-spacing: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  transition: all .3s;
+  position: relative; overflow: hidden;
+}
+.btn-glow::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--cyan);
+  transform: translateY(101%);
+  transition: transform .4s cubic-bezier(.23,1,.32,1);
+}
+.btn-glow:hover { color: var(--bg); box-shadow: 0 0 40px var(--glow-c); }
+.btn-glow:hover::before { transform: translateY(0); }
+.btn-glow span { position: relative; z-index: 1; }
+.btn-ghost {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+}
+.btn-ghost:hover { color: var(--text); }
+
+/* scroll indicator */
+.scroll-ind {
+  position: absolute; bottom: 40px; left: 60px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--muted);
+  opacity: 0; animation: fadeIn 1s 1.6s forwards;
+}
+.scroll-bar {
+  width: 1px; height: 60px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+/* live badge */
+.live-badge {
+  position: absolute; bottom: 40px; right: 60px;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 10px;
+  opacity: 0; animation: fadeIn 1s 1.8s forwards;
+}
+.live-dot { width: 8px; height: 8px; background: #00ff88; border-radius: 50%; animation: pulse 2s infinite; }
+
+/* ── REEL SECTION ── */
+#reel {
+  position: relative; z-index: 1;
+  padding: 100px 0;
+  overflow: hidden;
+}
+.reel-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--muted);
+  text-align: center; margin-bottom: 48px;
+}
+.reel-screen {
+  width: calc(100% - 120px);
+  margin: 0 auto;
+  aspect-ratio: 16/7;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.reel-screen::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0,245,255,0.04) 0%, transparent 70%);
+}
+.reel-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridScroll 8s linear infinite;
+}
+.reel-center {
+  position: relative; z-index: 2;
+  text-align: center;
+}
+.reel-icon { font-size: 64px; margin-bottom: 16px; animation: float3d 4s ease-in-out infinite; }
+.reel-play {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--cyan);
+  cursor: none;
+}
+.reel-corner {
+  position: absolute;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 2px;
+  color: var(--muted);
+}
+.rc-tl { top: 20px; left: 20px; }
+.rc-tr { top: 20px; right: 20px; }
+.rc-bl { bottom: 20px; left: 20px; }
+.rc-br { bottom: 20px; right: 20px; }
+/* scanning line */
+.scan-line {
+  position: absolute; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  box-shadow: 0 0 10px var(--cyan);
+  animation: scan 4s ease-in-out infinite;
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.marquee-inner {
+  display: flex;
+  animation: marquee 18s linear infinite;
+  white-space: nowrap;
+}
+.m-item {
+  padding: 16px 48px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 4px;
+  color: var(--muted);
+  display: flex; align-items: center; gap: 48px;
+  flex-shrink: 0;
+  transition: color .2s;
+}
+.m-item:hover { color: var(--cyan); }
+.m-sep { width: 6px; height: 6px; background: var(--magenta); border-radius: 50%; box-shadow: 0 0 8px var(--magenta); }
+
+/* ── FEATURES / SERVICES ── */
+#features {
+  position: relative; z-index: 1;
+  padding: 120px 60px;
+}
+.feat-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; margin-bottom: 80px;
+}
+.feat-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(50px, 6vw, 88px);
+  line-height: .95; letter-spacing: 2px;
+}
+.feat-title .c { color: var(--cyan); text-shadow: 0 0 30px rgba(0,245,255,0.4); }
+.feat-title .m { color: var(--magenta); text-shadow: 0 0 30px rgba(255,0,170,0.4); }
+.feat-right-text {
+  font-size: 17px; line-height: 1.85;
+  color: var(--muted); align-self: end;
+}
+.feat-right-text strong { color: var(--text); }
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.svc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 48px 36px;
+  position: relative; overflow: hidden;
+  transition: border-color .3s, transform .4s cubic-bezier(.23,1,.32,1);
+}
+.svc-card:hover { border-color: var(--cyan); transform: translateY(-6px); }
+.svc-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s ease;
+}
+.svc-card:hover::after { transform: scaleX(1); }
+.svc-glow {
+  position: absolute; top: -40px; right: -40px;
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  background: var(--glow-c);
+  filter: blur(40px);
+  opacity: 0; transition: opacity .4s;
+}
+.svc-card:hover .svc-glow { opacity: 1; }
+.svc-num {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px; letter-spacing: 3px;
+  color: var(--cyan); margin-bottom: 20px;
+  display: block;
+}
+.svc-icon { font-size: 44px; margin-bottom: 20px; display: block; }
+.svc-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px; letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.svc-text {
+  font-size: 15px; line-height: 1.75;
+  color: var(--muted);
+}
+.svc-tags {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-top: 20px;
+}
+.svc-tag {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px; letter-spacing: 2px;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  color: var(--muted); padding: 6px 12px;
+}
+
+/* ── GALLERY ── */
+#gallery {
+  position: relative; z-index: 1;
+  padding: 120px 60px;
+  background: var(--surface);
+}
+.gal-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 60px;
+}
+.gal-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(50px, 6vw, 88px);
+  line-height: .95; letter-spacing: 2px;
+}
+.gal-title span { color: var(--magenta); text-shadow: 0 0 30px rgba(255,0,170,0.4); }
+.gal-subtitle {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--muted);
+  max-width: 220px; text-align: right; line-height: 1.8;
+}
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 72px;
+  gap: 10px;
+}
+.w-item {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: none;
+  transition: border-color .3s;
+}
+.w-item:hover { border-color: rgba(0,245,255,0.3); }
+.wi1 { grid-column: 1/6; grid-row: 1/6; }
+.wi2 { grid-column: 6/9; grid-row: 1/4; }
+.wi3 { grid-column: 9/13; grid-row: 1/5; }
+.wi4 { grid-column: 6/9; grid-row: 4/7; }
+.wi5 { grid-column: 9/13; grid-row: 5/7; }
+.wi6 { grid-column: 1/5; grid-row: 6/9; }
+.wi7 { grid-column: 5/9; grid-row: 7/9; }
+.wi8 { grid-column: 9/13; grid-row: 7/9; }
+.w-bg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 56px;
+  transition: transform .6s cubic-bezier(.23,1,.32,1);
+}
+.w-item:hover .w-bg { transform: scale(1.06); }
+.w-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(2,2,10,.9) 0%, rgba(2,2,10,.5) 100%);
+  padding: 24px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  opacity: 0; transition: opacity .3s;
+}
+.w-item:hover .w-overlay { opacity: 1; }
+.w-tag {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--cyan);
+  margin-bottom: 6px;
+}
+.w-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px; letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.w-link {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+}
+.w-num {
+  position: absolute; top: 14px; left: 16px;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; color: rgba(255,255,255,.15);
+  letter-spacing: 2px;
+}
+
+/* ── ABOUT ── */
+#about {
+  position: relative; z-index: 1;
+  padding: 140px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px; align-items: center;
+  overflow: hidden;
+}
+.about-3d-wrap {
+  position: relative;
+  aspect-ratio: 1;
+}
+.about-3d-canvas {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.about-card {
+  position: absolute;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.ac1 { top: 10%; right: -10%; color: var(--cyan); border-color: rgba(0,245,255,0.2); animation: float3d 3s ease-in-out infinite; }
+.ac2 { bottom: 20%; left: -8%; color: var(--magenta); border-color: rgba(255,0,170,0.2); animation: float3d 4s 1s ease-in-out infinite; }
+.ac3 { bottom: 5%; right: 5%; color: var(--gold); border-color: rgba(255,204,0,0.2); animation: float3d 3.5s .5s ease-in-out infinite; }
+.ac-val { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 2px; display: block; margin-bottom: 4px; }
+.ac-lbl { color: var(--muted); }
+
+.about-content {}
+.sec-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 5px;
+  text-transform: uppercase; color: var(--cyan);
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 24px;
+}
+.sec-label::before { content: ''; width: 40px; height: 1px; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+.about-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 6vw, 80px);
+  line-height: .95; letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.about-role {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px; letter-spacing: 4px;
+  text-transform: uppercase; color: var(--magenta);
+  margin-bottom: 32px; display: block;
+}
+.about-bio {
+  font-size: 17px; line-height: 1.9;
+  color: var(--muted); margin-bottom: 40px;
+}
+.about-bio strong { color: var(--text); }
+.skills-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px; margin-bottom: 40px;
+}
+.skill-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 16px 20px;
+  position: relative; overflow: hidden;
+}
+.skill-item::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--cyan), var(--magenta));
+}
+.skill-nm {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  display: block; margin-bottom: 6px;
+}
+.skill-bar2 {
+  height: 2px; background: var(--border);
+  position: relative; overflow: hidden;
+}
+.skill-fill2 {
+  position: absolute; inset-y: 0; left: 0;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  width: 0; transition: width 1.2s cubic-bezier(.23,1,.32,1);
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+/* ── CONTACT ── */
+#contact {
+  position: relative; z-index: 1;
+  padding: 120px 60px;
+  background: var(--surface);
+}
+.contact-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px;
+}
+.contact-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 7vw, 100px);
+  line-height: .9; letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+.contact-title .c { color: var(--cyan); text-shadow: 0 0 30px rgba(0,245,255,0.4); }
+.contact-sub {
+  font-size: 17px; line-height: 1.8;
+  color: var(--muted); margin-bottom: 48px;
+}
+.c-info { display: flex; flex-direction: column; gap: 0; }
+.c-row {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.c-ico {
+  width: 44px; height: 44px;
+  background: var(--lift);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.c-lbl {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--muted);
+  display: block; margin-bottom: 4px;
+}
+.c-val { font-size: 16px; color: var(--text); }
+.avail {
+  margin-top: 32px;
+  background: rgba(0,245,255,0.04);
+  border: 1px solid rgba(0,245,255,0.15);
+  padding: 20px 24px;
+  display: flex; align-items: center; gap: 14px;
+}
+.avail-dot { width: 8px; height: 8px; background: #00ff88; border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
+.avail-txt {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+}
+.avail-txt strong { color: #00ff88; }
+
+.contact-form { display: flex; flex-direction: column; gap: 18px; }
+.f-grp { display: flex; flex-direction: column; gap: 8px; }
+.f-grp label {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--muted);
+}
+.f-grp input,
+.f-grp textarea,
+.f-grp select {
+  background: var(--lift);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 18px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  outline: none; resize: none; cursor: none;
+  transition: border-color .2s, box-shadow .2s;
+  appearance: none;
+}
+.f-grp input:focus,
+.f-grp textarea:focus,
+.f-grp select:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0,245,255,0.08);
+}
+.f-grp select option { background: var(--lift); }
+.f-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.btn-send {
+  background: transparent;
+  border: 1px solid var(--magenta);
+  color: var(--magenta);
+  padding: 18px 44px;
+  font-family: 'Orbitron', monospace;
+  font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: none; align-self: flex-start;
+  position: relative; overflow: hidden;
+  transition: color .3s, box-shadow .3s;
+}
+.btn-send::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--magenta);
+  transform: translateX(-105%);
+  transition: transform .4s cubic-bezier(.23,1,.32,1);
+}
+.btn-send:hover { color: var(--bg); box-shadow: 0 0 40px var(--glow-m); }
+.btn-send:hover::before { transform: translateX(0); }
+.btn-send-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 14px; }
+
+/* ── FOOTER ── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 40px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.f-logo {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px; letter-spacing: 4px;
+  font-weight: 900;
+}
+.f-logo span { color: var(--cyan); }
+.f-copy {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+}
+.f-links { display: flex; gap: 28px; }
+.f-links a {
+  font-family: 'Orbitron', monospace;
+  font-size: 8px; letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  transition: color .2s;
+}
+.f-links a:hover { color: var(--cyan); }
+
+/* ── ANIMATIONS ── */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeUp { from { opacity:0; transform: translateY(40px); } to { opacity:1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes float3d { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-12px) rotate(2deg); } }
+@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.8); } }
+@keyframes scan { 0% { top:-1px; } 100% { top:101%; } }
+@keyframes gridScroll { from { background-position: 0 0; } to { background-position: 0 60px; } }
+@keyframes scrollPulse { 0%,100% { opacity:.4; } 50% { opacity:1; } }
+
+.reveal { opacity:0; transform:translateY(40px); transition: opacity .9s ease, transform .9s cubic-bezier(.23,1,.32,1); }
+.reveal.in { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-pct" id="loader-pct">0</div>
+  <div class="loader-ring"></div>
+  <div class="loader-text">Initialising Experience</div>
+</div>
+
+<div id="cur"></div>
+<div id="cur-ring"></div>
+
+<!-- Three.js Canvas -->
+<canvas id="three-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">&lt;bitbyte/&gt;</a>
+  <ul class="nav-links">
+    <li><a href="#features">Services</a></li>
+    <li><a href="#gallery">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Start a Project</a>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <p class="hero-tag">Motion Design & Animation Director</p>
+  <h1 class="hero-h1">
+    <span class="stroke">MOTION</span>
+    <span class="fill">IS THE</span>
+    <span class="cyan">LANGUAGE</span>
+  </h1>
+  <div class="hero-bottom">
+    <p class="hero-desc">I craft <strong>kinetic experiences</strong> that move people — literally. Brand films, UI animation, 3D motion and immersive digital worlds that <strong>refuse to be ignored</strong>.</p>
+    <div class="hero-actions">
+      <a href="#gallery" class="btn-glow"><span>View Showreel</span></a>
+      <a href="#about" class="btn-ghost">About Me →</a>
+    </div>
+  </div>
+  <div class="scroll-ind"><div class="scroll-bar"></div>Scroll</div>
+  <div class="live-badge"><span class="live-dot"></span>Available for Projects</div>
+</section>
+
+<!-- REEL -->
+<section id="reel">
+  <p class="reel-label">— 2024 Showreel —</p>
+  <div class="reel-screen">
+    <div class="reel-grid"></div>
+    <div class="scan-line"></div>
+    <span class="reel-corner rc-tl">REC ●</span>
+    <span class="reel-corner rc-tr">4K · 60FPS</span>
+    <span class="reel-corner rc-bl">KAI.MOTION</span>
+    <span class="reel-corner rc-br">2024</span>
+    <div class="reel-center">
+      <div class="reel-icon">▶</div>
+      <p class="reel-play">Play Showreel</p>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="m-item">Motion Design <span class="m-sep"></span></span>
+    <span class="m-item">3D Animation <span class="m-sep"></span></span>
+    <span class="m-item">UI Motion <span class="m-sep"></span></span>
+    <span class="m-item">Brand Films <span class="m-sep"></span></span>
+    <span class="m-item">Visual Effects <span class="m-sep"></span></span>
+    <span class="m-item">WebGL Experiences <span class="m-sep"></span></span>
+    <span class="m-item">Kinetic Typography <span class="m-sep"></span></span>
+    <span class="m-item">Motion Design <span class="m-sep"></span></span>
+    <span class="m-item">3D Animation <span class="m-sep"></span></span>
+    <span class="m-item">UI Motion <span class="m-sep"></span></span>
+    <span class="m-item">Brand Films <span class="m-sep"></span></span>
+    <span class="m-item">Visual Effects <span class="m-sep"></span></span>
+    <span class="m-item">WebGL Experiences <span class="m-sep"></span></span>
+    <span class="m-item">Kinetic Typography <span class="m-sep"></span></span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="feat-header reveal">
+    <div>
+      <h2 class="feat-title">WHAT I<br><span class="c">CREATE</span><br><span class="m">FOR YOU</span></h2>
+    </div>
+    <p class="feat-right-text">Every frame is a decision. Every transition is intentional. I don't just make things move — I make motion <strong>mean something</strong>. From concept to final render, your story moves.</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card reveal">
+      <div class="svc-glow"></div>
+      <span class="svc-num">01 ——</span>
+      <span class="svc-icon">🎬</span>
+      <h3 class="svc-name">Brand Films</h3>
+      <p class="svc-text">Cinematic brand stories told through motion. From 15-second social cuts to full 2-minute hero films that anchor your identity in culture.</p>
+      <div class="svc-tags"><span class="svc-tag">Cinema 4D</span><span class="svc-tag">After Effects</span><span class="svc-tag">DaVinci</span></div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:.1s;">
+      <div class="svc-glow" style="background:var(--glow-m);"></div>
+      <span class="svc-num">02 ——</span>
+      <span class="svc-icon">✨</span>
+      <h3 class="svc-name">UI Animation</h3>
+      <p class="svc-text">Micro-interactions and transitions that make interfaces feel alive. Prototype-ready motion specs handed off directly to engineering teams.</p>
+      <div class="svc-tags"><span class="svc-tag">Framer</span><span class="svc-tag">ProtoPie</span><span class="svc-tag">Lottie</span></div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:.2s;">
+      <div class="svc-glow"></div>
+      <span class="svc-num">03 ——</span>
+      <span class="svc-icon">🌐</span>
+      <h3 class="svc-name">WebGL Worlds</h3>
+      <p class="svc-text">Immersive browser-native 3D experiences. Interactive product showcases, abstract data visualisations, full-screen landing experiences.</p>
+      <div class="svc-tags"><span class="svc-tag">Three.js</span><span class="svc-tag">GLSL</span><span class="svc-tag">WebGPU</span></div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:.1s;">
+      <div class="svc-glow" style="background:rgba(255,204,0,0.12);"></div>
+      <span class="svc-num">04 ——</span>
+      <span class="svc-icon">🔤</span>
+      <h3 class="svc-name">Kinetic Typography</h3>
+      <p class="svc-text">Words that breathe, punch, and dance. Motion-led title sequences, lyric videos, and animated manifestos that stick in the mind.</p>
+      <div class="svc-tags"><span class="svc-tag">After Effects</span><span class="svc-tag">Expression</span></div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:.2s;">
+      <div class="svc-glow"></div>
+      <span class="svc-num">05 ——</span>
+      <span class="svc-icon">🎮</span>
+      <h3 class="svc-name">3D Animation</h3>
+      <p class="svc-text">Product visualisations, abstract 3D motion loops, and character animation sequences. I model, rig, texture, light, and render end-to-end.</p>
+      <div class="svc-tags"><span class="svc-tag">Blender</span><span class="svc-tag">Cinema 4D</span><span class="svc-tag">Redshift</span></div>
+    </div>
+    <div class="svc-card reveal" style="transition-delay:.3s;">
+      <div class="svc-glow" style="background:var(--glow-m);"></div>
+      <span class="svc-num">06 ——</span>
+      <span class="svc-icon">🎭</span>
+      <h3 class="svc-name">Motion Direction</h3>
+      <p class="svc-text">Senior creative direction for in-house and agency teams. Motion audits, style guides, and workshops to elevate your team's output.</p>
+      <div class="svc-tags"><span class="svc-tag">Consulting</span><span class="svc-tag">Workshops</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="gal-header reveal">
+    <h2 class="gal-title">SELECTED<br><span>WORK</span></h2>
+    <p class="gal-subtitle">8 years · 120+ projects · global clients</p>
+  </div>
+  <div class="works-grid reveal">
+    <div class="w-item wi1" style="background:linear-gradient(135deg,#050520,#0a0a30);">
+      <div class="w-bg">🌌</div>
+      <span class="w-num">001</span>
+      <div class="w-overlay">
+        <span class="w-tag">Brand Film · Nike</span>
+        <p class="w-name">FUTURE FORWARD</p>
+        <a href="#" class="w-link">View Project →</a>
+      </div>
+    </div>
+    <div class="w-item wi2" style="background:linear-gradient(135deg,#150010,#2a0020);">
+      <div class="w-bg" style="font-size:44px;">🔮</div>
+      <span class="w-num">002</span>
+      <div class="w-overlay">
+        <span class="w-tag">WebGL · Apple</span>
+        <p class="w-name">SPATIAL AUDIO</p>
+        <a href="#" class="w-link">View →</a>
+      </div>
+    </div>
+    <div class="w-item wi3" style="background:linear-gradient(135deg,#001515,#002525);">
+      <div class="w-bg" style="font-size:64px;">⚡</div>
+      <span class="w-num">003</span>
+      <div class="w-overlay">
+        <span class="w-tag">UI Motion · Tesla</span>
+        <p class="w-name">ENERGY OS</p>
+        <a href="#" class="w-link">View Case →</a>
+      </div>
+    </div>
+    <div class="w-item wi4" style="background:linear-gradient(135deg,#100510,#201020);">
+      <div class="w-bg" style="font-size:44px;">🎵</div>
+      <span class="w-num">004</span>
+      <div class="w-overlay">
+        <span class="w-tag">Kinetic Type</span>
+        <p class="w-name">SOUNDWAVE</p>
+        <a href="#" class="w-link">View →</a>
+      </div>
+    </div>
+    <div class="w-item wi5" style="background:linear-gradient(135deg,#050a15,#0a1525);">
+      <div class="w-bg" style="font-size:44px;">🛸</div>
+      <span class="w-num">005</span>
+      <div class="w-overlay">
+        <span class="w-tag">3D · Concept</span>
+        <p class="w-name">ORBIT</p>
+        <a href="#" class="w-link">→</a>
+      </div>
+    </div>
+    <div class="w-item wi6" style="background:linear-gradient(135deg,#150800,#251500);">
+      <div class="w-bg" style="font-size:60px;">🔥</div>
+      <span class="w-num">006</span>
+      <div class="w-overlay">
+        <span class="w-tag">Brand Film · Adidas</span>
+        <p class="w-name">IGNITE</p>
+        <a href="#" class="w-link">View Case →</a>
+      </div>
+    </div>
+    <div class="w-item wi7" style="background:linear-gradient(135deg,#080020,#100035);">
+      <div class="w-bg" style="font-size:44px;">🌀</div>
+      <span class="w-num">007</span>
+      <div class="w-overlay">
+        <span class="w-tag">WebGL · Google</span>
+        <p class="w-name">DATA VORTEX</p>
+        <a href="#" class="w-link">View →</a>
+      </div>
+    </div>
+    <div class="w-item wi8" style="background:linear-gradient(135deg,#001200,#002500);">
+      <div class="w-bg" style="font-size:44px;">🧬</div>
+      <span class="w-num">008</span>
+      <div class="w-overlay">
+        <span class="w-tag">3D · Biotech</span>
+        <p class="w-name">GENESIS</p>
+        <a href="#" class="w-link">→</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-3d-wrap reveal">
+    <canvas id="sphere-canvas" width="500" height="500"></canvas>
+    <div class="about-card ac1">
+      <span class="ac-val">120+</span>
+      <span class="ac-lbl">Projects</span>
+    </div>
+    <div class="about-card ac2">
+      <span class="ac-val">8YR</span>
+      <span class="ac-lbl">Experience</span>
+    </div>
+    <div class="about-card ac3">
+      <span class="ac-val">40+</span>
+      <span class="ac-lbl">Clients</span>
+    </div>
+  </div>
+  <div class="about-content reveal" style="transition-delay:.15s;">
+    <p class="sec-label">About</p>
+    <h2 class="about-name">KAI CHEN</h2>
+    <span class="about-role">Motion Design Director</span>
+    <p class="about-bio">
+      I'm a <strong>motion designer and animation director</strong> based in Tokyo. I live inside After Effects, dream in keyframes, and wake up thinking about easing curves.<br><br>
+      For 8 years I've turned abstract ideas into <strong>kinetic reality</strong> for brands like Nike, Apple, and Google. Every project starts with a feeling — and ends with something that gives that feeling to everyone who sees it.
+    </p>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <span class="skill-nm">After Effects</span>
+        <div class="skill-bar2"><div class="skill-fill2" data-w="97"></div></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-nm">Cinema 4D</span>
+        <div class="skill-bar2"><div class="skill-fill2" data-w="88"></div></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-nm">Three.js / WebGL</span>
+        <div class="skill-bar2"><div class="skill-fill2" data-w="82"></div></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-nm">Blender</span>
+        <div class="skill-bar2"><div class="skill-fill2" data-w="79"></div></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-nm">ProtoPie / Framer</span>
+        <div class="skill-bar2"><div class="skill-fill2" data-w="91"></div></div>
+      </div>
+      <div class="skill-item">
+        <span class="skill-nm">GLSL Shaders</span>
+        <div class="skill-bar2"><div class="skill-fill2" data-w="70"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <p class="sec-label">Contact</p>
+      <h2 class="contact-title">LET'S<br>CREATE<br><span class="c">MAGIC</span></h2>
+      <p class="contact-sub">Have a project that needs to move? Let's talk. I take on a limited number of projects each quarter to ensure every client gets my full attention.</p>
+      <div class="c-info">
+        <div class="c-row">
+          <div class="c-ico">📧</div>
+          <div><span class="c-lbl">Email</span><span class="c-val">hello@kaimotion.studio</span></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ico">📍</div>
+          <div><span class="c-lbl">Base</span><span class="c-val">Tokyo · Remote Worldwide</span></div>
+        </div>
+        <div class="c-row">
+          <div class="c-ico">⏱️</div>
+          <div><span class="c-lbl">Response</span><span class="c-val">Within 24 hours</span></div>
+        </div>
+      </div>
+      <div class="avail">
+        <div class="avail-dot"></div>
+        <p class="avail-txt"><strong>Open to projects</strong> from Q3 2026 onward</p>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay:.15s;">
+      <div class="contact-form">
+        <div class="f-row">
+          <div class="f-grp"><label>First Name</label><input type="text" placeholder="Jane"></div>
+          <div class="f-grp"><label>Last Name</label><input type="text" placeholder="Smith"></div>
+        </div>
+        <div class="f-grp"><label>Email</label><input type="email" placeholder="jane@brand.com"></div>
+        <div class="f-grp">
+          <label>Project Type</label>
+          <select>
+            <option>Brand Film</option>
+            <option>UI Animation</option>
+            <option>WebGL Experience</option>
+            <option>3D Animation</option>
+            <option>Motion Direction</option>
+          </select>
+        </div>
+        <div class="f-grp">
+          <label>Budget</label>
+          <select>
+            <option>$5k – $15k</option>
+            <option>$15k – $40k</option>
+            <option>$40k – $80k</option>
+            <option>$80k+</option>
+          </select>
+        </div>
+        <div class="f-grp"><label>Tell Me Everything</label><textarea rows="5" placeholder="Project vision, timeline, deliverables, references…"></textarea></div>
+        <button class="btn-send"><div class="btn-send-inner">Transmit Message <span id="sarrow">→</span></div></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">KAI<span>.</span>MOTION</div>
+  <p class="f-copy">© 2026 — Motion that matters</p>
+  <div class="f-links">
+    <a href="#">Vimeo</a>
+    <a href="#">Instagram</a>
+    <a href="#">Behance</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+// ── LOADER ──
+let pct = 0;
+const pctEl = document.getElementById('loader-pct');
+const loaderEl = document.getElementById('loader');
+const inc = setInterval(() => {
+  pct += Math.floor(Math.random() * 12) + 3;
+  if (pct >= 100) { pct = 100; clearInterval(inc); setTimeout(() => loaderEl.classList.add('hide'), 400); }
+  pctEl.textContent = pct;
+}, 80);
+
+// ── CURSOR ──
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let mx=0,my=0,tx=0,ty=0;
+document.addEventListener('mousemove', e => {
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=(mx-3)+'px'; cur.style.top=(my-3)+'px';
+});
+(function loop(){ tx+=(mx-tx)*.1; ty+=(my-ty)*.1; ring.style.left=(tx-22)+'px'; ring.style.top=(ty-22)+'px'; requestAnimationFrame(loop); })();
+document.querySelectorAll('a,button,.w-item,.svc-card').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-big'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-big'));
+});
+
+// ── THREE.JS BACKGROUND SCENE ──
+(function initThree() {
+  const canvas = document.getElementById('three-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 100);
+  camera.position.z = 6;
+
+  // Torus knot — hero centerpiece
+  const tkGeo = new THREE.TorusKnotGeometry(1.4, 0.35, 200, 32, 2, 3);
+  const tkMat = new THREE.MeshBasicMaterial({ color: 0x00f5ff, wireframe: true, opacity: 0.12, transparent: true });
+  const tk = new THREE.Mesh(tkGeo, tkMat);
+  tk.position.set(3.5, 0, -2);
+  scene.add(tk);
+
+  // Icosahedron
+  const icoGeo = new THREE.IcosahedronGeometry(0.8, 1);
+  const icoMat = new THREE.MeshBasicMaterial({ color: 0xff00aa, wireframe: true, opacity: 0.1, transparent: true });
+  const ico = new THREE.Mesh(icoGeo, icoMat);
+  ico.position.set(-4, 2, -3);
+  scene.add(ico);
+
+  // Floating particles
+  const pCount = 300;
+  const pGeo = new THREE.BufferGeometry();
+  const pPos = new Float32Array(pCount * 3);
+  for (let i = 0; i < pCount; i++) {
+    pPos[i*3]   = (Math.random()-0.5)*20;
+    pPos[i*3+1] = (Math.random()-0.5)*20;
+    pPos[i*3+2] = (Math.random()-0.5)*10;
+  }
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+  const pMat = new THREE.PointsMaterial({ color: 0x00f5ff, size: 0.04, opacity: 0.5, transparent: true });
+  const pts = new THREE.Points(pGeo, pMat);
+  scene.add(pts);
+
+  // Grid plane
+  const gridGeo = new THREE.PlaneGeometry(30, 30, 30, 30);
+  const gridMat = new THREE.MeshBasicMaterial({ color: 0x0a0a30, wireframe: true, opacity: 0.06, transparent: true });
+  const grid = new THREE.Mesh(gridGeo, gridMat);
+  grid.rotation.x = -Math.PI / 3;
+  grid.position.y = -4;
+  scene.add(grid);
+
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  let t = 0;
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', e => {
+    mouseX = (e.clientX/window.innerWidth - .5) * 2;
+    mouseY = -(e.clientY/window.innerHeight - .5) * 2;
+  });
+
+  (function animate() {
+    t += 0.005;
+    tk.rotation.x = t * 0.4;
+    tk.rotation.y = t * 0.6;
+    ico.rotation.x = t * 0.5;
+    ico.rotation.y = t * 0.3;
+    pts.rotation.y = t * 0.04;
+    camera.position.x += (mouseX * 0.3 - camera.position.x) * 0.05;
+    camera.position.y += (mouseY * 0.2 - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  })();
+})();
+
+// ── ABOUT SPHERE (mini canvas) ──
+(function initSphere() {
+  const canvas = document.getElementById('sphere-canvas');
+  if (!canvas) return;
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(500, 500);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 3.5;
+
+  // Main sphere wireframe
+  const sGeo = new THREE.SphereGeometry(1.4, 24, 24);
+  const sMat = new THREE.MeshBasicMaterial({ color: 0x00f5ff, wireframe: true, opacity: 0.2, transparent: true });
+  const sphere = new THREE.Mesh(sGeo, sMat);
+  scene.add(sphere);
+
+  // Inner sphere
+  const s2Geo = new THREE.SphereGeometry(0.9, 16, 16);
+  const s2Mat = new THREE.MeshBasicMaterial({ color: 0xff00aa, wireframe: true, opacity: 0.15, transparent: true });
+  const sphere2 = new THREE.Mesh(s2Geo, s2Mat);
+  scene.add(sphere2);
+
+  // Orbiting ring
+  const rGeo = new THREE.TorusGeometry(1.8, 0.008, 8, 80);
+  const rMat = new THREE.MeshBasicMaterial({ color: 0xffcc00, opacity: 0.4, transparent: true });
+  const ring3d = new THREE.Mesh(rGeo, rMat);
+  ring3d.rotation.x = Math.PI / 2.5;
+  scene.add(ring3d);
+
+  // Dot on ring
+  const dotGeo = new THREE.SphereGeometry(0.06, 8, 8);
+  const dotMat = new THREE.MeshBasicMaterial({ color: 0x00f5ff });
+  const dot = new THREE.Mesh(dotGeo, dotMat);
+  scene.add(dot);
+
+  let t2 = 0;
+  (function animate() {
+    t2 += 0.008;
+    sphere.rotation.y = t2 * 0.4;
+    sphere.rotation.x = t2 * 0.15;
+    sphere2.rotation.y = -t2 * 0.5;
+    ring3d.rotation.z = t2 * 0.3;
+    dot.position.x = Math.cos(t2 * 1.5) * 1.8;
+    dot.position.z = Math.sin(t2 * 1.5) * 1.8 * Math.cos(ring3d.rotation.x - Math.PI/2);
+    dot.position.y = Math.sin(t2 * 1.5) * 1.8 * Math.sin(Math.PI/2 - ring3d.rotation.x);
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+  })();
+})();
+
+// ── SCROLL REVEAL ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      e.target.querySelectorAll('.skill-fill2').forEach(b => { b.style.width = b.dataset.w + '%'; });
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(r => obs.observe(r));
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' }); });
+});
+
+// ── SEND BUTTON ──
+document.querySelector('.btn-send')?.addEventListener('click', function(e) {
+  e.preventDefault();
+  const arrow = document.getElementById('sarrow');
+  if (arrow) arrow.textContent = '✓';
+  this.querySelector('.btn-send-inner').innerHTML = 'Transmitted ✓';
+  this.style.borderColor = '#00ff88';
+  this.style.color = '#00ff88';
+  setTimeout(() => {
+    this.querySelector('.btn-send-inner').innerHTML = 'Transmit Message <span id="sarrow">→</span>';
+    this.style.borderColor = ''; this.style.color = '';
+  }, 3000);
+});
+</script>
+</body>
+</html>

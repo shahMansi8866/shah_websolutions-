@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="bitbyte Services - Resume Building, Portfolio Creation, Website Development with gaming-inspired packages. Level up your career and business.">
+    <title>Services | bitbyte</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0891b2;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* ========== navbar ========== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0.9rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo a {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            background: linear-gradient(135deg, #0891b2, #06b6d4, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: 0.2s;
+        }
+        .logo a:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+        .nav-links li a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+        .nav-links li a:hover, .nav-links li a.active {
+            color: #0891b2;
+        }
+        .mobile-menu {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #0f172a;
+        }
+
+        /* section titles */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+            color: #0f172a;
+        }
+        .section-title span {
+            background: linear-gradient(135deg, #0891b2, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* service headers */
+        .service-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .service-header i {
+            font-size: 2.5rem;
+            color: #0891b2;
+            margin-bottom: 0.5rem;
+        }
+        .service-header h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* pricing grid (cards) */
+        .pricing-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .package-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem 1.5rem;
+            flex: 1;
+            min-width: 260px;
+            max-width: 320px;
+            transition: all 0.25s;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .package-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
+        }
+        .package-card.featured {
+            border-top: 4px solid #0891b2;
+            position: relative;
+        }
+        .package-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+        .package-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0891b2;
+            margin: 1rem 0;
+        }
+        .package-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+        .package-features li {
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .package-features i {
+            color: #0891b2;
+            width: 1.2rem;
+        }
+        .btn-primary, .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+            font-size: 0.9rem;
+            background: #0891b2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(8,145,178,0.2);
+        }
+        .btn-primary:hover {
+            background: #0e7490;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(8,145,178,0.25);
+        }
+        .btn-secondary {
+            background: white;
+            color: #0891b2;
+            border: 1.5px solid #0891b2;
+            box-shadow: none;
+        }
+        .btn-secondary:hover {
+            background: #f0f9ff;
+            transform: translateY(-2px);
+        }
+
+        /* features grid for add-ons */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .feature {
+            background: white;
+            border-radius: 1.2rem;
+            padding: 1.8rem;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: 0.2s;
+        }
+        .feature i {
+            font-size: 2.2rem;
+            color: #0891b2;
+            margin-bottom: 1rem;
+        }
+        .feature h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+        }
+        .feature p {
+            color: #0891b2;
+            font-weight: 600;
+        }
+
+        hr {
+            margin: 2rem 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* cta section */
+        .cta {
+            background: linear-gradient(115deg, #eef2ff 0%, #ffffff 100%);
+            border-radius: 2rem;
+            margin: 2rem 0 3rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .cta h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .glow-text {
+            background: linear-gradient(135deg, #0891b2, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .cta p {
+            max-width: 550px;
+            margin: 1rem auto 2rem;
+            color: #334155;
+        }
+
+        /* footer */
+        .footer {
+            background: #f1f5f9;
+            border-top: 1px solid #e2e8f0;
+            padding: 3rem 0 1.5rem;
+            margin-top: 2rem;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .footer-content div h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li, .footer-links li a {
+            color: #475569;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+        .footer-links li a:hover {
+            color: #0891b2;
+        }
+        .footer-links li i {
+            width: 1.4rem;
+            color: #0891b2;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* responsive */
+        @media (max-width: 780px) {
+            .container {
+                padding: 0 20px;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: white;
+                width: 70%;
+                height: auto;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: 0.3s;
+                border-right: 2px solid #0891b2;
+                box-shadow: 4px 8px 20px rgba(0,0,0,0.05);
+                border-radius: 0 20px 20px 0;
+                align-items: flex-start;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .section-title {
+                font-size: 1.9rem;
+            }
+            .service-header h2 {
+                font-size: 1.6rem;
+            }
+            .pricing-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .package-card {
+                max-width: 100%;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+
+        .faq {
+    max-width: 800px;
+    margin: 2rem auto 0;
+}
+
+.faq-item {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #0f172a;
+}
+
+.faq-answer {
+    display: none;
+    padding: 0 1rem 1rem;
+    color: #475569;
+}
+
+.faq-item.active .faq-answer {
+    display: block;
+}
+    </style>
+</head>
+<body>
+
+<header class="navbar">
+    <div class="container nav-container">
+        <div class="logo">
+            <a href="index.html">&lt;bitbyte/&gt;</a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="servise.html" class="active">SERVICES</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="internships.html">INTERNSHIPS</a></li>
+            <li><a href="blog.html">BLOG</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Hero intro -->
+    <section style="padding: 120px 0 40px;">
+        <div class="container">
+            <h1 class="section-title" style="margin-bottom: 1rem;">SERVICE <span>PACKAGES</span></h1>
+            <p style="text-align: center; font-size: 1.2rem; color: #475569; max-width: 700px; margin: 0 auto;">Choose your loadout. Each package is designed to give you maximum impact with zero bugs.</p>
+        </div>
+    </section>
+
+    <!-- Resume Building -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+            <div class="service-header">
+                <i class="fas fa-file-alt"></i>
+                <h2>📄 RESUME BUILDING</h2>
+                <p style="color: #475569;">Unlock job interviews with ATS-optimized resumes</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="package-card">
+                    <h3>LEVEL 1 - BASIC</h3>
+                    <div class="package-price">₹399</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> Professional Resume Design</li>
+                        <li><i class="fas fa-check"></i> ATS-Friendly Formatting</li>
+                        <li><i class="fas fa-check"></i> PDF Delivery</li>
+                        <li><i class="fas fa-check"></i> 1 Round of Revisions</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+                <div class="package-card featured">
+                    <h3>LEVEL 2 - PRO</h3>
+                    <div class="package-price">₹599</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> Professional Resume Design</li>
+                        <li><i class="fas fa-check"></i> ATS-Friendly Formatting</li>
+                        <li><i class="fas fa-check"></i> Cover Letter Included</li>
+                        <li><i class="fas fa-check"></i> LinkedIn Profile Tips</li>
+                        <li><i class="fas fa-check"></i> PDF + Word File</li>
+                        <li><i class="fas fa-check"></i> 2 Rounds of Revisions</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+                <div class="package-card">
+                    <h3>LEVEL 3 - LEGENDARY</h3>
+                    <div class="package-price">₹899</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> Professional Resume Design</li>
+                        <li><i class="fas fa-check"></i> ATS-Friendly Formatting</li>
+                        <li><i class="fas fa-check"></i> Cover Letter Included</li>
+                        <li><i class="fas fa-check"></i> LinkedIn Profile Optimization</li>
+                        <li><i class="fas fa-check"></i> Unlimited Revisions</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- Portfolio Creation -->
+    <section class="section">
+        <div class="container">
+            <div class="service-header">
+                <i class="fas fa-briefcase"></i>
+                <h2>🎨 PORTFOLIO CREATION</h2>
+                <p style="color: #475569;">Showcase your achievements like a final boss</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="package-card">
+                    <h3>LEVEL 1 - STARTER</h3>
+                    <div class="package-price">₹499</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> 1-Page Portfolio</li>
+                        <li><i class="fas fa-check"></i> Up to 5 Projects</li>
+                        <li><i class="fas fa-check"></i> Contact Form</li>
+                        <li><i class="fas fa-check"></i> Mobile Responsive</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+                <div class="package-card featured">
+                    <h3>LEVEL 2 - PRO</h3>
+                    <div class="package-price">₹999</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> 4-Page Portfolio</li>
+                        <li><i class="fas fa-check"></i> Unlimited Projects</li>
+                        <li><i class="fas fa-check"></i> About Page + Contact Form</li>
+                        <li><i class="fas fa-check"></i> Blog Option</li>
+                        <li><i class="fas fa-check"></i> GitHub Upload</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+                <div class="package-card">
+                    <h3>LEVEL 3 - LEGENDARY</h3>
+                    <div class="package-price">₹1499</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> Fully Custom Design</li>
+                        <li><i class="fas fa-check"></i> Unlimited Projects</li>
+                        <li><i class="fas fa-check"></i> Content Guidance</li>
+                        <li><i class="fas fa-check"></i> 30-Day Support</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr>
+
+    <!-- Website Development -->
+    <section class="section">
+        <div class="container">
+            <div class="service-header">
+                <i class="fas fa-laptop-code"></i>
+                <h2>💻 WEBSITE DEVELOPMENT</h2>
+                <p style="color: #475569;">Build your digital empire from the ground up</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="package-card">
+                    <h3>LEVEL 1 - STARTER</h3>
+                    <div class="package-price">₹12,999</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> 1-3 Page Website</li>
+                        <li><i class="fas fa-check"></i> Responsive Design</li>
+                        <li><i class="fas fa-check"></i> Contact Form</li>
+                        <li><i class="fas fa-check"></i> Additional charges for custom domain</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+                <div class="package-card featured">
+                    <h3>LEVEL 2 - PRO</h3>
+                    <div class="package-price">₹19,999</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> 6-10 Page Website</li>
+                        <li><i class="fas fa-check"></i> 30-Day Support</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+                <div class="package-card">
+                    <h3>LEVEL 3 - E-COMMERCE</h3>
+                    <div class="package-price">Based on requirements</div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check"></i> Online Store Setup</li>
+                        <li><i class="fas fa-check"></i> Product Pages</li>
+                        <li><i class="fas fa-check"></i> Payment Integration</li>
+                        <li><i class="fas fa-check"></i> Inventory Management</li>
+                    </ul>
+                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="margin-bottom: 1rem;">Need a custom build? Let's create something unique together.</p>
+                <a href="contact.html" class="btn-secondary">🎮 REQUEST CUSTOM BUILD</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Power-Up Add-Ons -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">POWER-UP <span>ADD-ONS</span></h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <i class="fas fa-paint-brush"></i>
+                    <h4>LOGO DESIGN</h4>
+                    <p>₹299</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-edit"></i>
+                    <h4>CONTENT WRITING</h4>
+                    <p>₹899 per page</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>MAINTENANCE PLAN</h4>
+                    <p>₹899/month</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <section class="section">
+    <div class="container">
+        <h2 class="section-title">WHO IS THIS <span>FOR?</span></h2>
+
+        <div class="features-grid">
+            <div class="feature">
+                <i class="fas fa-user-graduate"></i>
+                <h4>STUDENTS / FRESHERS</h4>
+                <p>Start strong with a professional resume & portfolio</p>
+            </div>
+
+            <div class="feature">
+                <i class="fas fa-briefcase"></i>
+                <h4>JOB SWITCHERS</h4>
+                <p>Upgrade your profile to land better opportunities</p>
+            </div>
+
+            <div class="feature">
+                <i class="fas fa-laptop"></i>
+                <h4>FREELANCERS</h4>
+                <p>Showcase your work and attract more clients</p>
+            </div>
+
+            <div class="feature">
+                <i class="fas fa-store"></i>
+                <h4>SMALL BUSINESS OWNERS</h4>
+                <p>Build your online presence and grow your brand</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+</main>
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">FREQUENTLY ASKED <span>QUESTIONS</span></h2>
+
+        <div class="faq">
+            <div class="faq-item">
+                <button class="faq-question">How long does delivery take?</button>
+                <div class="faq-answer">
+                    <p>Delivery usually takes 2–5 days depending on the package selected.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Do you provide revisions?</button>
+                <div class="faq-answer">
+                    <p>Yes, all packages include revisions. Higher packages include more revision rounds.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Is payment upfront?</button>
+                <div class="faq-answer">
+                    <p>Yes, we require upfront payment to begin work on your project.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">Can I customize packages?</button>
+                <div class="faq-answer">
+                    <p>Absolutely! Contact us and we’ll create a custom solution for your needs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div>
+                <h3>&lt;bitbyte/&gt;</h3>
+                <p>Build. Innovate. Dominate.</p>
+                <p style="margin-top: 0.5rem; color: #475569;">Game-changing IT services for the modern professional.</p>
+            </div>
+            <div>
+                <h3>QUICK LINKS</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>SERVICES</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html">Resume Building</a></li>
+                    <li><a href="services.html">Portfolio Creation</a></li>
+                    <li><a href="services.html">Website Development</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>CONTACT</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> bitbyte.tech01@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +91 8866693020</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 bitbyte. All rights reserved. | Game On! Level Up Your Future</p>
+            <p style="margin-top: 0.5rem; color: #64748b;">Start your business with us!</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu toggle
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+</script>
+</body>
+</html>

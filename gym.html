@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iron Forge | Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        :root {
+            --primary: #e63946;
+            --primary-dark: #c1121f;
+            --dark: #1e1e2a;
+            --light: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--dark);
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-left: 1rem;
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-top: 70px;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 40px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Section */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        /* Classes Grid */
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .class-card {
+            background: var(--light);
+            border-radius: 12px;
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .class-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .class-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .class-card h3 {
+            margin: 1rem 0 0.5rem;
+        }
+
+        /* Trainers */
+        .trainers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .trainer-card {
+            text-align: center;
+        }
+
+        .trainer-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid var(--primary);
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .price-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .price-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .price-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo"><a href="#">Iron <span>Forge</span></a></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#classes">Classes</a></li>
+                <li><a href="#trainers">Trainers</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <a href="index.html" class="back-link">&lt;bitbyte/&gt;</a>
+            <div class="mobile-menu"><i class="fas fa-bars"></i></div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="container hero-content">
+            <h1>Forge Your Best Self</h1>
+            <p>Elite training, community, and results.</p>
+            <a href="#contact" class="btn">Start Today</a>
+        </div>
+    </section>
+
+    <section id="classes" class="section">
+        <div class="container">
+            <h2 class="section-title">Our <span>Classes</span></h2>
+            <div class="classes-grid">
+                <div class="class-card">
+                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="HIIT">
+                    <h3>HIIT</h3>
+                    <p>High intensity interval training</p>
+                </div>
+                <div class="class-card">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Yoga">
+                    <h3>Yoga</h3>
+                    <p>Flexibility & mindfulness</p>
+                </div>
+                <div class="class-card">
+                    <img src="https://images.unsplash.com/photo-1534258936925-c58bed479fcb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Strength">
+                    <h3>Strength</h3>
+                    <p>Build muscle & power</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="trainers" class="section" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title">Elite <span>Coaches</span></h2>
+            <div class="trainers-grid">
+                <div class="trainer-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Coach Mike">
+                    <h3>Mike Johnson</h3>
+                    <p>Strength & Conditioning</p>
+                </div>
+                <div class="trainer-card">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Coach Sarah">
+                    <h3>Sarah Lee</h3>
+                    <p>HIIT & Functional</p>
+                </div>
+                <div class="trainer-card">
+                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Coach David">
+                    <h3>David Chen</h3>
+                    <p>Yoga & Mobility</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section">
+        <div class="container">
+            <h2 class="section-title">Membership <span>Plans</span></h2>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h3>Basic</h3>
+                    <div class="price">₹1,999<span>/mo</span></div>
+                    <ul>
+                        <li>Gym access (off-peak)</li>
+                        <li>Locker room</li>
+                        <li>Free parking</li>
+                    </ul>
+                    <a href="#contact" class="btn">Join Now</a>
+                </div>
+                <div class="price-card">
+                    <h3>Pro</h3>
+                    <div class="price">₹3,499<span>/mo</span></div>
+                    <ul>
+                        <li>Full gym access</li>
+                        <li>Group classes</li>
+                        <li>1 personal training session</li>
+                    </ul>
+                    <a href="#contact" class="btn">Join Now</a>
+                </div>
+                <div class="price-card">
+                    <h3>Elite</h3>
+                    <div class="price">₹5,999<span>/mo</span></div>
+                    <ul>
+                        <li>Everything in Pro</li>
+                        <li>Unlimited PT sessions</li>
+                        <li>Nutrition plan</li>
+                    </ul>
+                    <a href="#contact" class="btn">Join Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section" style="background: var(--light);">
+        <div class="container">
+            <h2 class="section-title">Get <span>In Touch</span></h2>
+            <div class="contact-grid">
+                <div class="contact-form">
+                    <input type="text" placeholder="Your Name">
+                    <input type="email" placeholder="Email">
+                    <textarea rows="5" placeholder="Message"></textarea>
+                    <button class="btn">Send Message</button>
+                </div>
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Fitness Ave, Bangalore</p>
+                    <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+                    <p><i class="fas fa-envelope"></i> info@ironforge.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Iron Forge. No pain, no gain.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelector('.mobile-menu').addEventListener('click', () => {
+            const nav = document.querySelector('.nav-links');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                nav.style.flexDirection = 'column';
+                nav.style.position = 'absolute';
+                nav.style.top = '70px';
+                nav.style.left = '0';
+                nav.style.width = '100%';
+                nav.style.backgroundColor = '#1e1e2a';
+                nav.style.padding = '1rem';
+            }
+        });
+    </script>
+</body>
+</html>

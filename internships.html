@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Internships | bitbyte</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f0f6ff;
+      --white: #ffffff;
+      --accent: #667eea;
+      --accent2: #764ba2;
+      --accent-light: #eef2ff;
+      --border: #c7d8f8;
+      --text: #1a1a2e;
+      --muted: #5a6a8a;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --shadow: 0 4px 24px rgba(102,126,234,0.10);
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 0 6%; height: 68px; background: var(--white); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(102,126,234,0.08); }
+    .logo { font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.76rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; padding-bottom: 4px; border-bottom: 2px solid transparent; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    .hero { text-align: center; padding: 64px 6% 48px; background: linear-gradient(160deg, #ffffff 0%, #deeaff 100%); border-bottom: 2px solid var(--border); }
+    .badge { display: inline-block; background: rgba(34,197,94,0.1); border: 1.5px solid rgba(34,197,94,0.3); color: var(--green); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 16px; border-radius: 20px; margin-bottom: 18px; }
+    h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.7rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.1; margin-bottom: 12px; }
+    h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: var(--muted); font-size: 1rem; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+
+    .stats-bar { display: flex; justify-content: center; gap: 0; background: var(--white); border-bottom: 2px solid var(--border); flex-wrap: wrap; }
+    .stat { text-align: center; padding: 28px 48px; border-right: 1.5px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; margin-bottom: 4px; }
+    .stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 6%; }
+    .sec { padding: 56px 0 0; }
+    .sec-head { margin-bottom: 32px; }
+    .sbadge { display: inline-block; background: var(--accent-light); border: 1.5px solid var(--border); color: var(--accent); font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border-radius: 4px; margin-bottom: 10px; }
+    .sec-head h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 900; }
+    .sec-head p { color: var(--muted); margin-top: 6px; font-size: 0.92rem; line-height: 1.6; }
+
+    /* PERKS */
+    .perks { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; margin-bottom: 56px; }
+    .perk { background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 26px 22px; box-shadow: var(--shadow); transition: border-color 0.3s; }
+    .perk:hover { border-color: var(--accent); }
+    .perk-icon { font-size: 1.8rem; margin-bottom: 12px; display: block; }
+    .perk h3 { font-size: 0.97rem; font-weight: 700; margin-bottom: 7px; }
+    .perk p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
+
+    /* ROLES */
+    .roles { display: flex; flex-direction: column; gap: 16px; margin-bottom: 56px; }
+    .role {
+      background: var(--white); border: 2px solid var(--border); border-radius: 14px;
+      padding: 24px 28px; display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap; box-shadow: var(--shadow); transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .role:hover { border-color: var(--accent); box-shadow: 0 6px 30px rgba(102,126,234,0.14); }
+    .role-left { display: flex; align-items: center; gap: 18px; }
+    .ricon { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .ri1 { background: linear-gradient(135deg, #d4e4ff, #b8caff); }
+    .ri2 { background: linear-gradient(135deg, #e8d4ff, #d4b3f0); }
+    .ri3 { background: linear-gradient(135deg, #d4f0e8, #b3e0d0); }
+    .ri4 { background: linear-gradient(135deg, #ffd4e8, #ffb3cf); }
+    .ri5 { background: linear-gradient(135deg, #fff3d4, #ffe0b3); }
+    .rinfo h3 { font-size: 1rem; font-weight: 700; margin-bottom: 7px; }
+    .rtags { display: flex; gap: 7px; flex-wrap: wrap; }
+    .rtag { background: var(--accent-light); border: 1px solid var(--border); color: var(--muted); font-size: 0.68rem; font-weight: 600; padding: 3px 9px; border-radius: 4px; }
+    .open-b { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--green); font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; }
+    .soon-b { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3); color: var(--amber); font-size: 0.68rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; }
+    .apply-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; font-size: 0.8rem; font-weight: 700; padding: 10px 22px;
+      border-radius: 8px; text-decoration: none; letter-spacing: 0.5px;
+      transition: opacity 0.2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .apply-btn:hover { opacity: 0.85; }
+    .apply-btn.dim { background: var(--accent-light); color: var(--muted); pointer-events: none; }
+
+    /* PROCESS */
+    .process { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; margin-bottom: 56px; border: 2px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow); }
+    .pstep { background: var(--white); padding: 28px 20px; text-align: center; border-right: 1.5px solid var(--border); }
+    .pstep:last-child { border-right: none; }
+    .pnum { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-size: 0.95rem; font-weight: 800; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+    .pstep h3 { font-size: 0.93rem; font-weight: 700; margin-bottom: 6px; }
+    .pstep p { color: var(--muted); font-size: 0.82rem; line-height: 1.6; }
+
+    /* FORM */
+    .aform { background: var(--white); border: 2px solid var(--border); border-radius: 18px; padding: 44px 36px; margin-bottom: 56px; box-shadow: var(--shadow); }
+    .aform h2 { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 6px; }
+    .aform > p { color: var(--muted); margin-bottom: 32px; font-size: 0.92rem; }
+    .fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .fg { display: flex; flex-direction: column; gap: 6px; }
+    .fg.full { grid-column: 1 / -1; }
+    label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--muted); }
+    input, select, textarea {
+      background: var(--bg); border: 1.5px solid var(--border); color: var(--text);
+      padding: 11px 14px; border-radius: 8px; font-size: 0.88rem; outline: none;
+      transition: border-color 0.2s; font-family: 'Inter', sans-serif;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); background: var(--white); }
+    input::placeholder, textarea::placeholder { color: var(--muted); }
+    textarea { resize: vertical; min-height: 110px; }
+    .sbtn {
+      margin-top: 22px; background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; border: none; padding: 13px 34px; border-radius: 8px;
+      font-size: 0.88rem; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif;
+      letter-spacing: 0.5px; transition: opacity 0.2s;
+    }
+    .sbtn:hover { opacity: 0.85; }
+
+    footer { background: var(--white); border-top: 2px solid var(--border); padding: 48px 6% 26px; }
+    .fg2 { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; max-width: 1100px; margin: 0 auto 32px; }
+    .fb p { color: var(--muted); font-size: 0.85rem; line-height: 1.7; margin-top: 10px; }
+    footer h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 14px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    footer ul li a:hover { color: var(--accent); }
+    .fbot { max-width: 1100px; margin: 0 auto; padding-top: 20px; border-top: 1.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .fbot p { color: var(--muted); font-size: 0.78rem; }
+
+    @media(max-width:768px){
+      .process { grid-template-columns: 1fr 1fr; }
+      .pstep:nth-child(2) { border-right: none; }
+      .pstep:nth-child(3) { border-right: 1.5px solid var(--border); }
+      .fgrid { grid-template-columns: 1fr; }
+      .role { flex-direction: column; align-items: flex-start; }
+      .fg2 { grid-template-columns: 1fr 1fr; }
+      .stats-bar { gap: 0; }
+      .stat { padding: 20px 28px; }
+      .aform { padding: 28px 20px; }
+    }
+    @media(max-width:480px){
+      .fg2 { grid-template-columns: 1fr; }
+      .process { grid-template-columns: 1fr; }
+      .pstep { border-right: none; border-bottom: 1.5px solid var(--border); }
+      .pstep:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">&lt;bitbyte/&gt;</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="servise.html">Services</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="internships.html" class="active">Internships</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="badge">🟢 Now Recruiting</div>
+  <h1>JOIN THE <span>BITBYTE</span> SQUAD</h1>
+  <p>Real work. Real skills. Real results. No fluff — just experience that actually matters for your career.</p>
+</section>
+
+<div class="stats-bar">
+  <div class="stat"><span class="stat-num">5+</span><span class="stat-label">Open Roles</span></div>
+  <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Remote</span></div>
+  <div class="stat"><span class="stat-num">4–8</span><span class="stat-label">Weeks Duration</span></div>
+  <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Skills Gained</span></div>
+</div>
+
+<div class="wrap">
+
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sbadge">Why bitbyte</div>
+      <h2>WHAT YOU'LL UNLOCK 🎮</h2>
+      <p>This isn't your average internship. Here's what you actually get.</p>
+    </div>
+    <div class="perks">
+      <div class="perk"><span class="perk-icon">🛠️</span><h3>Real Projects</h3><p>Work on live client projects — not dummy tasks. Build things people actually use.</p></div>
+      <div class="perk"><span class="perk-icon">📜</span><h3>Certificate</h3><p>Get an official bitbyte internship certificate to add to your LinkedIn and resume.</p></div>
+      <div class="perk"><span class="perk-icon">🚀</span><h3>Portfolio Boost</h3><p>We help you document your work so it becomes a standout portfolio piece.</p></div>
+      <div class="perk"><span class="perk-icon">🧠</span><h3>Mentorship</h3><p>Get direct feedback and guidance from Mansi and the core team every week.</p></div>
+      <div class="perk"><span class="perk-icon">💻</span><h3>Fully Remote</h3><p>Work from anywhere. Flexible hours. Just show up, deliver, and grow.</p></div>
+      <div class="perk"><span class="perk-icon">🤝</span><h3>Letter of Recommendation</h3><p>Top performers get a personalized LOR to take their career to the next level.</p></div>
+    </div>
+  </div>
+
+  <div class="sec-head">
+    <div class="sbadge">Open Positions</div>
+    <h2>AVAILABLE QUESTS 🗺️</h2>
+    <p>Pick your role. Apply below.</p>
+  </div>
+  <div class="roles">
+    <div class="role">
+      <div class="role-left"><div class="ricon ri1">🎨</div><div class="rinfo"><h3>UI/UX Design Intern</h3><div class="rtags"><span class="rtag">Remote</span><span class="rtag">4 Weeks</span><span class="rtag">Figma</span><span class="open-b">● Open</span></div></div></div>
+      <a class="apply-btn" href="https://l1nk.dev/wq30fwf">Apply Now →</a>
+    </div>
+    <div class="role">
+      <div class="role-left"><div class="ricon ri2">💻</div><div class="rinfo"><h3>Web Development Intern</h3><div class="rtags"><span class="rtag">Remote</span><span class="rtag">6 Weeks</span><span class="rtag">HTML/CSS/JS</span><span class="open-b">● Open</span></div></div></div>
+      <a class="apply-btn" href="https://l1nk.dev/wq30fwf">Apply Now →</a>
+    </div>
+    <div class="role">
+      <div class="role-left"><div class="ricon ri3">✍️</div><div class="rinfo"><h3>Content Writing Intern</h3><div class="rtags"><span class="rtag">Remote</span><span class="rtag">4 Weeks</span><span class="rtag">SEO</span><span class="open-b">● Open</span></div></div></div>
+      <a class="apply-btn" href="https://l1nk.dev/wq30fwf">Apply Now →</a>
+    </div>
+    <div class="role">
+      <div class="role-left"><div class="ricon ri4">📣</div><div class="rinfo"><h3>Social Media & Marketing Intern</h3><div class="rtags"><span class="rtag">Remote</span><span class="rtag">4 Weeks</span><span class="rtag">Instagram</span><span class="open-b">● Open</span></div></div></div>
+      <a class="apply-btn" href="https://l1nk.dev/wq30fwf">Apply Now →</a>
+    </div>
+    <div class="role">
+      <div class="role-left"><div class="ricon ri5">🎬</div><div class="rinfo"><h3>Video Editing Intern</h3><div class="rtags"><span class="rtag">Remote</span><span class="rtag">4 Weeks</span><span class="rtag">Reels/Shorts</span><span class="soon-b">● Coming Soon</span></div></div></div>
+      <a class="apply-btn dim" href="https://l1nk.dev/wq30fwf">Notify Me</a>
+    </div>
+  </div>
+
+  <div class="sec-head">
+    <div class="sbadge">How It Works</div>
+    <h2>YOUR JOURNEY ⚡</h2>
+  </div>
+  <div class="process">
+    <div class="pstep"><div class="pnum">1</div><h3>Apply</h3><p>Fill the form below. Takes 2 minutes.</p></div>
+    <div class="pstep"><div class="pnum">2</div><h3>Review</h3><p>We review your profile within 3 business days.</p></div>
+    <div class="pstep"><div class="pnum">3</div><h3>Intro Call</h3><p>Short 15-min call to align on goals.</p></div>
+    <div class="pstep"><div class="pnum">4</div><h3>Onboard</h3><p>Get your first project and start building.</p></div>
+  </div>
+<form class="aform" 
+id="internshipForm" 
+action="https://script.google.com/macros/s/AKfycbwXu0zwAbFmbDLBbd57OziyB85ZlH9caTeDksVT-buqeHpTFYbw9ivzxdTmBSRKPbzk/exec" 
+method="POST" 
+target="_blank">
+
+<h2>⚡ APPLY NOW</h2>
+<p>Fill out the form and we'll get back to you within 3 days.</p>
+
+<div class="fgrid">
+
+<div class="fg">
+<label>Full Name *</label>
+<input type="text" name="fullName" placeholder="Your full name" required/>
+</div>
+
+<div class="fg">
+<label>Email Address *</label>
+<input type="email" name="email" placeholder="your@email.com" required/>
+</div>
+
+<div class="fg">
+<label>Phone / WhatsApp *</label>
+<input type="tel" name="phone" placeholder="+91 XXXXX XXXXX" required/>
+</div>
+
+<div class="fg">
+<label>Role Applying For *</label>
+<select name="role" required>
+<option value="">Select a role</option>
+<option>UI/UX Design Intern</option>
+<option>Web Development Intern</option>
+<option>Content Writing Intern</option>
+<option>Social Media & Marketing Intern</option>
+</select>
+</div>
+
+<div class="fg">
+<label>College / University</label>
+<input type="text" name="college" placeholder="Your college name"/>
+</div>
+
+<div class="fg">
+<label>Year of Study</label>
+<select name="yearOfStudy">
+<option>1st Year</option>
+<option>2nd Year</option>
+<option>3rd Year</option>
+<option>Final Year</option>
+<option>Recent Graduate</option>
+</select>
+</div>
+
+<div class="fg full">
+<label>Portfolio / GitHub / LinkedIn Link</label>
+<input type="url" name="portfolio" placeholder="https://..."/>
+</div>
+
+<div class="fg full">
+<label>Why do you want to join bitbyte? *</label>
+<textarea name="whyJoin"
+placeholder="Tell us about yourself, your skills, and what you hope to learn..."
+required></textarea>
+</div>
+
+</div>
+
+<p style="font-size: 0.8rem; color: var(--muted); margin-top: 10px;">
+📊 Your application will be sent directly to Google Sheets.
+</p>
+
+<button type="submit" class="sbtn">
+🚀 SUBMIT APPLICATION
+</button>
+
+</form>
+</div>
+
+<footer>
+  <div class="fg2">
+    <div class="fb"><a href="index.html" class="logo">&lt;bitbyte/&gt;</a><p>Build. Innovate. Dominate.<br>Game-changing digital services for modern professionals.</p></div>
+    <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="servise.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="internships.html">Internships</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4>Services</h4><ul><li><a href="servise.html">Resume Building</a></li><li><a href="servise.html">Portfolio Creation</a></li><li><a href="servise.html">Website Development</a></li><li><a href="servise.html">Posters & Branding</a></li></ul></div>
+    <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms & Conditions</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <p>© 2025 bitbyte. All rights reserved. | Level Up Your Future</p>
+    <p>bitbyte.teams@gmail.com · +91 8866693020</p>
+  </div>
+</footer>
+
+<script>function validateAndSubmit(event) {
+  event.preventDefault();
+
+  const form = document.getElementById('internshipForm');
+  const inputs = Array.from(
+    form.querySelectorAll('input[name], select[name], textarea[name]')
+  );
+
+  let isValid = true;
+
+  inputs.forEach(input => {
+    if (input.hasAttribute('required') && !input.value.trim()) {
+      isValid = false;
+      input.style.borderColor = '#ef4444';
+    } else {
+      input.style.borderColor = 'var(--border)';
+    }
+  });
+
+  if (!isValid) {
+    alert('Please fill in all required fields marked with *');
+    return false;
+  }
+
+  const submitBtn = form.querySelector('.sbtn');
+
+  submitBtn.textContent = '📤 Submitting...';
+  submitBtn.disabled = true;
+
+  // Submit form AFTER validation
+  form.submit();
+
+  // Reset button after delay
+  setTimeout(() => {
+    submitBtn.textContent = '🚀 SUBMIT APPLICATION';
+    submitBtn.disabled = false;
+  }, 2000);
+
+  return true;   // ✅ changed from false
+}
+
+// Reset border colors when users type
+document.addEventListener('DOMContentLoaded', function() {
+  const inputs = document.querySelectorAll('.aform input, .aform select, .aform textarea');
+  inputs.forEach(input => {
+    input.addEventListener('input', function() {
+      this.style.borderColor = 'var(--border)';
+    });
+  });
+});
+</script>
+
+</body>
+</html>

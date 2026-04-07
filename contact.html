@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact bitbyte for IT services, resume building, portfolio creation, website development. Let's level up your digital presence.">
+    <title>Contact | bitbyte</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0891b2;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 28px;
+        }
+
+        /* ========== navbar ========== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0.9rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo img {
+            height: 32px;
+            width: auto;
+            border-radius: 8px;
+        }
+        .logo a {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            text-decoration: none;
+            background: linear-gradient(135deg, #0891b2, #06b6d4, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transition: 0.2s;
+        }
+        .logo a:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+        .nav-links li a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: 0.2s;
+        }
+        .nav-links li a:hover, .nav-links li a.active {
+            color: #0891b2;
+        }
+        .mobile-menu {
+            display: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #0f172a;
+        }
+
+        /* section titles */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+            color: #0f172a;
+        }
+        .section-title span {
+            background: linear-gradient(135deg, #0891b2, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* contact wrapper */
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        .contact-info, .contact-form {
+            flex: 1;
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+        .contact-info h3, .contact-form h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #0f172a;
+        }
+        .contact-detail {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: flex-start;
+        }
+        .contact-detail i {
+            font-size: 1.4rem;
+            color: #0891b2;
+            margin-top: 0.2rem;
+        }
+        .contact-detail strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .social-links a {
+            color: #475569;
+            font-size: 1.3rem;
+            transition: 0.2s;
+        }
+        .social-links a:hover {
+            color: #0891b2;
+        }
+
+        /* form styles */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            color: #0f172a;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: white;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #0891b2;
+            box-shadow: 0 0 0 3px rgba(8,145,178,0.1);
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0.8rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+            font-size: 0.95rem;
+            background: #0891b2;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(8,145,178,0.2);
+        }
+        .btn-primary:hover {
+            background: #0e7490;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(8,145,178,0.25);
+        }
+
+        /* FAQ grid */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .faq-item {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        .faq-item h4 {
+            margin-bottom: 0.5rem;
+            color: #0f172a;
+        }
+        .faq-item p {
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        /* cta section */
+        .cta {
+            background: linear-gradient(115deg, #eef2ff 0%, #ffffff 100%);
+            border-radius: 2rem;
+            margin: 2rem 0 3rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .cta h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .glow-text {
+            background: linear-gradient(135deg, #0891b2, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .cta p {
+            max-width: 550px;
+            margin: 1rem auto 2rem;
+            color: #334155;
+        }
+
+        /* footer */
+        .footer {
+            background: #f1f5f9;
+            border-top: 1px solid #e2e8f0;
+            padding: 3rem 0 1.5rem;
+            margin-top: 2rem;
+        }
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .footer-content div h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li, .footer-links li a {
+            color: #475569;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+        .footer-links li a:hover {
+            color: #0891b2;
+        }
+        .footer-links li i {
+            width: 1.4rem;
+            color: #0891b2;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* responsive */
+        @media (max-width: 780px) {
+            .container {
+                padding: 0 20px;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: white;
+                width: 70%;
+                height: auto;
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: 0.3s;
+                border-right: 2px solid #0891b2;
+                box-shadow: 4px 8px 20px rgba(0,0,0,0.05);
+                border-radius: 0 20px 20px 0;
+                align-items: flex-start;
+            }
+            .nav-links.active {
+                left: 0;
+            }
+            .contact-wrapper {
+                flex-direction: column;
+            }
+            .section-title {
+                font-size: 1.9rem;
+            }
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="navbar">
+    <div class="container nav-container">
+        <div class="logo">
+            <img src="image.png" alt="bitbyte logo" onerror="this.style.display='none'">
+            <a href="index.html">&lt;bitbyte/&gt;</a>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="servise.html">SERVICES</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="internships.html">INTERNSHIPS</a></li>
+            <li><a href="blog.html">BLOG</a></li>
+            <li><a href="contact.html" class="active">CONTACT</a></li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Hero intro -->
+    <section style="padding: 120px 0 40px;">
+        <div class="container">
+            <h1 class="section-title" style="margin-bottom: 1rem;">JOIN THE <span>GUILD</span></h1>
+            <p style="text-align: center; font-size: 1.2rem; color: #475569; max-width: 700px; margin: 0 auto;">Ready to level up? Fill out the form or connect with me directly. Let's build something legendary.</p>
+        </div>
+    </section>
+
+    <!-- Contact form + info -->
+    <section class="section" style="padding-top: 0;">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>🎮 CONNECT WITH ME</h3>
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <strong>EMAIL</strong><br>
+                           bitbyte.tech@gmail.com
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>PHONE / WHATSAPP</strong><br>
+                            +91 8866693020
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>HQ LOCATION</strong><br>
+                            India (Remote — Worldwide)
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div style="margin-top: 2rem; padding: 1rem; background: #eef2ff; border-radius: 12px; border-left: 3px solid #0891b2;">
+                        <p style="font-size: 0.9rem;">⚡ <strong>Fast Response:</strong> I typically respond within 24 hours. Let's start your mission!</p>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <h3>🎯 START YOUR QUEST</h3>
+                    <form action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="3f5fb507-bab4-4589-a90f-d994a4af6e41">
+                        <input type="hidden" name="to_email" value="bitbyte.teams@gmail.com">
+                        <input type="hidden" name="subject" value="New Contact from bitbyte website">
+                        <input type="hidden" name="from_name" value="bitbyte Contact">
+                        
+                        <div class="form-group">
+                            <label>PLAYER NAME *</label>
+                            <input type="text" name="name" required placeholder="Your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>EMAIL *</label>
+                            <input type="email" name="email" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>CHOOSE YOUR CLASS *</label>
+                            <select name="service" required>
+                                <option value="">Select a service</option>
+                                <option value="resume">Resume Building</option>
+                                <option value="portfolio">Portfolio Creation</option>
+                                <option value="website">Website Development</option>
+                                <option value="posters">Posters</option>
+                                <option value="custom">Custom Project</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>CHOOSE YOUR LEVEL *</label>
+                            <select name="level" required>
+                                <option value="">Select your level</option>
+                                <option value="beginner">Level 1 (Beginner)</option>
+                                <option value="intermediate">Level 2 (Intermediate)</option>
+                                <option value="advanced">Level 3 (Advanced)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>QUEST DETAILS *</label>
+                            <textarea name="message" rows="5" required placeholder="Tell me about your project, goals, and any specific requirements..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary" style="width: 100%;">⚡ SEND MESSAGE ⚡</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">FREQUENTLY ASKED <span>QUESTIONS</span></h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4>❓ How long does it take to complete a project?</h4>
+                    <p>Resumes: 2-3 days | Portfolios: 3-5 days | Websites: 5-10 days depending on complexity. Rush orders available!</p>
+                </div>
+                <div class="faq-item">
+                    <h4>❓ What's your payment process?</h4>
+                    <p>50% advance to start, 50% on completion. Payments accepted via UPI, bank transfer, or Razorpay link.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>❓ Do you offer revisions?</h4>
+                    <p>Yes! All packages include revisions. Premium packages include unlimited revisions until you're 100% satisfied.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>❓ Do I need technical skills to maintain my website?</h4>
+                    <p>Not at all! I provide easy-to-use CMS options and full training. Maintenance plans also available.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="container">
+        <div class="cta">
+            <h2>READY TO <span class="glow-text">DOMINATE?</span></h2>
+            <p>Let's create something legendary together. Your journey starts now.</p>
+            <a href="#contact-form" class="btn-primary">🎮 BOOK FREE CONSULTATION</a>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div>
+                <h3>&lt;bitbyte/&gt;</h3>
+                <p>Build. Innovate. Dominate.</p>
+                <p style="margin-top: 0.5rem; color: #475569;">Game-changing IT services for the modern professional.</p>
+            </div>
+            <div>
+                <h3>QUICK LINKS</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>SERVICES</h3>
+                <ul class="footer-links">
+                    <li><a href="services.html">Resume Building</a></li>
+                    <li><a href="services.html">Portfolio Creation</a></li>
+                    <li><a href="services.html">Website Development</a></li>
+                    <li><a href="services.html">Posters</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>CONTACT</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> bitbyte.tech01@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +91 8866693020</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 bitbyte. All rights reserved. | Game On! Level Up Your Future</p>
+            <p style="margin-top: 0.5rem; color: #64748b;">Crafting game-changing IT services for the modern professional.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Mobile menu toggle
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+    }
+
+    // Smooth scroll for the consultation button
+    document.querySelector('.cta .btn-primary')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        const form = document.querySelector('.contact-form');
+        if (form) {
+            form.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+</script>
+</body>
+</html>

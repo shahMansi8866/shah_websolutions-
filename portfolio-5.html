@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio – Your Name</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f2ed;
+      --ink: #1a1814;
+      --muted: #7a7570;
+      --accent: #b08d6a;
+      --border: #ddd9d3;
+      --section-gap: 100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 60px;
+      background: rgba(245,242,237,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      animation: fadeDown 0.8s ease both;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 600; letter-spacing: 0.04em;
+      text-decoration: none; color: var(--ink);
+    }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-size: 0.85rem;
+      font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 60px 80px;
+      border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 50% at 80% 30%, rgba(176,141,106,0.12) 0%, transparent 70%);
+    }
+    .hero-eyebrow {
+      font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500; margin-bottom: 20px;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300; line-height: 1.05;
+      max-width: 800px;
+      animation: fadeUp 0.9s 0.45s ease both;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      margin-top: 28px; max-width: 440px;
+      color: var(--muted); font-size: 1rem; font-weight: 300;
+      animation: fadeUp 0.9s 0.6s ease both;
+    }
+    .hero-cta {
+      margin-top: 44px; display: flex; gap: 16px;
+      animation: fadeUp 0.9s 0.75s ease both;
+    }
+    .btn {
+      display: inline-block; padding: 13px 32px;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-primary {
+      background: var(--ink); color: var(--cream);
+      border: 1.5px solid var(--ink);
+    }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+    .btn-outline {
+      background: transparent; color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--ink); }
+
+    /* ── SECTION SHARED ── */
+    section { padding: var(--section-gap) 60px; }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300; line-height: 1.15;
+      margin-bottom: 48px;
+    }
+    .divider {
+      width: 48px; height: 1.5px; background: var(--accent); margin: 20px 0 48px;
+    }
+
+    /* ── ABOUT ── */
+    #about { border-bottom: 1px solid var(--border); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .about-image {
+      width: 100%; aspect-ratio: 4/5; object-fit: cover;
+      filter: grayscale(20%); border: 1px solid var(--border);
+      background: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 0.85rem; letter-spacing: 0.1em;
+    }
+    .about-text p { color: var(--muted); font-weight: 300; margin-bottom: 20px; }
+    .about-stats { display: flex; gap: 40px; margin-top: 40px; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.4rem;
+      font-weight: 300; color: var(--ink); display: block;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+    /* ── WORK ── */
+    #work { background: var(--ink); color: var(--cream); border-bottom: 1px solid #2a2824; }
+    #work .section-title { color: var(--cream); }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .project-card {
+      position: relative; overflow: hidden; cursor: pointer;
+      aspect-ratio: 3/4; background: #2a2824;
+      border: 1px solid #333;
+      display: flex; align-items: flex-end;
+      transition: transform 0.35s;
+    }
+    .project-card:hover { transform: scale(1.015); }
+    .project-card-inner {
+      padding: 28px; width: 100%; position: relative; z-index: 2;
+      background: linear-gradient(to top, rgba(20,18,14,0.95) 0%, transparent 100%);
+    }
+    .project-tag {
+      font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .project-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+      font-weight: 300; color: var(--cream);
+    }
+    .project-year { font-size: 0.75rem; color: #666; margin-top: 6px; }
+    .project-placeholder {
+      position: absolute; inset: 0; display: flex; align-items: center;
+      justify-content: center; font-size: 0.75rem; color: #444;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    /* ── SKILLS ── */
+    #skills { border-bottom: 1px solid var(--border); }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .skill-group h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+      font-weight: 400; margin-bottom: 16px;
+    }
+    .skill-list { list-style: none; }
+    .skill-list li {
+      padding: 10px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.88rem; color: var(--muted); font-weight: 300;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .skill-bar {
+      width: 60px; height: 2px; background: var(--border); position: relative;
+    }
+    .skill-bar::after {
+      content: ''; position: absolute; left: 0; top: 0; height: 100%;
+      background: var(--accent);
+    }
+    .skill-bar.l90::after { width: 90%; }
+    .skill-bar.l75::after { width: 75%; }
+    .skill-bar.l60::after { width: 60%; }
+    .skill-bar.l85::after { width: 85%; }
+    .skill-bar.l70::after { width: 70%; }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: #f0ede8; border-bottom: 1px solid var(--border); }
+    .timeline { max-width: 700px; }
+    .timeline-item { display: grid; grid-template-columns: 140px 1fr; gap: 32px; margin-bottom: 48px; }
+    .timeline-year { font-size: 0.78rem; color: var(--accent); letter-spacing: 0.1em; padding-top: 4px; }
+    .timeline-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 400; }
+    .timeline-content .company { font-size: 0.82rem; color: var(--muted); margin: 4px 0 10px; letter-spacing: 0.05em; }
+    .timeline-content p { font-size: 0.9rem; color: var(--muted); font-weight: 300; }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; padding: 120px 60px; }
+    #contact .section-title { margin-bottom: 16px; }
+    #contact p { color: var(--muted); font-weight: 300; max-width: 440px; margin: 0 auto 40px; }
+    .contact-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 48px; }
+    .contact-link {
+      font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; padding-bottom: 4px;
+      border-bottom: 1px solid var(--border); transition: all 0.2s;
+    }
+    .contact-link:hover { color: var(--ink); border-color: var(--ink); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer span { font-size: 0.78rem; color: var(--muted); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 20px 28px; }
+      section { padding: 70px 28px; }
+      .hero { padding: 0 28px 64px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">&lt;bitbyte/&gt;</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <p class="hero-eyebrow">Available for new opportunities</p>
+    <h1>Crafting work that<br><em>matters</em> and endures.</h1>
+    <p class="hero-sub">A professional with a passion for thoughtful, purposeful work. Based wherever the best projects lead.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn btn-primary">View My Work</a>
+      <a href="#contact" class="btn btn-outline">Get In Touch</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-image">[ Your Photo Here ]</div>
+      <div class="about-text">
+        <p class="section-label">About Me</p>
+        <h2 class="section-title">A professional defined by<br>precision and purpose.</h2>
+        <p>This is where you introduce yourself. Write two or three sentences about who you are, what you do, and what drives you. Keep it personal but professional — let your personality come through.</p>
+        <p>Add a second paragraph that speaks to your approach, your values, or what sets you apart from others in your field. Be specific and authentic.</p>
+        <div class="about-stats">
+          <div>
+            <span class="stat-num">8+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div>
+            <span class="stat-num">40</span>
+            <span class="stat-label">Projects Delivered</span>
+          </div>
+          <div>
+            <span class="stat-num">15</span>
+            <span class="stat-label">Happy Clients</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <p class="section-label" style="color:#a08060;">Selected Projects</p>
+    <h2 class="section-title">Work I'm proud of.</h2>
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-placeholder">Project Image</div>
+        <div class="project-card-inner">
+          <p class="project-tag">Category · Type</p>
+          <h3 class="project-title">Project Title One</h3>
+          <p class="project-year">2024</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-placeholder">Project Image</div>
+        <div class="project-card-inner">
+          <p class="project-tag">Category · Type</p>
+          <h3 class="project-title">Project Title Two</h3>
+          <p class="project-year">2024</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-placeholder">Project Image</div>
+        <div class="project-card-inner">
+          <p class="project-tag">Category · Type</p>
+          <h3 class="project-title">Project Title Three</h3>
+          <p class="project-year">2023</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-placeholder">Project Image</div>
+        <div class="project-card-inner">
+          <p class="project-tag">Category · Type</p>
+          <h3 class="project-title">Project Title Four</h3>
+          <p class="project-year">2023</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-placeholder">Project Image</div>
+        <div class="project-card-inner">
+          <p class="project-tag">Category · Type</p>
+          <h3 class="project-title">Project Title Five</h3>
+          <p class="project-year">2022</p>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-placeholder">Project Image</div>
+        <div class="project-card-inner">
+          <p class="project-tag">Category · Type</p>
+          <h3 class="project-title">Project Title Six</h3>
+          <p class="project-year">2022</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">Expertise</p>
+    <h2 class="section-title">What I bring to the table.</h2>
+    <div class="skills-grid reveal">
+
+      <div class="skill-group">
+        <h3>Core Skills</h3>
+        <ul class="skill-list">
+          <li>Skill One <span class="skill-bar l90"></span></li>
+          <li>Skill Two <span class="skill-bar l85"></span></li>
+          <li>Skill Three <span class="skill-bar l75"></span></li>
+          <li>Skill Four <span class="skill-bar l70"></span></li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <h3>Tools & Software</h3>
+        <ul class="skill-list">
+          <li>Tool One <span class="skill-bar l90"></span></li>
+          <li>Tool Two <span class="skill-bar l80"></span></li>
+          <li>Tool Three <span class="skill-bar l75"></span></li>
+          <li>Tool Four <span class="skill-bar l60"></span></li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <h3>Soft Skills</h3>
+        <ul class="skill-list">
+          <li>Leadership</li>
+          <li>Communication</li>
+          <li>Problem Solving</li>
+          <li>Collaboration</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">Career</p>
+    <h2 class="section-title">Where I've been.</h2>
+    <div class="timeline reveal">
+
+      <div class="timeline-item">
+        <div class="timeline-year">2022 – Present</div>
+        <div class="timeline-content">
+          <h3>Senior Position Title</h3>
+          <p class="company">Company Name · Full-time</p>
+          <p>Describe your responsibilities and key achievements in this role. Focus on impact and results rather than tasks.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2019 – 2022</div>
+        <div class="timeline-content">
+          <h3>Mid-Level Position</h3>
+          <p class="company">Previous Company · Full-time</p>
+          <p>Describe what you accomplished here. Quantify results where possible — numbers build credibility.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2017 – 2019</div>
+        <div class="timeline-content">
+          <h3>Junior Position</h3>
+          <p class="company">Earlier Company · Full-time</p>
+          <p>Your earlier career experience. Show growth and progression across your roles.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-year">2013 – 2017</div>
+        <div class="timeline-content">
+          <h3>Degree Name</h3>
+          <p class="company">University Name · Education</p>
+          <p>Field of study and any notable achievements, honors, or relevant coursework.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Let's Connect</p>
+    <h2 class="section-title reveal">Open to the right<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);">opportunity.</em></h2>
+    <p class="reveal">Whether you have a project in mind, a question, or simply want to say hello — my inbox is always open.</p>
+    <a href="mailto:your@email.com" class="btn btn-primary reveal">your@email.com</a>
+    <div class="contact-links reveal">
+      <a href="#" class="contact-link">LinkedIn</a>
+      <a href="#" class="contact-link">GitHub</a>
+      <a href="#" class="contact-link">Twitter / X</a>
+      <a href="#" class="contact-link">Download CV</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Your Name. All rights reserved.</span>
+    <span>Designed & built with care.</span>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

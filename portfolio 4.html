@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio – Your Name</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --white: #f0efe9;
+      --yellow: #f5e03a;
+      --pink: #ff4d6d;
+      --blue: #3a86ff;
+      --muted: #666;
+      --card-bg: #111;
+      --border: #222;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Epilogue', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor {
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--yellow); position: fixed; pointer-events: none;
+      z-index: 9999; transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor.big { width: 48px; height: 48px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 60px;
+      animation: fadeDown 0.7s ease both;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 1.1rem; letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; color: var(--white);
+    }
+    .nav-logo span { color: var(--yellow); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-size: 0.82rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--yellow); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 120px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-noise {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--yellow); margin-bottom: 32px;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-tag::before {
+      content: ''; width: 32px; height: 2px; background: var(--yellow);
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3.8rem, 9vw, 8.5rem);
+      line-height: 0.95; letter-spacing: -0.02em;
+      text-transform: uppercase;
+      animation: fadeUp 0.8s 0.35s ease both;
+    }
+    .hero h1 .outline {
+      -webkit-text-stroke: 2px var(--white);
+      color: transparent;
+    }
+    .hero h1 .yellow { color: var(--yellow); }
+    .hero-bottom {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-top: 60px;
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+    .hero-desc { max-width: 360px; color: var(--muted); font-weight: 300; font-size: 1rem; }
+    .hero-scroll {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .hero-scroll-line {
+      width: 1px; height: 64px; background: linear-gradient(to bottom, var(--yellow), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{transform:scaleY(1);opacity:1} 50%{transform:scaleY(0.6);opacity:0.4} }
+
+    .marquee-wrap {
+      overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      padding: 18px 0; background: var(--yellow);
+    }
+    .marquee-track {
+      display: flex; gap: 48px; width: max-content;
+      animation: marquee 18s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.8rem;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--bg);
+      white-space: nowrap; display: flex; align-items: center; gap: 48px;
+    }
+    .marquee-item::after { content: '✦'; font-size: 0.6rem; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── ABOUT ── */
+    #about { padding: 120px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; border-bottom: 1px solid var(--border); }
+    .about-label {
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--yellow); margin-bottom: 20px;
+    }
+    .about-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      text-transform: uppercase; line-height: 1.1; margin-bottom: 32px;
+    }
+    .about-title em { font-style: italic; font-family: 'Epilogue', sans-serif; font-weight: 300; color: var(--yellow); text-transform: none; }
+    .about-body { color: var(--muted); font-weight: 300; margin-bottom: 16px; }
+    .about-image-wrap { position: relative; }
+    .about-img-box {
+      width: 100%; aspect-ratio: 3/4; background: var(--card-bg);
+      border: 1px solid var(--border); display: flex; align-items: center;
+      justify-content: center; color: var(--muted); font-size: 0.8rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      position: relative; overflow: hidden;
+    }
+    .about-img-box::after {
+      content: ''; position: absolute; bottom: -20px; right: -20px;
+      width: 120px; height: 120px; border: 2px solid var(--yellow);
+      pointer-events: none;
+    }
+    .about-badge {
+      position: absolute; top: -20px; right: -20px;
+      width: 110px; height: 110px; background: var(--yellow);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.65rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--bg);
+      text-align: center; line-height: 1.3;
+      animation: spin 12s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── WORK ── */
+    #work { padding: 120px 60px; border-bottom: 1px solid var(--border); }
+    .work-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 60px; }
+    .work-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.5rem); text-transform: uppercase; line-height: 1.05;
+    }
+    .work-title .outline { -webkit-text-stroke: 1.5px var(--white); color: transparent; }
+    .work-count { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.1em; }
+
+    .project-list { display: flex; flex-direction: column; gap: 2px; }
+    .project-row {
+      display: grid; grid-template-columns: 60px 1fr auto auto;
+      align-items: center; gap: 32px;
+      padding: 28px 0; border-top: 1px solid var(--border);
+      cursor: pointer; transition: padding 0.3s, background 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .project-row::after {
+      content: ''; position: absolute; left: 0; bottom: 0; top: 0;
+      width: 0; background: var(--yellow); transition: width 0.35s ease; z-index: 0;
+    }
+    .project-row:hover::after { width: 4px; }
+    .project-row > * { position: relative; z-index: 1; }
+    .project-row:hover { padding-left: 16px; }
+    .proj-num { font-family: 'Syne', sans-serif; font-size: 0.72rem; color: var(--muted); font-weight: 700; }
+    .proj-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.4rem; text-transform: uppercase; transition: color 0.2s; }
+    .project-row:hover .proj-name { color: var(--yellow); }
+    .proj-tag {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); border: 1px solid var(--border); padding: 6px 14px;
+    }
+    .proj-year { font-size: 0.78rem; color: var(--muted); }
+    .proj-arrow { font-size: 1.2rem; color: var(--muted); transition: transform 0.2s, color 0.2s; }
+    .project-row:hover .proj-arrow { transform: translate(4px, -4px); color: var(--yellow); }
+
+    /* ── SERVICES ── */
+    #services { padding: 120px 60px; background: var(--yellow); border-bottom: 1px solid var(--border); }
+    #services .section-label { color: var(--bg); opacity: 0.5; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 16px; }
+    #services .section-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.2rem, 4vw, 3.5rem); text-transform: uppercase;
+      color: var(--bg); margin-bottom: 60px; line-height: 1.05;
+    }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .service-card {
+      background: var(--bg); padding: 40px 32px;
+      border: 1px solid #1a1a1a; transition: background 0.3s;
+    }
+    .service-card:hover { background: #111; }
+    .service-num { font-family: 'Syne', sans-serif; font-size: 0.7rem; color: var(--yellow); font-weight: 700; letter-spacing: 0.15em; margin-bottom: 20px; }
+    .service-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; text-transform: uppercase; margin-bottom: 16px; }
+    .service-desc { font-size: 0.88rem; color: var(--muted); font-weight: 300; line-height: 1.7; }
+
+    /* ── STATS ── */
+    .stats-band { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--border); }
+    .stat-box { padding: 60px 40px; border-right: 1px solid var(--border); }
+    .stat-box:last-child { border-right: none; }
+    .stat-big {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1;
+      color: var(--yellow); display: block; margin-bottom: 8px;
+    }
+    .stat-desc { font-size: 0.82rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 140px 60px; position: relative; overflow: hidden; }
+    .contact-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 50% 60% at 50% 50%, rgba(245,224,58,0.07) 0%, transparent 70%);
+    }
+    .contact-inner { position: relative; z-index: 1; text-align: center; }
+    .contact-eyebrow { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--yellow); margin-bottom: 24px; }
+    .contact-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(3rem, 8vw, 7rem); text-transform: uppercase; line-height: 0.95;
+      margin-bottom: 40px;
+    }
+    .contact-title .outline { -webkit-text-stroke: 2px var(--white); color: transparent; }
+    .contact-email {
+      display: inline-block;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.6rem);
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--bg);
+      background: var(--yellow); padding: 18px 48px; text-decoration: none;
+      transition: background 0.25s, color 0.25s;
+    }
+    .contact-email:hover { background: var(--pink); color: var(--white); }
+    .social-links { display: flex; gap: 28px; justify-content: center; margin-top: 48px; }
+    .social-link {
+      font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      padding-bottom: 3px; border-bottom: 1px solid var(--border); transition: all 0.2s;
+    }
+    .social-link:hover { color: var(--yellow); border-color: var(--yellow); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 28px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer span { font-size: 0.75rem; color: var(--muted); }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.95rem;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--white);
+    }
+    .footer-logo span { color: var(--yellow); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+    @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: none; } }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 20px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      #about { padding: 80px 24px; grid-template-columns: 1fr; }
+      #work { padding: 80px 24px; }
+      #services { padding: 80px 24px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .stats-band { grid-template-columns: 1fr 1fr; }
+      .stat-box:nth-child(2) { border-right: none; }
+      #contact { padding: 100px 24px; }
+      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+      .project-row { grid-template-columns: 40px 1fr auto; }
+      .proj-year { display: none; }
+      body { cursor: auto; }
+      .cursor { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="index.html">&lt;bitbyte/&gt;</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-noise"></div>
+    <div class="hero-tag">Available for projects · 2026</div>
+    <h1>
+      BOLD<br>
+      <span class="outline">IDEAS.</span><br>
+      <span class="yellow">REAL</span> RESULTS.
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">A creative professional turning complex challenges into work that moves people — and moves the needle.</p>
+      <div class="hero-scroll">
+        <div class="hero-scroll-line"></div>
+        Scroll
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">Strategy</div>
+      <div class="marquee-item">Execution</div>
+      <div class="marquee-item">Innovation</div>
+      <div class="marquee-item">Results</div>
+      <div class="marquee-item">Creativity</div>
+      <div class="marquee-item">Precision</div>
+      <div class="marquee-item">Strategy</div>
+      <div class="marquee-item">Execution</div>
+      <div class="marquee-item">Innovation</div>
+      <div class="marquee-item">Results</div>
+      <div class="marquee-item">Creativity</div>
+      <div class="marquee-item">Precision</div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal">
+      <p class="about-label">Who I Am</p>
+      <h2 class="about-title">Making work that<br><em>actually</em> matters.</h2>
+      <p class="about-body">This is where you introduce yourself with energy. Write two sentences that capture who you are and what drives you. Make it memorable — not a job description.</p>
+      <p class="about-body">Add a second thought here about your philosophy or approach. This is your chance to differentiate yourself from everyone else with the same title.</p>
+    </div>
+    <div class="about-image-wrap reveal">
+      <div class="about-img-box">[ Your Photo ]</div>
+      <div class="about-badge">Open<br>to Work<br>✦ 2026 ✦</div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="work-header reveal">
+      <h2 class="work-title">SELECTED<br><span class="outline">WORK</span></h2>
+      <span class="work-count">6 Projects</span>
+    </div>
+    <div class="project-list">
+      <div class="project-row reveal">
+        <span class="proj-num">01</span>
+        <span class="proj-name">Project Title One</span>
+        <span class="proj-tag">Branding</span>
+        <span class="proj-year">2024</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+      <div class="project-row reveal">
+        <span class="proj-num">02</span>
+        <span class="proj-name">Project Title Two</span>
+        <span class="proj-tag">Strategy</span>
+        <span class="proj-year">2024</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+      <div class="project-row reveal">
+        <span class="proj-num">03</span>
+        <span class="proj-name">Project Title Three</span>
+        <span class="proj-tag">Research</span>
+        <span class="proj-year">2023</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+      <div class="project-row reveal">
+        <span class="proj-num">04</span>
+        <span class="proj-name">Project Title Four</span>
+        <span class="proj-tag">Consulting</span>
+        <span class="proj-year">2023</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+      <div class="project-row reveal">
+        <span class="proj-num">05</span>
+        <span class="proj-name">Project Title Five</span>
+        <span class="proj-tag">Campaign</span>
+        <span class="proj-year">2022</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+      <div class="project-row reveal">
+        <span class="proj-num">06</span>
+        <span class="proj-name">Project Title Six</span>
+        <span class="proj-tag">Product</span>
+        <span class="proj-year">2022</span>
+        <span class="proj-arrow">↗</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-band">
+    <div class="stat-box reveal">
+      <span class="stat-big">8+</span>
+      <span class="stat-desc">Years of Experience</span>
+    </div>
+    <div class="stat-box reveal">
+      <span class="stat-big">40</span>
+      <span class="stat-desc">Projects Delivered</span>
+    </div>
+    <div class="stat-box reveal">
+      <span class="stat-big">15</span>
+      <span class="stat-desc">Happy Clients</span>
+    </div>
+    <div class="stat-box reveal">
+      <span class="stat-big">100%</span>
+      <span class="stat-desc">On Time Delivery</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <p class="section-label">What I Do</p>
+    <h2 class="section-title">Services &<br>Expertise.</h2>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <p class="service-num">01 ——</p>
+        <h3 class="service-name">Service One</h3>
+        <p class="service-desc">Describe this service in one or two sentences. Focus on the outcome for the client, not just the activity you perform.</p>
+      </div>
+      <div class="service-card reveal">
+        <p class="service-num">02 ——</p>
+        <h3 class="service-name">Service Two</h3>
+        <p class="service-desc">Describe this service in one or two sentences. What problem does it solve? What transformation does it create?</p>
+      </div>
+      <div class="service-card reveal">
+        <p class="service-num">03 ——</p>
+        <h3 class="service-name">Service Three</h3>
+        <p class="service-desc">Your third core offering. Keep it concise and client-focused — what do they walk away with?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-bg"></div>
+    <div class="contact-inner">
+      <p class="contact-eyebrow reveal">Let's Work Together</p>
+      <h2 class="contact-title reveal">GOT A<br><span class="outline">PROJECT?</span></h2>
+      <a href="mailto:your@email.com" class="contact-email reveal">your@email.com</a>
+      <div class="social-links reveal">
+        <a href="#" class="social-link">LinkedIn</a>
+        <a href="#" class="social-link">Twitter / X</a>
+        <a href="#" class="social-link">GitHub</a>
+        <a href="#" class="social-link">Download CV</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">YOUR<span>.</span>NAME</span>
+    <span>© 2026 — All rights reserved.</span>
+    <span>Built with intent.</span>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .project-row').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bitbyte | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+font-family:'Inter',sans-serif;
+background:#f8fafc;
+color:#0f172a;
+margin:0;
+}
+
+/* Navigation */
+.navbar {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo a {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    background: linear-gradient(135deg, #0891b2, #06b6d4, #3b82f6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+.nav-links a {
+    text-decoration: none;
+    color: #334155;
+    font-weight: 500;
+    transition: 0.2s;
+}
+.nav-links a:hover, .nav-links a.active {
+    color: #0891b2;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:40px 20px;
+}
+
+h1{
+text-align:center;
+font-size:2.5rem;
+margin-bottom:10px;
+}
+
+.subtitle{
+text-align:center;
+color:#475569;
+margin-bottom:30px;
+}
+
+/* FILTER */
+.filters{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:40px;
+}
+
+.filter-btn{
+padding:8px 18px;
+border-radius:30px;
+border:1px solid #cbd5e1;
+background:white;
+cursor:pointer;
+font-size:0.9rem;
+}
+
+.filter-btn.active,
+.filter-btn:hover{
+background:#0891b2;
+color:white;
+border-color:#0891b2;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
+
+/* CARD */
+.card{
+background:white;
+border-radius:20px;
+padding:20px;
+box-shadow:0 4px 12px rgba(0,0,0,0.05);
+transition:0.25s;
+border:1px solid #e2e8f0;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 20px 30px rgba(0,0,0,0.08);
+}
+
+/* IMAGE */
+.thumb{
+height:160px;
+background:#eef2ff;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:2.5rem;
+margin-bottom:15px;
+overflow:hidden;
+}
+
+.thumb img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* TAG */
+.tag{
+display:inline-block;
+background:#e0f2fe;
+color:#0891b2;
+padding:4px 12px;
+border-radius:20px;
+font-size:0.75rem;
+margin-bottom:10px;
+}
+
+/* TEXT */
+.card-title{
+font-size:1.2rem;
+font-weight:600;
+margin-bottom:6px;
+}
+
+.card-desc{
+font-size:0.9rem;
+color:#475569;
+margin-bottom:15px;
+}
+
+/* BUTTON */
+.btn{
+display:inline-block;
+padding:8px 16px;
+border-radius:30px;
+border:1px solid #cbd5e1;
+text-decoration:none;
+color:#1e293b;
+font-size:0.85rem;
+}
+
+.btn:hover{
+border-color:#0891b2;
+background:#f0f9ff;
+}
+
+/* BEFORE AFTER */
+.before-after{
+margin-top:60px;
+}
+
+.ba-title{
+text-align:center;
+font-size:1.8rem;
+margin-bottom:30px;
+}
+
+.ba-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.ba-box{
+background:white;
+padding:25px;
+border-radius:15px;
+border:1px solid #e2e8f0;
+text-align:center;
+}
+
+.ba-box h4{
+margin-bottom:10px;
+color:#64748b;
+}
+
+@media(max-width:768px){
+.ba-grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="index.html">&lt;bitbyte/&gt;</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="servise.html">SERVICES</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="internships.html">INTERNSHIPS</a></li>
+            <li><a href="blog.html">BLOG</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+
+<h1>Our Work</h1>
+<p class="subtitle">Real projects. Real results.</p>
+
+<!-- FILTER -->
+<div class="filters">
+<button class="filter-btn active" onclick="filterProjects('all')">All</button>
+<button class="filter-btn" onclick="filterProjects('resume')">Resume</button>
+<button class="filter-btn" onclick="filterProjects('website')">Website</button>
+<button class="filter-btn" onclick="filterProjects('poster')">Poster</button>
+</div>
+
+<!-- GRID -->
+<div class="grid">
+
+<!-- RESUME -->
+<div class="card" data-category="resume">
+<div class="thumb">📄</div>
+<div class="tag">Resume</div>
+<div class="card-title">Software Engineer Resume</div>
+<div class="card-desc">ATS-optimized resume that helped client get interviews fast.</div>
+<a href="#" class="btn">View</a>
+</div>
+
+<div class="card" data-category="resume">
+<div class="thumb">📑</div>
+<div class="tag">Resume</div>
+<div class="card-title">MBA Professional Resume</div>
+<div class="card-desc">Corporate-ready resume for management roles.</div>
+<a href="#" class="btn">View</a>
+</div>
+
+<!-- WEBSITE -->
+<div class="card" data-category="website">
+<div class="thumb">🌐</div>
+<div class="tag">Website</div>
+<div class="card-title">Startup Cafe Website</div>
+<div class="card-desc">Modern responsive website with menu & contact form.</div>
+<a href="cafe.html" class="btn">View</a>
+</div>
+
+<div class="card" data-category="website">
+<div class="thumb">💼</div>
+<div class="tag">Website</div>
+<div class="card-title">Freelancer Portfolio</div>
+<div class="card-desc">Personal branding site that increased client leads.</div>
+<a href="portfolio 4.html" class="btn">View1</a>
+<a href="portfolio-2.html" class="btn">View2</a>
+<a href="portfolio-dark.html" class="btn">View3</a>
+<a href="portfolio-3d (1).html" class="btn">View4</a>
+
+
+
+</div>
+
+<div class="card" data-category="website">
+<div class="thumb">🏋️</div>
+<div class="tag">Website</div>
+<div class="card-title">Gym Website</div>
+<div class="card-desc">Modern fitness-focused website for a local gym.</div>
+<a href="gym.html" class="btn">View</a>
+</div>
+
+<div class="card" data-category="website">
+<div class="thumb">🏋️</div>
+<div class="tag">Restaurant</div>
+<div class="card-title">Restaurant Website</div>
+<div class="card-desc">Modern website for a local restaurant.</div>
+<a href="restaurant.html" class="btn">View</a>
+</div>
+
+<!-- POSTERS -->
+<div class="card" data-category="poster">
+<div class="thumb">🎯</div>
+<div class="tag">Poster</div>
+<div class="card-title">Music Festival Poster</div>
+<div class="card-desc">High engagement promotional design.</div>
+<a href="#" class="btn">View</a>
+</div>
+
+<div class="card" data-category="poster">
+<div class="thumb">📢</div>
+<div class="tag">Poster</div>
+<div class="card-title">College Event Poster</div>
+<div class="card-desc">Designed to attract maximum audience.</div>
+<a href="#" class="btn">View</a>
+</div>
+
+<div class="card" data-category="poster">
+<div class="thumb">🔥</div>
+<div class="tag">Poster</div>
+<div class="card-title">Sale Campaign Poster</div>
+<div class="card-desc">Marketing-focused design for conversions.</div>
+<a href="#" class="btn">View</a>
+</div>
+
+</div>
+
+<!-- BEFORE AFTER -->
+<div class="before-after">
+<h2 class="ba-title">🔥 Before vs After</h2>
+
+<div class="ba-grid">
+
+<div class="ba-box">
+<h4>Before</h4>
+<p>Basic design with poor layout and low impact.</p>
+</div>
+
+<div class="ba-box">
+<h4>After</h4>
+<p>Modern, clean, high-converting professional design.</p>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+function filterProjects(category){
+let cards=document.querySelectorAll('.card');
+let buttons=document.querySelectorAll('.filter-btn');
+
+buttons.forEach(btn=>btn.classList.remove('active'));
+event.target.classList.add('active');
+
+cards.forEach(card=>{
+if(category==="all"||card.dataset.category===category){
+card.style.display="block";
+}else{
+card.style.display="none";
+}
+});
+}
+</script>
+
+</body>
+</html>
