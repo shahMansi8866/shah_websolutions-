@@ -820,6 +820,48 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     z-index: 999;
 }
+
+        .hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+/* Text on left */
+.hero-text {
+    flex: 1;
+}
+
+/* Logo on right */
+.hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* pushes logo to right */
+}
+
+/* Logo styling */
+.hero-logo {
+    width: 280px;   /* adjust size */
+    height: auto;
+    max-width: 100%;
+}
+
+        @media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-image {
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .hero-logo {
+        width: 200px;
+    }
+}
     </style>
 </head>
 <body>
@@ -838,29 +880,38 @@
             <li><a href="contact.html">CONTACT</a></li>
             <a href="portfolios.html" class="view-all-btn">VIEW ALL PROJECTS →</a>
         </ul>
-        <div class="mobile-menu" id="mobileMenu">
-            <i class="fas fa-bars"></i>
-        </div>
+       <div class="hero-image">
+    <img src="logo.jpg" alt="BitByte Logo" class="hero-logo">
+</div>
     </div>
 </header>
 
 <main>
     <!-- Hero section -->
     <section class="hero">
-        <div class="container hero-content">
-            <div class="hero-text">
-                <h1>LEVEL UP YOUR<br><span>DIGITAL PRESENCE</span></h1>
-                <p>bitbyte crafts professional resumes, stunning portfolios, custom websites, and eye-catching posters that help you dominate your industry.</p>
-                <div class="hero-buttons">
-                    <a href="servise.html" class="btn-primary">▶ START MISSION</a>
-                    <a href="contact.html" class="btn-outline">⚡ CONTACT HQ</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <i class="fas fa-gamepad"></i>
+    <div class="container hero-content">
+        
+        <div class="hero-text">
+            <h1>LEVEL UP YOUR<br><span>DIGITAL PRESENCE</span></h1>
+            <p>
+                bitbyte crafts professional resumes, stunning portfolios, 
+                custom websites, and eye-catching posters that help you 
+                dominate your industry.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="servise.html" class="btn-primary">▶ START MISSION</a>
+                <a href="contact.html" class="btn-outline">⚡ CONTACT HQ</a>
             </div>
         </div>
-    </section>
+
+        <!-- RIGHT SIDE LOGO -->
+        <div class="hero-image">
+            <img src="images/logo.png" alt="BitByte Logo" class="hero-logo">
+        </div>
+
+    </div>
+</section>
     <!-- ========== ABOUT US SECTION ========== -->
 <section class="about-section">
     <div class="container">
