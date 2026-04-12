@@ -1,0 +1,423 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);background:#0a0a0f;color:#fff;overflow-x:hidden}
+canvas#bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
+
+.port{position:relative;z-index:1}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-bottom:0.5px solid rgba(255,255,255,0.08);background:rgba(10,10,15,0.7);backdrop-filter:blur(12px)}
+.logo{font-size:17px;font-weight:500;letter-spacing:-0.5px;color:#fff}.logo span{color:#a78bfa}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;cursor:pointer;transition:color 0.2s}
+.nav-links a:hover{color:#fff}
+.nav-cta{font-size:13px;padding:7px 18px;border-radius:8px;border:0.5px solid rgba(167,139,250,0.4);background:rgba(167,139,250,0.1);color:#c4b5fd;cursor:pointer;transition:all 0.2s}
+.nav-cta:hover{background:rgba(167,139,250,0.2)}
+
+.hero{min-height:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;position:relative}
+.hero-badge{font-size:12px;padding:5px 14px;border-radius:20px;background:rgba(167,139,250,0.12);color:#c4b5fd;border:0.5px solid rgba(167,139,250,0.3);margin-bottom:1.5rem;display:inline-block;letter-spacing:0.3px}
+.hero h1{font-size:52px;font-weight:500;line-height:1.1;letter-spacing:-2px;margin-bottom:1rem}
+.hero h1 .g1{color:#a78bfa}.hero h1 .g2{color:#38bdf8}.hero h1 .g3{color:#f472b6}
+.hero p{font-size:16px;color:rgba(255,255,255,0.5);max-width:500px;margin:0 auto 2rem;line-height:1.7}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-p{padding:11px 26px;border-radius:8px;font-size:14px;background:#7c3aed;color:#fff;border:none;cursor:pointer;font-weight:500;transition:all 0.2s}
+.btn-p:hover{background:#6d28d9}
+.btn-o{padding:11px 26px;border-radius:8px;font-size:14px;background:transparent;color:rgba(255,255,255,0.7);border:0.5px solid rgba(255,255,255,0.2);cursor:pointer;transition:all 0.2s}
+.btn-o:hover{border-color:rgba(255,255,255,0.4);color:#fff}
+.stats{display:flex;gap:3rem;justify-content:center;margin-top:3rem;flex-wrap:wrap}
+.stat .n{font-size:28px;font-weight:500;color:#a78bfa}.stat .l{font-size:12px;color:rgba(255,255,255,0.4);margin-top:2px}
+
+.section{padding:5rem 2rem;max-width:960px;margin:0 auto}
+.s-chip{font-size:11px;color:#a78bfa;letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
+.s-title{font-size:32px;font-weight:500;letter-spacing:-1px;margin-bottom:.5rem;color:#fff}
+.s-sub{font-size:15px;color:rgba(255,255,255,0.4);margin-bottom:2.5rem}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:start}
+.av{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#2563eb);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:500;margin-bottom:1.5rem}
+.about-text p{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.8;margin-bottom:1rem}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.25rem}
+.tag{font-size:12px;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.5);border:0.5px solid rgba(255,255,255,0.1)}
+
+.skill-item{margin-bottom:14px}
+.skill-item label{font-size:13px;color:rgba(255,255,255,0.4);display:flex;justify-content:space-between;margin-bottom:6px}
+.skill-bar{height:5px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden}
+.skill-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#7c3aed,#38bdf8)}
+
+.work-filter{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap}
+.fb{padding:6px 14px;border-radius:20px;font-size:13px;cursor:pointer;border:0.5px solid rgba(255,255,255,0.12);background:transparent;color:rgba(255,255,255,0.4);transition:all 0.2s}
+.fb.active{background:rgba(124,58,237,0.3);color:#c4b5fd;border-color:rgba(124,58,237,0.5)}
+.fb:hover:not(.active){border-color:rgba(255,255,255,0.25);color:rgba(255,255,255,0.7)}
+
+.work-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.wcard{border-radius:16px;border:0.5px solid rgba(255,255,255,0.08);overflow:hidden;cursor:pointer;transition:transform 0.3s,border-color 0.2s;transform-style:preserve-3d;background:rgba(255,255,255,0.03)}
+.wcard:hover{transform:translateY(-6px) rotateX(3deg) rotateY(-2deg);border-color:rgba(124,58,237,0.4)}
+.wthumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:48px;position:relative}
+.wtag{position:absolute;top:10px;right:10px;font-size:11px;padding:3px 9px;border-radius:10px;background:rgba(124,58,237,0.25);color:#c4b5fd;border:0.5px solid rgba(124,58,237,0.3)}
+.winfo{padding:1rem}
+.winfo h3{font-size:14px;font-weight:500;margin-bottom:4px;color:#fff}
+.winfo p{font-size:13px;color:rgba(255,255,255,0.4)}
+
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+.scard{padding:1.5rem 1.25rem;border-radius:16px;border:0.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);transition:transform 0.3s,border-color 0.2s;transform-style:preserve-3d}
+.scard:hover{transform:translateY(-4px) rotateX(4deg);border-color:rgba(124,58,237,0.3)}
+.sico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:1rem;background:rgba(124,58,237,0.15);border:0.5px solid rgba(124,58,237,0.2)}
+.scard h3{font-size:14px;font-weight:500;color:#fff;margin-bottom:.4rem}
+.scard p{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.6}
+
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tc{padding:1.25rem;border-radius:14px;border:0.5px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03)}
+.tc-q{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:1rem}
+.tc-a{display:flex;align-items:center;gap:10px}
+.tc-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500}
+.tc-n{font-size:13px;font-weight:500;color:#fff}.tc-r{font-size:12px;color:rgba(255,255,255,0.35)}
+
+.contact-wrap{display:grid;grid-template-columns:1fr 1.4fr;gap:2.5rem;align-items:start}
+.ci h3{font-size:15px;font-weight:500;color:#fff;margin-bottom:1rem}
+.cd{display:flex;align-items:flex-start;gap:10px;margin-bottom:1rem}
+.cico{width:32px;height:32px;border-radius:8px;background:rgba(124,58,237,0.15);border:0.5px solid rgba(124,58,237,0.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.cd p{font-size:14px;color:rgba(255,255,255,0.4);line-height:1.5}
+.socials{display:flex;gap:8px;margin-top:1.5rem}
+.soc{font-size:12px;padding:6px 12px;border-radius:8px;border:0.5px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);text-decoration:none;transition:all 0.2s}
+.soc:hover{border-color:rgba(167,139,250,0.4);color:#c4b5fd}
+
+.cform{display:flex;flex-direction:column;gap:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:13px;color:rgba(255,255,255,0.4)}
+.fg input,.fg textarea,.fg select{padding:9px 12px;border-radius:8px;border:0.5px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);font-size:14px;color:#fff;font-family:var(--font-sans);width:100%;transition:border-color 0.2s;outline:none}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:#7c3aed}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,255,255,0.2)}
+.fg select option{background:#1a1a2e;color:#fff}
+.fg textarea{resize:vertical;min-height:110px}
+.sbtn{padding:11px 24px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;align-self:flex-start;transition:opacity 0.2s}
+.sbtn:hover{opacity:.85}.sbtn:disabled{opacity:.4;cursor:default}
+.fsucc{display:none;padding:12px 16px;border-radius:8px;background:rgba(52,211,153,0.1);color:#6ee7b7;font-size:14px;border:0.5px solid rgba(52,211,153,0.2)}
+.ferr{display:none;padding:12px 16px;border-radius:8px;background:rgba(239,68,68,0.1);color:#fca5a5;font-size:14px;border:0.5px solid rgba(239,68,68,0.2)}
+
+.divider{border:none;border-top:0.5px solid rgba(255,255,255,0.06);margin:0}
+footer{text-align:center;padding:2rem;font-size:13px;color:rgba(255,255,255,0.25)}
+footer a{color:#a78bfa;text-decoration:none}
+
+@media(max-width:640px){
+  .about-grid,.contact-wrap,.tgrid{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .hero h1{font-size:32px}
+  .nav-links{display:none}
+  .stats{gap:1.5rem}
+}
+</style>
+
+<canvas id="bg"></canvas>
+
+<div class="port">
+<nav>
+  <div class="logo">alex<span>.</span>3d</div>
+  <div class="nav-links">
+    <a onclick="goTo('about')">About</a>
+    <a onclick="goTo('work')">Work</a>
+    <a onclick="goTo('services')">Services</a>
+    <a onclick="goTo('contact')">Contact</a>
+  </div>
+  <button class="nav-cta" onclick="goTo('contact')">Hire me</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Available for freelance · 2026</div>
+  <h1><span class="g1">Visual</span> <span class="g2">stories</span><br><span class="g3">in 3D</span></h1>
+  <p>Multidisciplinary creative student crafting brand identities, motion graphics, and immersive digital experiences.</p>
+  <div class="hero-btns">
+    <button class="btn-p" onclick="goTo('work')">View my work</button>
+    <button class="btn-o" onclick="goTo('contact')">Let's collaborate</button>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n">24+</div><div class="l">Projects</div></div>
+    <div class="stat"><div class="n">12</div><div class="l">Clients</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">Awards</div></div>
+    <div class="stat"><div class="n">2</div><div class="l">Years exp</div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="about">
+  <div class="s-chip">About me</div>
+  <div class="s-title">Hello, I'm Alex</div>
+  <div class="s-sub">Final-year student at the School of Visual Arts, Ahmedabad</div>
+  <div class="about-grid">
+    <div>
+      <div class="av">A</div>
+      <p class="about-text"><p>I study graphic design and communication — with a focus on brand identity and digital experiences. Great design isn't just beautiful, it solves problems and tells stories.</p>
+      <p>When I'm not designing, I'm illustrating, shooting film photography, or exploring typography at 2am.</p></p>
+      <div class="tags">
+        <span class="tag">Branding</span><span class="tag">Motion</span><span class="tag">UI/UX</span>
+        <span class="tag">Photography</span><span class="tag">Illustration</span><span class="tag">3D</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-item"><label><span>Figma & UI Design</span><span>92%</span></label><div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
+      <div class="skill-item"><label><span>Brand Identity</span><span>88%</span></label><div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
+      <div class="skill-item"><label><span>Adobe Illustrator</span><span>85%</span></label><div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></div>
+      <div class="skill-item"><label><span>Blender / 3D</span><span>78%</span></label><div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></div>
+      <div class="skill-item"><label><span>Motion / After Effects</span><span>75%</span></label><div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></div>
+      <div class="skill-item"><label><span>Photography</span><span>80%</span></label><div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="work">
+  <div class="s-chip">Portfolio</div>
+  <div class="s-title">Selected work</div>
+  <div class="s-sub">Things I'm proud of</div>
+  <div class="work-filter">
+    <button class="fb active" onclick="fw(this,'all')">All</button>
+    <button class="fb" onclick="fw(this,'brand')">Branding</button>
+    <button class="fb" onclick="fw(this,'ui')">UI/UX</button>
+    <button class="fb" onclick="fw(this,'motion')">Motion</button>
+    <button class="fb" onclick="fw(this,'3d')">3D</button>
+    <button class="fb" onclick="fw(this,'photo')">Photography</button>
+  </div>
+  <div class="work-grid" id="wg">
+    <div class="wcard" data-cat="brand"><div class="wthumb" style="background:rgba(124,58,237,0.12)">🌿<div class="wtag">Branding</div></div><div class="winfo"><h3>Bloom Café — Brand identity</h3><p>Logo, color system & packaging for eco-café</p></div></div>
+    <div class="wcard" data-cat="ui"><div class="wthumb" style="background:rgba(56,189,248,0.1)">📱<div class="wtag" style="background:rgba(56,189,248,0.2);color:#7dd3fc;border-color:rgba(56,189,248,0.3)">UI/UX</div></div><div class="winfo"><h3>StudyFlow — App design</h3><p>Productivity app concept for students with ADHD</p></div></div>
+    <div class="wcard" data-cat="3d"><div class="wthumb" style="background:rgba(244,114,182,0.1)">🔮<div class="wtag" style="background:rgba(244,114,182,0.2);color:#f9a8d4;border-color:rgba(244,114,182,0.3)">3D</div></div><div class="winfo"><h3>Crystal — 3D sculpture series</h3><p>Abstract generative 3D forms in Blender</p></div></div>
+    <div class="wcard" data-cat="motion"><div class="wthumb" style="background:rgba(52,211,153,0.1)">🎬<div class="wtag" style="background:rgba(52,211,153,0.15);color:#6ee7b7;border-color:rgba(52,211,153,0.3)">Motion</div></div><div class="winfo"><h3>Climate — Title sequence</h3><p>Animated opener for a documentary short film</p></div></div>
+    <div class="wcard" data-cat="photo"><div class="wthumb" style="background:rgba(251,146,60,0.1)">📷<div class="wtag" style="background:rgba(251,146,60,0.15);color:#fdba74;border-color:rgba(251,146,60,0.3)">Photo</div></div><div class="winfo"><h3>Urban textures — Series</h3><p>35mm street photography in Ahmedabad</p></div></div>
+    <div class="wcard" data-cat="3d"><div class="wthumb" style="background:rgba(167,139,250,0.1)">🌐<div class="wtag">3D</div></div><div class="winfo"><h3>Orbit — 3D brand world</h3><p>Full 3D brand environment for a tech startup</p></div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="services">
+  <div class="s-chip">What I offer</div>
+  <div class="s-title">Services</div>
+  <div class="s-sub">How I can help you</div>
+  <div class="services-grid">
+    <div class="scard"><div class="sico">🎨</div><h3>Brand identity</h3><p>Logos, color systems, typography & brand guidelines from scratch.</p></div>
+    <div class="scard"><div class="sico">📐</div><h3>UI/UX design</h3><p>Wireframes, prototypes & high-fidelity screens in Figma.</p></div>
+    <div class="scard"><div class="sico">🎥</div><h3>Motion design</h3><p>Logo animations, explainers & short-form social content.</p></div>
+    <div class="scard"><div class="sico">🔮</div><h3>3D & CGI</h3><p>Product renders, abstract art & 3D brand environments in Blender.</p></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section">
+  <div class="s-chip">Kind words</div>
+  <div class="s-title">Testimonials</div>
+  <div class="s-sub">From people I've worked with</div>
+  <div class="tgrid">
+    <div class="tc"><div class="tc-q">"Alex brought our café brand to life in a way we never imagined. Remarkable attention to detail and ability to translate our vision."</div><div class="tc-a"><div class="tc-av" style="background:rgba(124,58,237,0.2);color:#c4b5fd">SR</div><div><div class="tc-n">Sanya R.</div><div class="tc-r">Owner, Bloom Café</div></div></div></div>
+    <div class="tc"><div class="tc-q">"Working with Alex on our app UI was smooth, fast, and the result genuinely exceeded expectations. Highly recommended."</div><div class="tc-a"><div class="tc-av" style="background:rgba(56,189,248,0.15);color:#7dd3fc">DM</div><div><div class="tc-n">Dev M.</div><div class="tc-r">Co-founder, StudyFlow</div></div></div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="contact">
+  <div class="s-chip">Get in touch</div>
+  <div class="s-title">Let's work together</div>
+  <div class="s-sub">Fill out the form — I'll reply within 24 hours</div>
+  <div class="contact-wrap">
+    <div class="ci">
+      <h3>Contact details</h3>
+      <div class="cd"><div class="cico">✉</div><p>alex@creates.design<br><span style="font-size:12px;color:rgba(255,255,255,0.25)">Best way to reach me</span></p></div>
+      <div class="cd"><div class="cico">📍</div><p>Ahmedabad, Gujarat, India<br><span style="font-size:12px;color:rgba(255,255,255,0.25)">Open to remote projects</span></p></div>
+      <div class="cd"><div class="cico">🕐</div><p>Mon – Fri, 10am – 8pm IST<br><span style="font-size:12px;color:rgba(255,255,255,0.25)">Response within 24h</span></p></div>
+      <div class="socials">
+        <a class="soc" href="#">Behance</a>
+        <a class="soc" href="#">Dribbble</a>
+        <a class="soc" href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="cform" id="cf">
+      <div class="frow">
+        <div class="fg"><label>First name</label><input type="text" id="fn" placeholder="Alex"></div>
+        <div class="fg"><label>Email</label><input type="email" id="fe" placeholder="you@email.com"></div>
+      </div>
+      <div class="fg"><label>Project type</label>
+        <select id="fs">
+          <option value="">Select a service...</option>
+          <option>Brand identity</option><option>UI/UX design</option>
+          <option>Motion design</option><option>3D & CGI</option>
+          <option>Photography</option><option>Other</option>
+        </select>
+      </div>
+      <div class="fg"><label>Tell me about your project</label><textarea id="fm" placeholder="What are you working on? Budget, timeline, any details help..."></textarea></div>
+      <button class="sbtn" id="sb" onclick="submitForm()">Send message</button>
+      <div class="fsucc" id="fsucc">Message sent! I'll get back to you within 24 hours.</div>
+      <div class="ferr" id="ferr">Something went wrong. Please try again or email me directly.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Designed in 3D by <a href="#">Alex Creates</a> — Ahmedabad, 2026</p>
+</footer>
+</div>
+
+<script>
+function goTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth'})}
+function fw(btn,cat){
+  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.wcard').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'':'none'});
+}
+
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+let W,H,particles=[];
+
+function resize(){W=canvas.width=canvas.offsetWidth;H=canvas.height=canvas.offsetHeight}
+window.addEventListener('resize',()=>{resize();initParticles()});
+resize();
+
+function Particle(){
+  this.x=Math.random()*W;
+  this.y=Math.random()*H;
+  this.z=Math.random()*2+0.5;
+  this.vx=(Math.random()-0.5)*0.4*this.z;
+  this.vy=(Math.random()-0.5)*0.4*this.z;
+  this.r=Math.random()*2+0.5;
+  this.hue=Math.random()<0.5?270:200;
+  this.alpha=Math.random()*0.5+0.1;
+  this.connections=[];
+}
+
+function initParticles(){
+  particles=[];
+  const count=Math.min(60,Math.floor(W*H/12000));
+  for(let i=0;i<count;i++) particles.push(new Particle());
+}
+initParticles();
+
+let mx=W/2,my=H/2;
+document.addEventListener('mousemove',e=>{
+  const r=canvas.getBoundingClientRect();
+  mx=e.clientX-r.left; my=e.clientY-r.top;
+});
+
+let frame=0;
+function draw(){
+  requestAnimationFrame(draw);
+  ctx.clearRect(0,0,W,H);
+  frame++;
+
+  const gridSize=80;
+  ctx.strokeStyle='rgba(100,80,200,0.04)';
+  ctx.lineWidth=0.5;
+  const offX=(frame*0.2)%gridSize;
+  const offY=(frame*0.1)%gridSize;
+  for(let x=-gridSize+offX;x<W+gridSize;x+=gridSize){
+    ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
+  }
+  for(let y=-gridSize+offY;y<H+gridSize;y+=gridSize){
+    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+  }
+
+  particles.forEach(p=>{
+    const dx=mx-p.x,dy=my-p.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<180){
+      p.vx+=dx/dist*0.03;
+      p.vy+=dy/dist*0.03;
+    }
+    p.vx*=0.98; p.vy*=0.98;
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`hsla(${p.hue},80%,75%,${p.alpha})`;
+    ctx.fill();
+  });
+
+  for(let i=0;i<particles.length;i++){
+    for(let j=i+1;j<particles.length;j++){
+      const a=particles[i],b=particles[j];
+      const dx=a.x-b.x,dy=a.y-b.y;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<120){
+        const alpha=0.12*(1-d/120);
+        ctx.beginPath();
+        ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle=`rgba(167,139,250,${alpha})`;
+        ctx.lineWidth=0.5;ctx.stroke();
+      }
+    }
+  }
+
+  const t=frame*0.008;
+  const cx=W*0.5+Math.cos(t)*30,cy=160+Math.sin(t*0.7)*20;
+  const sides=6,r=28;
+  ctx.beginPath();
+  for(let i=0;i<sides;i++){
+    const a=i/sides*Math.PI*2-Math.PI/6;
+    const px=cx+Math.cos(a)*r,py=cy+Math.sin(a)*r;
+    i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+  }
+  ctx.closePath();
+  ctx.strokeStyle='rgba(167,139,250,0.15)';
+  ctx.lineWidth=0.5;ctx.stroke();
+
+  const cx2=W*0.85+Math.cos(t*0.6+1)*20,cy2=300+Math.sin(t)*25;
+  ctx.beginPath();
+  ctx.arc(cx2,cy2,20,0,Math.PI*2);
+  ctx.strokeStyle='rgba(56,189,248,0.12)';ctx.lineWidth=0.5;ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(cx2,cy2,32,0,Math.PI*2);
+  ctx.strokeStyle='rgba(56,189,248,0.06)';ctx.lineWidth=0.5;ctx.stroke();
+
+  const cx3=W*0.1+Math.sin(t*0.5)*15,cy3=350+Math.cos(t*0.8)*20;
+  for(let i=0;i<4;i++){
+    ctx.beginPath();
+    ctx.rect(cx3-12+i*4,cy3-12+i*4,24-i*8,24-i*8);
+    ctx.strokeStyle=`rgba(244,114,182,${0.1-i*0.02})`;ctx.lineWidth=0.5;ctx.stroke();
+  }
+}
+draw();
+
+async function submitForm(){
+  const btn=document.getElementById('sb');
+  const name=document.getElementById('fn').value.trim();
+  const email=document.getElementById('fe').value.trim();
+  const subject=document.getElementById('fs').value;
+  const message=document.getElementById('fm').value.trim();
+  const succ=document.getElementById('fsucc');
+  const err=document.getElementById('ferr');
+
+  if(!name||!email||!message){
+    err.textContent='Please fill in your name, email, and message.';
+    err.style.display='block';succ.style.display='none';return;
+  }
+  btn.disabled=true;btn.textContent='Sending...';
+  succ.style.display='none';err.style.display='none';
+
+  try{
+    const res=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        access_key:'YOUR_WEB3FORMS_ACCESS_KEY',
+        name,email,subject:subject||'Portfolio enquiry',message
+      })
+    });
+    const data=await res.json();
+    if(data.success){
+      succ.style.display='block';
+      document.getElementById('fn').value='';
+      document.getElementById('fe').value='';
+      document.getElementById('fs').value='';
+      document.getElementById('fm').value='';
+      btn.textContent='Sent!';
+      setTimeout(()=>{btn.textContent='Send message';btn.disabled=false},3000);
+    }else throw new Error();
+  }catch(e){
+    err.textContent='Something went wrong. Please try again or email directly.';
+    err.style.display='block';btn.textContent='Send message';btn.disabled=false;
+  }
+}
+</script>

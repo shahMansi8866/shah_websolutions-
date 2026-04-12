@@ -1,0 +1,269 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .pf { background: #0d0f1a; color: #fff; min-height: 100vh; }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px; border-bottom: 0.5px solid rgba(255,255,255,0.1);
+    position: sticky; top: 0; background: #0d0f1a; z-index: 100;
+  }
+  .nav-logo { font-size: 18px; font-weight: 500; color: #c8f135; letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: #aaa; text-decoration: none; font-size: 13px; letter-spacing: 0.5px; transition: color 0.2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-contact {
+    background: transparent; border: 0.5px solid rgba(255,255,255,0.3);
+    color: #fff; padding: 8px 20px; border-radius: 20px; font-size: 13px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .nav-contact:hover { background: #c8f135; color: #0d0f1a; border-color: #c8f135; }
+
+  .hero {
+    display: grid; grid-template-columns: 1fr 340px; align-items: center;
+    gap: 40px; padding: 60px 40px 40px; min-height: 420px; position: relative; overflow: hidden;
+  }
+  .hero-text h3 { font-size: 13px; color: #aaa; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+  .hero-text h1 { font-size: 48px; font-weight: 500; line-height: 1.1; margin-bottom: 6px; }
+  .hero-text h1 span { color: #c8f135; font-style: italic; }
+  .hero-text h2 { font-size: 36px; font-weight: 400; color: rgba(255,255,255,0.7); margin-bottom: 24px; }
+  .hero-text p { color: #aaa; font-size: 14px; line-height: 1.7; max-width: 420px; margin-bottom: 28px; }
+  .btn-primary {
+    display: inline-block; background: #c8f135; color: #0d0f1a;
+    padding: 12px 28px; border-radius: 24px; font-size: 13px; font-weight: 500;
+    text-decoration: none; cursor: pointer; border: none; letter-spacing: 0.5px;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .hero-avatar {
+    width: 280px; height: 320px; background: linear-gradient(135deg, #1a2a1a 0%, #0d1a0d 100%);
+    border-radius: 24px; display: flex; align-items: center; justify-content: center;
+    border: 0.5px solid rgba(200,241,53,0.2); margin: 0 auto; position: relative; overflow: hidden;
+  }
+  .avatar-initials {
+    font-size: 72px; font-weight: 500; color: #c8f135; opacity: 0.6; letter-spacing: -2px;
+  }
+  .hero-badge {
+    position: absolute; background: #131826; border: 0.5px solid rgba(255,255,255,0.15);
+    border-radius: 12px; padding: 10px 14px; font-size: 11px;
+  }
+  .badge-left { left: -20px; top: 60px; }
+  .badge-right { right: -20px; top: 40px; min-width: 150px; }
+  .badge-label { color: #aaa; font-size: 10px; margin-bottom: 4px; }
+  .badge-val { color: #c8f135; font-weight: 500; }
+  .skill-bar { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+  .skill-bar span { font-size: 10px; color: #aaa; min-width: 40px; }
+  .bar-track { flex: 1; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .bar-fill { height: 100%; background: #c8f135; border-radius: 2px; }
+
+  section { padding: 60px 40px; }
+  .section-title { text-align: center; font-size: 28px; font-weight: 500; color: #c8f135; margin-bottom: 8px; }
+  .section-sub { text-align: center; color: #aaa; font-size: 13px; margin-bottom: 40px; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .about-text p { color: #aaa; font-size: 14px; line-height: 1.8; margin-bottom: 14px; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-card {
+    background: #131826; border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 20px; text-align: center;
+  }
+  .stat-num { font-size: 36px; font-weight: 500; color: #c8f135; }
+  .stat-label { font-size: 12px; color: #aaa; margin-top: 4px; }
+
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px;
+    margin-bottom: 24px;
+  }
+  .skill-card {
+    background: #131826; border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 20px 12px; text-align: center; transition: border-color 0.2s;
+  }
+  .skill-card:hover { border-color: rgba(200,241,53,0.4); }
+  .skill-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+  .skill-name { font-size: 11px; color: #aaa; }
+
+  .skill-icon.html { font-size: 26px; color: #e34c26; font-weight: 700; font-family: monospace; }
+  .skill-icon.css { font-size: 26px; color: #2965f1; font-weight: 700; font-family: monospace; }
+  .skill-icon.js { font-size: 26px; color: #f7df1e; font-weight: 700; font-family: monospace; background: #3c3c00; border-radius: 4px; padding: 2px 4px; }
+  .skill-icon.react { color: #61dafb; font-size: 26px; }
+  .skill-icon.py { color: #3572A5; font-size: 26px; }
+  .skill-icon.git { color: #f34f29; font-size: 26px; }
+
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
+  }
+  .project-card {
+    background: #131826; border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 16px; overflow: hidden; transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .project-card:hover { border-color: rgba(200,241,53,0.4); transform: translateY(-3px); }
+  .project-thumb {
+    height: 140px; display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+  }
+  .project-body { padding: 16px; }
+  .project-tag {
+    display: inline-block; background: rgba(200,241,53,0.15); color: #c8f135;
+    font-size: 10px; padding: 3px 10px; border-radius: 10px; margin-bottom: 8px;
+  }
+  .project-title { font-size: 15px; font-weight: 500; margin-bottom: 6px; }
+  .project-desc { font-size: 12px; color: #aaa; line-height: 1.6; }
+  .project-links { display: flex; gap: 10px; margin-top: 12px; }
+  .project-link {
+    font-size: 11px; color: #c8f135; text-decoration: none; border: 0.5px solid rgba(200,241,53,0.3);
+    padding: 4px 12px; border-radius: 10px; transition: background 0.2s;
+  }
+  .project-link:hover { background: rgba(200,241,53,0.1); }
+
+  .contact-section { background: #f5f5f0; border-radius: 24px; margin: 0 20px 40px; }
+  .contact-inner { padding: 50px 40px; }
+  .contact-inner .section-title { color: #0d0f1a; }
+  .contact-inner .section-sub { color: #555; }
+  .contact-form { max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
+  .contact-form input, .contact-form textarea {
+    background: #fff; border: 0.5px solid #ddd; border-radius: 10px;
+    padding: 14px 16px; font-size: 13px; color: #0d0f1a; font-family: var(--font-sans);
+    outline: none; transition: border-color 0.2s;
+  }
+  .contact-form input:focus, .contact-form textarea:focus { border-color: #0d0f1a; }
+  .contact-form textarea { min-height: 100px; resize: vertical; }
+  .contact-form .btn-dark {
+    background: #0d0f1a; color: #fff; border: none; padding: 14px; border-radius: 10px;
+    font-size: 13px; font-weight: 500; cursor: pointer; letter-spacing: 0.5px; transition: opacity 0.2s;
+  }
+  .contact-form .btn-dark:hover { opacity: 0.8; }
+
+  footer { text-align: center; padding: 20px; color: #555; font-size: 12px; }
+</style>
+
+<div class="pf">
+  <nav>
+    <div class="nav-logo">SA</div>
+    <ul class="nav-links">
+      <li><a href="#">About me</a></li>
+      <li><a href="#">Skills</a></li>
+      <li><a href="#">Projects</a></li>
+    </ul>
+    <button class="nav-contact">Contact</button>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h3>Hello, World!</h3>
+      <h1>I'm <span>Sarah Ali</span></h1>
+      <h2>CS Student & Developer</h2>
+      <p>A passionate computer science student building real-world projects with modern web technologies. Currently in my 3rd year at university and open to internship opportunities.</p>
+      <button class="btn-primary">View My Projects</button>
+    </div>
+    <div style="position:relative; display:flex; justify-content:center; align-items:center;">
+      <div class="hero-avatar">
+        <span class="avatar-initials">SA</span>
+      </div>
+      <div class="hero-badge badge-left">
+        <div class="badge-label">Currently</div>
+        <div class="badge-val">3rd Year CS</div>
+      </div>
+      <div class="hero-badge badge-right">
+        <div class="badge-label">MY SKILLS</div>
+        <div class="skill-bar"><span>Frontend</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div></div>
+        <div class="skill-bar"><span>Backend</span><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div></div>
+        <div class="skill-bar"><span>UI/UX</span><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-title">WHO AM I?</div>
+    <div class="section-sub">A little about me</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a 3rd-year Computer Science student with a love for building things that live on the internet. I specialize in React and Python, and I'm always exploring new technologies.</p>
+        <p>When I'm not coding, you'll find me solving competitive programming challenges, contributing to open-source projects, or sketching UI designs in Figma.</p>
+        <p>I'm actively looking for internship and part-time opportunities where I can apply my skills and keep learning from experienced teams.</p>
+        <button class="btn-primary" style="margin-top:8px;">Download Resume</button>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card"><div class="stat-num">12+</div><div class="stat-label">Projects Built</div></div>
+        <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Hackathons Won</div></div>
+        <div class="stat-card"><div class="stat-num">8.7</div><div class="stat-label">CGPA</div></div>
+        <div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Internships</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">MY SKILLS</div>
+    <div class="section-sub">Technologies I work with</div>
+    <div class="skills-grid">
+      <div class="skill-card"><span class="skill-icon html">H5</span><div class="skill-name">HTML5</div></div>
+      <div class="skill-card"><span class="skill-icon css">C3</span><div class="skill-name">CSS3</div></div>
+      <div class="skill-card"><span class="skill-icon js">JS</span><div class="skill-name">JavaScript</div></div>
+      <div class="skill-card"><span class="skill-icon react">⬡</span><div class="skill-name">React</div></div>
+      <div class="skill-card"><span class="skill-icon py">Py</span><div class="skill-name">Python</div></div>
+      <div class="skill-card"><span class="skill-icon git">⎇</span><div class="skill-name">Git</div></div>
+      <div class="skill-card"><span class="skill-icon" style="color:#47A248">◉</span><div class="skill-name">MongoDB</div></div>
+      <div class="skill-card"><span class="skill-icon" style="color:#00ADD8">Go</span><div class="skill-name">Figma</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title">MY PROJECTS</div>
+    <div class="section-sub">Things I've built</div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-thumb" style="background:#131a2a;">🛒</div>
+        <div class="project-body">
+          <span class="project-tag">React · Node.js</span>
+          <div class="project-title">Campus Marketplace</div>
+          <div class="project-desc">A peer-to-peer platform for students to buy and sell items within their university campus.</div>
+          <div class="project-links">
+            <a class="project-link" href="#">Live</a>
+            <a class="project-link" href="#">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb" style="background:#1a2a1a;">📊</div>
+        <div class="project-body">
+          <span class="project-tag">Python · ML</span>
+          <div class="project-title">Grade Predictor</div>
+          <div class="project-desc">Machine learning model that predicts student grades based on study habits and attendance data.</div>
+          <div class="project-links">
+            <a class="project-link" href="#">Demo</a>
+            <a class="project-link" href="#">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb" style="background:#2a1a2a;">📅</div>
+        <div class="project-body">
+          <span class="project-tag">React · Firebase</span>
+          <div class="project-title">Study Planner</div>
+          <div class="project-desc">A smart study scheduler with Pomodoro timer, task tracking, and progress analytics for students.</div>
+          <div class="project-links">
+            <a class="project-link" href="#">Live</a>
+            <a class="project-link" href="#">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-section">
+    <div class="contact-inner">
+      <div class="section-title">LET'S CONNECT</div>
+      <div class="section-sub">Have an opportunity or just want to say hi?</div>
+      <div class="contact-form">
+        <input type="text" placeholder="Your name" />
+        <input type="email" placeholder="Email address" />
+        <textarea placeholder="Your message..."></textarea>
+        <button class="btn-dark">Send Message</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Made with ❤ by Sarah Ali · 2026</footer>
+</div>
