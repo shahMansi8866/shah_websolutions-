@@ -5,724 +5,1150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="bitbyte Services - Resume Building, Portfolio Creation, Website Development with gaming-inspired packages. Level up your career and business.">
     <title>Services | bitbyte</title>
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Inter & Space Grotesk -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
     <style>
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --cyan: #0891b2;
+            --cyan-light: #06b6d4;
+            --cyan-dark: #0e7490;
+            --blue: #3b82f6;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --gradient: linear-gradient(135deg, #0891b2, #3b82f6);
+            --radius-sm: 0.75rem;
+            --radius-md: 1.25rem;
+            --radius-lg: 1.75rem;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
+            --shadow-cyan: 0 8px 24px rgba(8,145,178,0.2);
+        }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: #f8fafc;
-            color: #0f172a;
-            line-height: 1.5;
-            scroll-behavior: smooth;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #e2e8f0;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #0891b2;
-            border-radius: 10px;
-        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--border); }
+        ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
 
+        /* ── Container ── */
         .container {
-            max-width: 1280px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 28px;
+            padding: 0 clamp(1rem, 5vw, 2rem);
         }
 
-        /* ========== navbar ========== */
+        /* ── Navbar ── */
         .navbar {
             position: sticky;
             top: 0;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.9rem 0;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            z-index: 1000;
+            background: rgba(255,255,255,0.93);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0;
         }
+
         .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 64px;
         }
+
         .logo a {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 1.9rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
             text-decoration: none;
-            background: linear-gradient(135deg, #0891b2, #06b6d4, #3b82f6);
+            background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            transition: 0.2s;
         }
-        .logo a:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
-        }
+
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: clamp(1rem, 2.5vw, 2rem);
             align-items: center;
             list-style: none;
         }
+
         .nav-links li a {
             text-decoration: none;
-            color: #334155;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: 0.2s;
-        }
-        .nav-links li a:hover, .nav-links li a.active {
-            color: #0891b2;
-        }
-        .mobile-menu {
-            display: none;
-            font-size: 1.6rem;
-            cursor: pointer;
-            color: #0f172a;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+            white-space: nowrap;
         }
 
-        /* section titles */
-        .section-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 1rem;
-            letter-spacing: -0.01em;
-            color: #0f172a;
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            color: var(--cyan);
         }
-        .section-title span {
-            background: linear-gradient(135deg, #0891b2, #3b82f6);
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 8px;
+            transition: background 0.2s;
+            border: none;
+            background: transparent;
+        }
+
+        .hamburger:hover { background: #f1f5f9; }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .hamburger.open span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
+        /* Mobile drawer */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            inset: 64px 0 0 0;
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            padding: 2rem 1.5rem;
+            flex-direction: column;
+            gap: 0.25rem;
+            transform: translateX(-100%);
+            transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-nav.open {
+            transform: translateX(0);
+        }
+
+        .mobile-nav a {
+            display: block;
+            padding: 0.9rem 1rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border-radius: var(--radius-sm);
+            transition: all 0.15s;
+        }
+
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            background: #f0f9ff;
+            color: var(--cyan);
+            padding-left: 1.5rem;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            padding: clamp(3rem, 8vw, 7rem) 0 clamp(2rem, 4vw, 3.5rem);
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f0f9ff;
+            color: var(--cyan-dark);
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            border: 1px solid #bae6fd;
+            margin-bottom: 1.25rem;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5.5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        /* service headers */
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ── Section wrappers ── */
+        .section {
+            padding: clamp(2.5rem, 5vw, 4.5rem) 0;
+        }
+
+        .section + .section {
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── Section titles ── */
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title span {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ── Service header ── */
         .service-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
-        .service-header i {
-            font-size: 2.5rem;
-            color: #0891b2;
-            margin-bottom: 0.5rem;
+
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
         }
+
         .service-header h2 {
-            font-size: 2rem;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+        }
+
+        .service-header p {
+            color: var(--text-secondary);
+        }
+
+        /* ── Pricing grid ── */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 1.5rem;
+            align-items: stretch;
+        }
+
+        .package-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: clamp(1.5rem, 3vw, 2rem);
+            border: 1.5px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--border);
+            transition: background 0.25s;
+        }
+
+        .package-card.featured::before {
+            background: var(--gradient);
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: #cbd5e1;
+        }
+
+        .package-card.featured {
+            border-color: #bae6fd;
+        }
+
+        .badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gradient);
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+            text-transform: uppercase;
+        }
+
+        .package-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
             margin-bottom: 0.5rem;
         }
 
-        /* pricing grid (cards) */
-        .pricing-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-            margin: 2rem 0;
-        }
-        .package-card {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 2rem 1.5rem;
-            flex: 1;
-            min-width: 260px;
-            max-width: 320px;
-            transition: all 0.25s;
-            border: 1px solid #e2e8f0;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-        .package-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.08);
-            border-color: #cbd5e1;
-        }
-        .package-card.featured {
-            border-top: 4px solid #0891b2;
-            position: relative;
-        }
-        .package-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.75rem;
-        }
         .package-price {
-            font-size: 2rem;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
             font-weight: 800;
-            color: #0891b2;
-            margin: 1rem 0;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.03em;
         }
+
+        .package-price small {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .package-desc {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
         .package-features {
             list-style: none;
-            margin: 1.5rem 0;
-            text-align: left;
+            flex: 1;
+            margin-bottom: 1.75rem;
         }
+
         .package-features li {
-            margin-bottom: 0.6rem;
             display: flex;
-            align-items: center;
-            gap: 0.6rem;
+            align-items: flex-start;
+            gap: 0.65rem;
+            margin-bottom: 0.65rem;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
         }
-        .package-features i {
-            color: #0891b2;
-            width: 1.2rem;
+
+        .package-features li i {
+            color: var(--cyan);
+            margin-top: 0.15rem;
+            flex-shrink: 0;
+            font-size: 0.85rem;
         }
-        .btn-primary, .btn-secondary {
+
+        /* ── Buttons ── */
+        .btn-primary {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 0.7rem 1.5rem;
-            border-radius: 40px;
-            font-weight: 600;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.88rem;
             text-decoration: none;
-            transition: all 0.25s;
-            font-size: 0.9rem;
-            background: #0891b2;
+            transition: all 0.2s;
+            background: var(--gradient);
             color: white;
             border: none;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(8,145,178,0.2);
+            box-shadow: var(--shadow-cyan);
+            letter-spacing: 0.03em;
+            width: 100%;
+            text-align: center;
         }
+
         .btn-primary:hover {
-            background: #0e7490;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(8,145,178,0.25);
+            box-shadow: 0 12px 28px rgba(8,145,178,0.3);
+            filter: brightness(1.05);
         }
+
         .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: all 0.2s;
             background: white;
-            color: #0891b2;
-            border: 1.5px solid #0891b2;
-            box-shadow: none;
+            color: var(--cyan);
+            border: 2px solid var(--cyan);
+            cursor: pointer;
+            letter-spacing: 0.03em;
         }
+
         .btn-secondary:hover {
             background: #f0f9ff;
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(8,145,178,0.12);
         }
 
-        /* features grid for add-ons */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
+        /* ── Custom build bar ── */
+        .custom-bar {
             margin-top: 2rem;
+            background: #f8fafc;
+            border: 1.5px dashed #cbd5e1;
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
-        .feature {
-            background: white;
-            border-radius: 1.2rem;
-            padding: 1.8rem;
+
+        .custom-bar p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .custom-bar strong {
+            color: var(--text-primary);
+        }
+
+        /* ── Add-ons ── */
+        .addons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+            gap: 1.25rem;
+        }
+
+        .addon-card {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
             text-align: center;
-            border: 1px solid #e2e8f0;
-            transition: 0.2s;
+            border: 1.5px solid var(--border);
+            transition: all 0.2s;
         }
-        .feature i {
-            font-size: 2.2rem;
-            color: #0891b2;
-            margin-bottom: 1rem;
+
+        .addon-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: #bae6fd;
         }
-        .feature h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #0f172a;
+
+        .addon-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #e0f2fe, #dbeafe);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+            font-size: 1.3rem;
+            color: var(--cyan);
         }
-        .feature p {
-            color: #0891b2;
+
+        .addon-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+        }
+
+        .addon-card .price {
+            color: var(--cyan);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        /* ── Who is this for ── */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+            gap: 1.25rem;
+        }
+
+        .audience-card {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            border: 1.5px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .audience-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            border-color: #bae6fd;
+        }
+
+        .audience-card .icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .audience-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .audience-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* ── FAQ ── */
+        .faq {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 1.1rem 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.97rem;
             font-weight: 600;
-        }
-
-        hr {
-            margin: 2rem 0;
+            background: none;
             border: none;
-            border-top: 1px solid #e2e8f0;
+            cursor: pointer;
+            color: var(--text-primary);
+            text-align: left;
         }
 
-        /* cta section */
-        .cta {
-            background: linear-gradient(115deg, #eef2ff 0%, #ffffff 100%);
-            border-radius: 2rem;
-            margin: 2rem 0 3rem;
-            padding: 3rem 2rem;
-            text-align: center;
-            border: 1px solid #e2e8f0;
+        .faq-question .faq-icon {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--cyan);
+            transition: all 0.2s;
         }
-        .cta h2 {
-            font-size: 2rem;
+
+        .faq-item.active .faq-icon {
+            background: var(--cyan);
+            color: white;
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 0 0 1.1rem;
+            color: var(--text-secondary);
+            font-size: 0.93rem;
+            line-height: 1.7;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* ── Footer ── */
+        .footer {
+            background: #f1f5f9;
+            border-top: 1px solid var(--border);
+            padding: clamp(2rem, 5vw, 3.5rem) 0 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .footer-brand .logo-text {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
             font-weight: 800;
-            color: #0f172a;
-        }
-        .glow-text {
-            background: linear-gradient(135deg, #0891b2, #3b82f6);
+            background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-        }
-        .cta p {
-            max-width: 550px;
-            margin: 1rem auto 2rem;
-            color: #334155;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
-        /* footer */
-        .footer {
-            background: #f1f5f9;
-            border-top: 1px solid #e2e8f0;
-            padding: 3rem 0 1.5rem;
-            margin-top: 2rem;
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.6;
         }
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 2rem;
-        }
-        .footer-content div h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #0f172a;
+
+        .footer-col h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-primary);
             margin-bottom: 1rem;
         }
+
         .footer-links {
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
-        .footer-links li, .footer-links li a {
-            color: #475569;
+
+        .footer-links li a {
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.88rem;
             transition: color 0.2s;
         }
-        .footer-links li a:hover {
-            color: #0891b2;
+
+        .footer-links li a:hover { color: var(--cyan); }
+
+        .footer-links li span {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
         }
-        .footer-links li i {
-            width: 1.4rem;
-            color: #0891b2;
+
+        .footer-links li span i {
+            color: var(--cyan);
+            margin-top: 0.15rem;
+            flex-shrink: 0;
         }
+
         .footer-bottom {
-            text-align: center;
             margin-top: 2.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e2e8f0;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
             font-size: 0.8rem;
-            color: #64748b;
+            color: var(--text-muted);
         }
 
-        /* responsive */
-        @media (max-width: 780px) {
-            .container {
-                padding: 0 20px;
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
             }
-            .mobile-menu {
-                display: block;
+
+            .footer-brand {
+                grid-column: 1 / -1;
             }
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                flex-direction: column;
-                background: white;
-                width: 70%;
-                height: auto;
-                padding: 2rem;
-                gap: 1.5rem;
-                transition: 0.3s;
-                border-right: 2px solid #0891b2;
-                box-shadow: 4px 8px 20px rgba(0,0,0,0.05);
-                border-radius: 0 20px 20px 0;
-                align-items: flex-start;
-            }
-            .nav-links.active {
-                left: 0;
-            }
-            .section-title {
-                font-size: 1.9rem;
-            }
-            .service-header h2 {
-                font-size: 1.6rem;
-            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            .mobile-nav { display: flex; }
+
             .pricing-grid {
-                flex-direction: column;
-                align-items: center;
+                grid-template-columns: 1fr;
             }
-            .package-card {
-                max-width: 100%;
-            }
-            .footer-content {
-                flex-direction: column;
+
+            .footer-grid {
+                grid-template-columns: 1fr;
                 gap: 1.5rem;
+            }
+
+            .footer-brand {
+                grid-column: auto;
+            }
+
+            .custom-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .addons-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
-        .faq {
-    max-width: 800px;
-    margin: 2rem auto 0;
-}
+        @media (max-width: 400px) {
+            .addons-grid {
+                grid-template-columns: 1fr;
+            }
 
-.faq-item {
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.faq-question {
-    width: 100%;
-    text-align: left;
-    padding: 1rem;
-    font-size: 1rem;
-    font-weight: 600;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #0f172a;
-}
-
-.faq-answer {
-    display: none;
-    padding: 0 1rem 1rem;
-    color: #475569;
-}
-
-.faq-item.active .faq-answer {
-    display: block;
-}
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+        }
     </style>
 </head>
 <body>
 
+<!-- ── Navbar ── -->
 <header class="navbar">
     <div class="container nav-container">
         <div class="logo">
             <a href="index.html">&lt;bitbyte/&gt;</a>
         </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="index.html">HOME</a></li>
-            <li><a href="servise.html" class="active">SERVICES</a></li>
-            <li><a href="about.html">ABOUT</a></li>
-            <li><a href="internships.html">INTERNSHIPS</a></li>
-            <li><a href="blog.html">BLOG</a></li>
-            <li><a href="contact.html">CONTACT</a></li>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="servise.html" class="active">Services</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="internships.html">Internships</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
-        <div class="mobile-menu" id="mobileMenu">
-            <i class="fas fa-bars"></i>
-        </div>
+        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
     </div>
 </header>
 
+<!-- Mobile Nav Drawer -->
+<nav class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="servise.html" class="active">Services</a>
+    <a href="about.html">About</a>
+    <a href="internships.html">Internships</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">Contact</a>
+</nav>
+
 <main>
-    <!-- Hero intro -->
-    <section style="padding: 120px 0 40px;">
+    <!-- ── Hero ── -->
+    <section class="hero">
         <div class="container">
-            <h1 class="section-title" style="margin-bottom: 1rem;">SERVICE <span>PACKAGES</span></h1>
-            <p style="text-align: center; font-size: 1.2rem; color: #475569; max-width: 700px; margin: 0 auto;">Choose your loadout. Each package is designed to give you maximum impact with zero bugs.</p>
+            <div class="hero-eyebrow">
+                <i class="fas fa-gamepad"></i> Choose Your Loadout
+            </div>
+            <h1>SERVICE <span>PACKAGES</span></h1>
+            <p>Designed to give you maximum impact with zero bugs. Pick a tier, level up.</p>
         </div>
     </section>
 
-    <!-- Resume Building -->
-    <section class="section" style="padding-top: 0;">
+    <!-- ── Resume Building ── -->
+    <section class="section">
         <div class="container">
             <div class="service-header">
-                <i class="fas fa-file-alt"></i>
-                <h2>📄 RESUME BUILDING</h2>
-                <p style="color: #475569;">Unlock job interviews with ATS-optimized resumes</p>
+                <div class="service-icon">📄</div>
+                <h2>Resume Building</h2>
+                <p>Unlock job interviews with ATS-optimized resumes</p>
             </div>
             <div class="pricing-grid">
                 <div class="package-card">
-                    <h3>LEVEL 1 - BASIC</h3>
+                    <h3>Level 1</h3>
                     <div class="package-price">₹399</div>
+                    <div class="package-desc">Basic — Get in the game</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> Professional Resume Design</li>
-                        <li><i class="fas fa-check"></i> ATS-Friendly Formatting</li>
-                        <li><i class="fas fa-check"></i> PDF Delivery</li>
-                        <li><i class="fas fa-check"></i> 1 Round of Revisions</li>
+                        <li><i class="fas fa-check-circle"></i> Professional Resume Design</li>
+                        <li><i class="fas fa-check-circle"></i> ATS-Friendly Formatting</li>
+                        <li><i class="fas fa-check-circle"></i> PDF Delivery</li>
+                        <li><i class="fas fa-check-circle"></i> 1 Round of Revisions</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
                 <div class="package-card featured">
-                    <h3>LEVEL 2 - PRO</h3>
+                    <span class="badge">Most Popular</span>
+                    <h3>Level 2</h3>
                     <div class="package-price">₹599</div>
+                    <div class="package-desc">Pro — Power up your profile</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> Professional Resume Design</li>
-                        <li><i class="fas fa-check"></i> ATS-Friendly Formatting</li>
-                        <li><i class="fas fa-check"></i> Cover Letter Included</li>
-                        <li><i class="fas fa-check"></i> LinkedIn Profile Tips</li>
-                        <li><i class="fas fa-check"></i> PDF + Word File</li>
-                        <li><i class="fas fa-check"></i> 2 Rounds of Revisions</li>
+                        <li><i class="fas fa-check-circle"></i> Professional Resume Design</li>
+                        <li><i class="fas fa-check-circle"></i> ATS-Friendly Formatting</li>
+                        <li><i class="fas fa-check-circle"></i> Cover Letter Included</li>
+                        <li><i class="fas fa-check-circle"></i> LinkedIn Profile Tips</li>
+                        <li><i class="fas fa-check-circle"></i> PDF + Word File</li>
+                        <li><i class="fas fa-check-circle"></i> 2 Rounds of Revisions</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
                 <div class="package-card">
-                    <h3>LEVEL 3 - LEGENDARY</h3>
+                    <h3>Level 3</h3>
                     <div class="package-price">₹899</div>
+                    <div class="package-desc">Legendary — Boss-level presence</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> Professional Resume Design</li>
-                        <li><i class="fas fa-check"></i> ATS-Friendly Formatting</li>
-                        <li><i class="fas fa-check"></i> Cover Letter Included</li>
-                        <li><i class="fas fa-check"></i> LinkedIn Profile Optimization</li>
-                        <li><i class="fas fa-check"></i> Unlimited Revisions</li>
+                        <li><i class="fas fa-check-circle"></i> Professional Resume Design</li>
+                        <li><i class="fas fa-check-circle"></i> ATS-Friendly Formatting</li>
+                        <li><i class="fas fa-check-circle"></i> Cover Letter Included</li>
+                        <li><i class="fas fa-check-circle"></i> LinkedIn Profile Optimization</li>
+                        <li><i class="fas fa-check-circle"></i> Unlimited Revisions</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <hr>
-
-    <!-- Portfolio Creation -->
+    <!-- ── Portfolio Creation ── -->
     <section class="section">
         <div class="container">
             <div class="service-header">
-                <i class="fas fa-briefcase"></i>
-                <h2>🎨 PORTFOLIO CREATION</h2>
-                <p style="color: #475569;">Showcase your achievements like a final boss</p>
+                <div class="service-icon">🎨</div>
+                <h2>Portfolio Creation</h2>
+                <p>Showcase your achievements like a final boss</p>
             </div>
             <div class="pricing-grid">
                 <div class="package-card">
-                    <h3>LEVEL 1 - STARTER</h3>
+                    <h3>Level 1</h3>
                     <div class="package-price">₹899</div>
+                    <div class="package-desc">Starter — Enter the arena</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> 1-Page Portfolio</li>
-                        <li><i class="fas fa-check"></i> Up to 5 Projects</li>
-                        <li><i class="fas fa-check"></i> Contact Form</li>
-                        <li><i class="fas fa-check"></i> Mobile Responsive</li>
-                        <li> <i class ="fas fa-check" > domain price by your side </i> </li>
+                        <li><i class="fas fa-check-circle"></i> 1-Page Portfolio</li>
+                        <li><i class="fas fa-check-circle"></i> Up to 5 Projects</li>
+                        <li><i class="fas fa-check-circle"></i> Contact Form</li>
+                        <li><i class="fas fa-check-circle"></i> Mobile Responsive</li>
+                        <li><i class="fas fa-check-circle"></i> Domain price on your side</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
                 <div class="package-card featured">
-                    <h3>LEVEL 2 - PRO</h3>
+                    <span class="badge">Most Popular</span>
+                    <h3>Level 2</h3>
                     <div class="package-price">₹999</div>
+                    <div class="package-desc">Pro — Full battle setup</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> 4-Page Portfolio</li>
-                        <li><i class="fas fa-check"></i> 7 Projects</li>
-                        <li><i class="fas fa-check"></i> About Page + Contact Form come in emails </li>
-                        <li><i class="fas fa-check"></i> Blog Option</li>
-                        <li><i class="fas fa-check"></i> GitHub Upload or domain price by your side </li>
+                        <li><i class="fas fa-check-circle"></i> 4-Page Portfolio</li>
+                        <li><i class="fas fa-check-circle"></i> Up to 7 Projects</li>
+                        <li><i class="fas fa-check-circle"></i> About Page + Contact via Email</li>
+                        <li><i class="fas fa-check-circle"></i> Blog Option</li>
+                        <li><i class="fas fa-check-circle"></i> GitHub Upload or custom domain</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
                 <div class="package-card">
-                    <h3>LEVEL 3 - LEGENDARY</h3>
+                    <h3>Level 3</h3>
                     <div class="package-price">₹1,599</div>
+                    <div class="package-desc">Legendary — Fully custom</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> Fully Custom Design</li>
-                        <li><i class="fas fa-check"></i> Unlimited Projects</li>
-                        <li><i class="fas fa-check"></i> Content Guidance</li>
-                        <li><i class="fas fa-check"></i> 30-Day Support</li>
+                        <li><i class="fas fa-check-circle"></i> Fully Custom Design</li>
+                        <li><i class="fas fa-check-circle"></i> Unlimited Projects</li>
+                        <li><i class="fas fa-check-circle"></i> Content Guidance</li>
+                        <li><i class="fas fa-check-circle"></i> 30-Day Support</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <hr>
-
-    <!-- Website Development -->
+    <!-- ── Website Development ── -->
     <section class="section">
         <div class="container">
             <div class="service-header">
-                <i class="fas fa-laptop-code"></i>
-                <h2>💻 WEBSITE DEVELOPMENT</h2>
-                <p style="color: #475569;">Build your digital empire from the ground up</p>
+                <div class="service-icon">💻</div>
+                <h2>Website Development</h2>
+                <p>Build your digital empire from the ground up</p>
             </div>
             <div class="pricing-grid">
                 <div class="package-card">
-                    <h3>LEVEL 1 - STARTER</h3>
+                    <h3>Level 1</h3>
                     <div class="package-price">₹12,999</div>
+                    <div class="package-desc">Starter — Launch pad</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> 1-3 Page Website</li>
-                        <li><i class="fas fa-check"></i> Responsive Design</li>
-                        <li><i class="fas fa-check"></i> Contact Form</li>
-                        <li><i class="fas fa-check"></i> Additional charges for custom domain</li>
+                        <li><i class="fas fa-check-circle"></i> 1–3 Page Website</li>
+                        <li><i class="fas fa-check-circle"></i> Responsive Design</li>
+                        <li><i class="fas fa-check-circle"></i> Contact Form</li>
+                        <li><i class="fas fa-check-circle"></i> Custom domain charges extra</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
                 <div class="package-card featured">
-                    <h3>LEVEL 2 - PRO</h3>
+                    <span class="badge">Most Popular</span>
+                    <h3>Level 2</h3>
                     <div class="package-price">₹19,999</div>
+                    <div class="package-desc">Pro — Scale up</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> 6-10 Page Website</li>
-                        <li><i class="fas fa-check"></i> 30-Day Support</li>
+                        <li><i class="fas fa-check-circle"></i> 6–10 Page Website</li>
+                        <li><i class="fas fa-check-circle"></i> 30-Day Support</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
                 <div class="package-card">
-                    <h3>LEVEL 3 - E-COMMERCE</h3>
-                    <div class="package-price">Based on requirements</div>
+                    <h3>Level 3</h3>
+                    <div class="package-price" style="font-size: 1.3rem;">Custom Quote</div>
+                    <div class="package-desc">E-Commerce — Full store</div>
                     <ul class="package-features">
-                        <li><i class="fas fa-check"></i> Online Store Setup</li>
-                        <li><i class="fas fa-check"></i> Product Pages</li>
-                        <li><i class="fas fa-check"></i> Payment Integration</li>
-                        <li><i class="fas fa-check"></i> Inventory Management</li>
+                        <li><i class="fas fa-check-circle"></i> Online Store Setup</li>
+                        <li><i class="fas fa-check-circle"></i> Product Pages</li>
+                        <li><i class="fas fa-check-circle"></i> Payment Integration</li>
+                        <li><i class="fas fa-check-circle"></i> Inventory Management</li>
                     </ul>
-                    <a href="contact.html" class="btn-primary">SELECT LOADOUT</a>
+                    <a href="contact.html" class="btn-primary">Select Loadout</a>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 2rem;">
-                <p style="margin-bottom: 1rem;">Need a custom build? Let's create something unique together.</p>
-                <a href="contact.html" class="btn-secondary">🎮 REQUEST CUSTOM BUILD</a>
+            <div class="custom-bar">
+                <p><strong>Need something unique?</strong> We'll build exactly what you envision.</p>
+                <a href="contact.html" class="btn-secondary">🎮 Request Custom Build</a>
             </div>
         </div>
     </section>
 
-    <!-- Power-Up Add-Ons -->
+    <!-- ── Add-ons ── -->
     <section class="section">
         <div class="container">
             <h2 class="section-title">POWER-UP <span>ADD-ONS</span></h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <i class="fas fa-paint-brush"></i>
-                    <h4>LOGO DESIGN</h4>
-                    <p>₹299</p>
+            <p class="section-sub">Boost any package with these extras</p>
+            <div class="addons-grid">
+                <div class="addon-card">
+                    <div class="addon-icon"><i class="fas fa-paint-brush"></i></div>
+                    <h4>Logo Design</h4>
+                    <div class="price">₹299</div>
                 </div>
-                <div class="feature">
-                    <i class="fas fa-edit"></i>
-                    <h4>CONTENT WRITING</h4>
-                    <p>₹899 per page</p>
+                <div class="addon-card">
+                    <div class="addon-icon"><i class="fas fa-edit"></i></div>
+                    <h4>Content Writing</h4>
+                    <div class="price">₹899 / page</div>
                 </div>
-                <div class="feature">
-                    <i class="fas fa-shield-alt"></i>
-                    <h4>MAINTENANCE PLAN</h4>
-                    <p>₹899/month</p>
+                <div class="addon-card">
+                    <div class="addon-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Maintenance Plan</h4>
+                    <div class="price">₹899 / month</div>
                 </div>
             </div>
         </div>
     </section>
 
-  <section class="section">
-    <div class="container">
-        <h2 class="section-title">WHO IS THIS <span>FOR?</span></h2>
-
-        <div class="features-grid">
-            <div class="feature">
-                <i class="fas fa-user-graduate"></i>
-                <h4>STUDENTS / FRESHERS</h4>
-                <p>Start strong with a professional resume & portfolio</p>
-            </div>
-
-            <div class="feature">
-                <i class="fas fa-briefcase"></i>
-                <h4>JOB SWITCHERS</h4>
-                <p>Upgrade your profile to land better opportunities</p>
-            </div>
-
-            <div class="feature">
-                <i class="fas fa-laptop"></i>
-                <h4>FREELANCERS</h4>
-                <p>Showcase your work and attract more clients</p>
-            </div>
-
-            <div class="feature">
-                <i class="fas fa-store"></i>
-                <h4>SMALL BUSINESS OWNERS</h4>
-                <p>Build your online presence and grow your brand</p>
+    <!-- ── Who is this for ── -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">WHO IS THIS <span>FOR?</span></h2>
+            <p class="section-sub">Built for everyone leveling up their career or business</p>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="icon">🎓</div>
+                    <h4>Students / Freshers</h4>
+                    <p>Start strong with a professional resume & portfolio</p>
+                </div>
+                <div class="audience-card">
+                    <div class="icon">💼</div>
+                    <h4>Job Switchers</h4>
+                    <p>Upgrade your profile to land better opportunities</p>
+                </div>
+                <div class="audience-card">
+                    <div class="icon">💻</div>
+                    <h4>Freelancers</h4>
+                    <p>Showcase your work and attract more clients</p>
+                </div>
+                <div class="audience-card">
+                    <div class="icon">🏪</div>
+                    <h4>Small Business Owners</h4>
+                    <p>Build your online presence and grow your brand</p>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
+    <!-- ── FAQ ── -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">FREQUENTLY ASKED <span>QUESTIONS</span></h2>
+            <p class="section-sub" style="margin-bottom: 2rem;">Everything you need to know</p>
+            <div class="faq">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How long does delivery take?
+                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="faq-answer">Delivery usually takes 2–5 days depending on the package selected.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Do you provide revisions?
+                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="faq-answer">Yes, all packages include revisions. Higher packages include more revision rounds.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Is payment upfront?
+                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="faq-answer">Yes, we require upfront payment to begin work on your project.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can I customize packages?
+                        <span class="faq-icon"><i class="fas fa-plus"></i></span>
+                    </button>
+                    <div class="faq-answer">Absolutely! Contact us and we'll create a custom solution for your needs.</div>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>
-<section class="section">
-    <div class="container">
-        <h2 class="section-title">FREQUENTLY ASKED <span>QUESTIONS</span></h2>
 
-        <div class="faq">
-            <div class="faq-item">
-                <button class="faq-question">How long does delivery take?</button>
-                <div class="faq-answer">
-                    <p>Delivery usually takes 2–5 days depending on the package selected.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question">Do you provide revisions?</button>
-                <div class="faq-answer">
-                    <p>Yes, all packages include revisions. Higher packages include more revision rounds.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question">Is payment upfront?</button>
-                <div class="faq-answer">
-                    <p>Yes, we require upfront payment to begin work on your project.</p>
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <button class="faq-question">Can I customize packages?</button>
-                <div class="faq-answer">
-                    <p>Absolutely! Contact us and we’ll create a custom solution for your needs.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- ── Footer ── -->
 <footer class="footer">
     <div class="container">
-        <div class="footer-content">
-            <div>
-                <h3>&lt;bitbyte/&gt;</h3>
-                <p>Build. Innovate. Dominate.</p>
-                <p style="margin-top: 0.5rem; color: #475569;">Game-changing IT services for the modern professional.</p>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <span class="logo-text">&lt;bitbyte/&gt;</span>
+                <p>Build. Innovate. Dominate.<br>Game-changing IT services for the modern professional.</p>
             </div>
-            <div>
-                <h3>QUICK LINKS</h3>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
                 <ul class="footer-links">
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="services.html">Services</a></li>
+                    <li><a href="servise.html">Services</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </div>
-            <div>
-                <h3>SERVICES</h3>
+            <div class="footer-col">
+                <h3>Services</h3>
                 <ul class="footer-links">
-                    <li><a href="services.html">Resume Building</a></li>
-                    <li><a href="services.html">Portfolio Creation</a></li>
-                    <li><a href="services.html">Website Development</a></li>
+                    <li><a href="servise.html">Resume Building</a></li>
+                    <li><a href="servise.html">Portfolio Creation</a></li>
+                    <li><a href="servise.html">Website Development</a></li>
                 </ul>
             </div>
-            <div>
-                <h3>CONTACT</h3>
+            <div class="footer-col">
+                <h3>Contact</h3>
                 <ul class="footer-links">
-                    <li><i class="fas fa-envelope"></i> bitbyte.tech01@gmail.com</li>
-                    <li><i class="fas fa-phone"></i> +91 8866693020</li>
+                    <li><span><i class="fas fa-envelope"></i> bitbyte.tech01@gmail.com</span></li>
+                    <li><span><i class="fas fa-phone"></i> +91 8866693020</span></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 bitbyte. All rights reserved. | Game On! Level Up Your Future</p>
-            <p style="margin-top: 0.5rem; color: #64748b;">Start your business with us!</p>
+            <span>© 2025 bitbyte. All rights reserved.</span>
+            <span>Game On! Level Up Your Future 🎮</span>
         </div>
     </div>
 </footer>
 
 <script>
-    // Mobile menu toggle
-    const mobileMenu = document.getElementById('mobileMenu');
-    const navLinks = document.getElementById('navLinks');
-    if (mobileMenu && navLinks) {
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+        const isOpen = mobileNav.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close mobile nav on link click
+    mobileNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', false);
+            document.body.style.overflow = '';
         });
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+            mobileNav.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', false);
+            document.body.style.overflow = '';
+        }
+    });
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.parentElement;
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
         });
-    }
+    });
 </script>
 </body>
 </html>
