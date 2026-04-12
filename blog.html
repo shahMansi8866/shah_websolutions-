@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Blog | bitbyte</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -18,114 +18,170 @@
       --muted: #5a6a8a;
       --shadow: 0 4px 24px rgba(102,126,234,0.10);
     }
-    body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; }
 
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+    /* ── Navbar ── */
     nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 6%; height: 68px; background: var(--white);
-      border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100;
+      padding: 0 clamp(1rem, 5vw, 6%); height: 64px;
+      background: var(--white); border-bottom: 2px solid var(--border);
+      position: sticky; top: 0; z-index: 1000;
       box-shadow: 0 2px 16px rgba(102,126,234,0.08);
     }
     .logo {
-      font-family: 'Orbitron', sans-serif; font-size: 1.25rem; font-weight: 900;
+      font-family: 'Syne', sans-serif; font-size: clamp(1rem, 3vw, 1.3rem); font-weight: 800;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      text-decoration: none;
+      text-decoration: none; white-space: nowrap;
     }
-    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links { display: flex; gap: clamp(0.8rem, 2vw, 1.8rem); list-style: none; }
     .nav-links a {
-      color: var(--muted); text-decoration: none; font-size: 0.76rem;
-      font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      transition: color 0.2s; padding-bottom: 4px; border-bottom: 2px solid transparent;
+      color: var(--muted); text-decoration: none; font-size: 0.74rem;
+      font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+      transition: color 0.2s; padding-bottom: 4px; border-bottom: 2px solid transparent; white-space: nowrap;
     }
     .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; justify-content: center; gap: 5px;
+      width: 36px; height: 36px; cursor: pointer; padding: 4px;
+      border-radius: 8px; background: transparent; border: none; transition: background 0.2s;
+    }
+    .hamburger:hover { background: var(--accent-light); }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: var(--text);
+      border-radius: 2px; transition: all 0.3s ease; transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none; position: fixed; inset: 64px 0 0 0;
+      background: var(--white);
+      z-index: 999; padding: 1.5rem; flex-direction: column; gap: 0.25rem;
+      transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .mobile-nav.open { transform: translateX(0); }
+    .mobile-nav a {
+      display: block; padding: 0.85rem 1rem; text-decoration: none; color: var(--text);
+      font-weight: 700; font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;
+      border-radius: 10px; transition: all 0.15s;
+    }
+    .mobile-nav a:hover, .mobile-nav a.active {
+      background: var(--accent-light); color: var(--accent); padding-left: 1.5rem;
+    }
+
+    /* ── Hero ── */
     .hero {
-      text-align: center; padding: 64px 6% 48px;
+      text-align: center;
+      padding: clamp(2.5rem, 8vw, 5rem) clamp(1rem, 5vw, 6%) clamp(2rem, 5vw, 3.5rem);
       background: linear-gradient(160deg, #ffffff 0%, #deeaff 100%);
       border-bottom: 2px solid var(--border);
     }
     .badge {
       display: inline-block; background: var(--accent-light);
       border: 1.5px solid var(--border); color: var(--accent);
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-      padding: 5px 16px; border-radius: 20px; margin-bottom: 18px;
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 20px; margin-bottom: 1.1rem;
+      font-family: 'DM Sans', sans-serif;
     }
-    h1 {
-      font-family: 'Orbitron', sans-serif; font-size: clamp(1.7rem, 4vw, 2.8rem);
-      font-weight: 900; line-height: 1.1; margin-bottom: 12px;
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 900; line-height: 1.1; margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
     }
-    h1 span {
+    .hero h1 span {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-    .hero p { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+    .hero p { color: var(--muted); font-size: clamp(0.9rem, 2vw, 1rem); max-width: 480px; margin: 0 auto; line-height: 1.7; }
 
+    /* ── Filters ── */
     .filters {
-      display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
-      padding: 28px 6% 16px; background: var(--white); border-bottom: 1.5px solid var(--border);
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+      padding: clamp(1rem, 3vw, 1.75rem) clamp(1rem, 5vw, 6%) clamp(0.75rem, 2vw, 1rem);
+      background: var(--white); border-bottom: 1.5px solid var(--border);
     }
     .fbtn {
       background: var(--accent-light); border: 1.5px solid var(--border);
-      color: var(--muted); padding: 7px 18px; border-radius: 20px;
-      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
-      cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif;
+      color: var(--muted); padding: 6px 16px; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
     }
     .fbtn:hover, .fbtn.active {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       border-color: var(--accent); color: #fff;
     }
 
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 6%; }
-
-    /* FEATURED */
-    .featured { padding: 36px 6% 0; max-width: 1100px; margin: 0 auto; }
+    /* ── Featured ── */
+    .featured {
+      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1rem, 5vw, 6%) 0;
+      max-width: 1100px; margin: 0 auto;
+    }
     .feat-card {
       display: grid; grid-template-columns: 1fr 1fr;
       background: var(--white); border: 2px solid var(--border); border-radius: 18px;
-      overflow: hidden; box-shadow: var(--shadow); text-decoration: none; color: inherit;
-      transition: border-color 0.3s, box-shadow 0.3s; margin-bottom: 48px;
+      overflow: hidden; box-shadow: var(--shadow);
+      text-decoration: none; color: inherit;
+      transition: border-color 0.3s, box-shadow 0.3s; margin-bottom: clamp(2rem, 5vw, 3rem);
     }
     .feat-card:hover { border-color: var(--accent); box-shadow: 0 8px 40px rgba(102,126,234,0.18); }
     .feat-img {
       background: linear-gradient(135deg, #d4e4ff, #b8caff);
-      min-height: 260px; display: flex; align-items: center; justify-content: center;
-      font-size: 5rem; position: relative;
+      min-height: 220px; display: flex; align-items: center; justify-content: center;
+      font-size: 4.5rem; position: relative;
     }
     .feat-label {
       position: absolute; top: 14px; left: 14px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; font-size: 0.62rem; font-weight: 800; letter-spacing: 2px;
+      color: #fff; font-size: 0.6rem; font-weight: 800; letter-spacing: 2px;
       padding: 5px 12px; border-radius: 5px; text-transform: uppercase;
+      font-family: 'DM Sans', sans-serif;
     }
-    .feat-body { padding: 36px 32px; display: flex; flex-direction: column; justify-content: center; }
+    .feat-body {
+      padding: clamp(1.5rem, 4vw, 2.25rem) clamp(1.25rem, 3vw, 2rem);
+      display: flex; flex-direction: column; justify-content: center;
+    }
     .meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
     .tag {
       background: var(--accent-light); color: var(--accent);
-      font-size: 0.68rem; font-weight: 700; letter-spacing: 1px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;
       text-transform: uppercase; padding: 3px 10px; border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
     }
-    .dt { color: var(--muted); font-size: 0.78rem; }
-    .feat-body h2 { font-size: 1.5rem; font-weight: 800; line-height: 1.25; margin-bottom: 10px; }
-    .feat-body p { color: var(--muted); line-height: 1.7; font-size: 0.91rem; margin-bottom: 22px; }
+    .dt { color: var(--muted); font-size: 0.76rem; }
+    .feat-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+      font-weight: 800; line-height: 1.3; margin-bottom: 10px;
+    }
+    .feat-body p { color: var(--muted); line-height: 1.7; font-size: 0.9rem; margin-bottom: 20px; }
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px;
-      padding: 11px 22px; border-radius: 8px; text-decoration: none;
-      width: fit-content; transition: opacity 0.2s;
+      color: #fff; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px;
+      padding: 10px 20px; border-radius: 8px; text-decoration: none;
+      width: fit-content; transition: opacity 0.2s; font-family: 'DM Sans', sans-serif;
     }
     .btn:hover { opacity: 0.85; }
 
-    /* GRID */
+    /* ── Blog grid ── */
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1rem, 5vw, 6%); }
     .slabel {
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 20px; padding-bottom: 10px;
-      border-bottom: 1.5px solid var(--border);
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1.25rem; padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--border); font-family: 'DM Sans', sans-serif;
     }
     .grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 22px; margin-bottom: 56px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+      gap: clamp(1rem, 2.5vw, 1.375rem);
+      margin-bottom: clamp(2rem, 5vw, 3.5rem);
     }
     .card {
       background: var(--white); border: 2px solid var(--border); border-radius: 16px;
@@ -133,72 +189,111 @@
       display: flex; flex-direction: column; box-shadow: var(--shadow);
     }
     .card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(102,126,234,0.15); }
-    .cimg { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .cimg { height: 130px; display: flex; align-items: center; justify-content: center; font-size: 2.75rem; }
     .c1 { background: linear-gradient(135deg, #d4e4ff, #b8caff); }
     .c2 { background: linear-gradient(135deg, #d4f0e8, #b3e0d0); }
     .c3 { background: linear-gradient(135deg, #e8d4ff, #d4b3f0); }
     .c4 { background: linear-gradient(135deg, #ffd4e8, #ffb3cf); }
     .c5 { background: linear-gradient(135deg, #d4eeff, #b3d8f0); }
     .c6 { background: linear-gradient(135deg, #fff3d4, #ffe0b3); }
-    .cbody { padding: 18px; flex: 1; display: flex; flex-direction: column; }
-    .cbody h3 { font-size: 0.97rem; font-weight: 700; line-height: 1.35; margin-bottom: 8px; }
-    .cbody p { color: var(--muted); font-size: 0.85rem; line-height: 1.6; flex: 1; margin-bottom: 14px; }
-    .clink { color: var(--accent); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+    .cbody { padding: clamp(1rem, 2.5vw, 1.125rem); flex: 1; display: flex; flex-direction: column; }
+    .cbody h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(0.92rem, 2vw, 1rem);
+      font-weight: 700; line-height: 1.35; margin-bottom: 8px;
+    }
+    .cbody p { color: var(--muted); font-size: 0.84rem; line-height: 1.6; flex: 1; margin-bottom: 14px; }
+    .clink { color: var(--accent); font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif; }
 
-    /* NEWSLETTER */
+    /* ── Newsletter ── */
     .newsletter {
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-radius: 18px; padding: 48px 36px; text-align: center;
-      margin-bottom: 56px; box-shadow: 0 8px 40px rgba(102,126,234,0.25);
+      border-radius: 18px; padding: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 4vw, 2.25rem);
+      text-align: center; margin-bottom: clamp(2rem, 5vw, 3.5rem);
+      box-shadow: 0 8px 40px rgba(102,126,234,0.25);
     }
     .newsletter h2 {
-      font-family: 'Orbitron', sans-serif; font-size: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 3.5vw, 1.7rem);
       font-weight: 900; color: #fff; margin-bottom: 10px;
     }
-    .newsletter p { color: rgba(255,255,255,0.88); margin-bottom: 26px; font-size: 0.93rem; }
-    .nform { display: flex; gap: 12px; max-width: 460px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .newsletter p { color: rgba(255,255,255,0.88); margin-bottom: 1.5rem; font-size: 0.93rem; line-height: 1.6; }
+    .nform {
+      display: flex; gap: 10px; max-width: 460px; margin: 0 auto;
+      flex-wrap: wrap; justify-content: center;
+    }
     .nform input {
-      flex: 1; min-width: 210px;
+      flex: 1; min-width: 200px;
       background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.4);
       color: #fff; padding: 12px 16px; border-radius: 8px;
-      font-size: 0.88rem; outline: none; font-family: 'Inter', sans-serif;
+      font-size: 0.88rem; outline: none; font-family: 'DM Sans', sans-serif;
     }
     .nform input::placeholder { color: rgba(255,255,255,0.65); }
     .nform input:focus { border-color: rgba(255,255,255,0.9); }
     .nform button {
       background: #fff; color: var(--accent); border: none;
-      padding: 12px 24px; border-radius: 8px; font-size: 0.83rem;
-      font-weight: 800; cursor: pointer; font-family: 'Inter', sans-serif;
-      transition: opacity 0.2s;
+      padding: 12px 22px; border-radius: 8px; font-size: 0.83rem;
+      font-weight: 800; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: opacity 0.2s; white-space: nowrap;
     }
     .nform button:hover { opacity: 0.9; }
 
-    footer { background: var(--white); border-top: 2px solid var(--border); padding: 48px 6% 26px; }
-    .fg { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; max-width: 1100px; margin: 0 auto 32px; }
+    /* ── Footer ── */
+    footer {
+      background: var(--white); border-top: 2px solid var(--border);
+      padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 5vw, 6%) clamp(1.25rem, 3vw, 1.75rem);
+    }
+    .fg {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: clamp(1.5rem, 3vw, 2.25rem); max-width: 1100px; margin: 0 auto 2rem;
+    }
     .fb p { color: var(--muted); font-size: 0.85rem; line-height: 1.7; margin-top: 10px; }
-    footer h4 { font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text); margin-bottom: 14px; }
+    footer h4 {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--text); margin-bottom: 14px;
+      font-family: 'DM Sans', sans-serif;
+    }
     footer ul { list-style: none; }
     footer ul li { margin-bottom: 8px; }
     footer ul li a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
     footer ul li a:hover { color: var(--accent); }
-    .fbot { max-width: 1100px; margin: 0 auto; padding-top: 20px; border-top: 1.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .fbot {
+      max-width: 1100px; margin: 0 auto; padding-top: 1.25rem;
+      border-top: 1.5px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
     .fbot p { color: var(--muted); font-size: 0.78rem; }
 
-    @media(max-width:768px){
+    /* ── Responsive ── */
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+
       .feat-card { grid-template-columns: 1fr; }
       .feat-img { min-height: 160px; }
-      .feat-body { padding: 22px 18px; }
+
       .fg { grid-template-columns: 1fr 1fr; }
+      .fg .fb { grid-column: 1 / -1; }
     }
-    @media(max-width:480px){
+
+    @media (max-width: 560px) {
+      .grid { grid-template-columns: 1fr; }
+
+      .nform { flex-direction: column; align-items: stretch; }
+      .nform input { min-width: unset; }
+
       .fg { grid-template-columns: 1fr; }
-      .nav-links { gap: 1rem; }
-      .nav-links a { font-size: 0.68rem; }
+      .fg .fb { grid-column: auto; }
+
+      .fbot { flex-direction: column; text-align: center; gap: 0.25rem; }
     }
   </style>
 </head>
 <body>
 
+<!-- ── Navbar ── -->
 <nav>
   <a href="index.html" class="logo">&lt;bitbyte/&gt;</a>
   <ul class="nav-links">
@@ -209,14 +304,29 @@
     <li><a href="blog.html" class="active">Blog</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
+<!-- Mobile drawer -->
+<nav class="mobile-nav" id="mobileNav">
+  <a href="index.html">Home</a>
+  <a href="servise.html">Services</a>
+  <a href="about.html">About</a>
+  <a href="internships.html">Internships</a>
+  <a href="blog.html" class="active">Blog</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<!-- ── Hero ── -->
 <section class="hero">
   <div class="badge">⚡ Knowledge Base</div>
   <h1>THE <span>BITBYTE</span> BLOG</h1>
   <p>Tips, guides & insights to level up your resume, portfolio, and digital presence.</p>
 </section>
 
+<!-- ── Filters ── -->
 <div class="filters">
   <button class="fbtn active">All Posts</button>
   <button class="fbtn">Resume Tips</button>
@@ -226,9 +336,13 @@
   <button class="fbtn">Career</button>
 </div>
 
+<!-- ── Featured ── -->
 <div class="featured">
   <a class="feat-card" href="#">
-    <div class="feat-img"><div class="feat-label">Featured</div>📄</div>
+    <div class="feat-img">
+      <div class="feat-label">Featured</div>
+      📄
+    </div>
     <div class="feat-body">
       <div class="meta"><span class="tag">Resume Tips</span><span class="dt">Jan 15, 2025 · 5 min read</span></div>
       <h2>How to Beat ATS Filters and Get Your Resume Seen by Real Humans</h2>
@@ -238,22 +352,72 @@
   </a>
 </div>
 
+<!-- ── Grid ── -->
 <div class="wrap">
   <p class="slabel">Recent Posts</p>
   <div class="grid">
-    <a class="card" href="#"><div class="cimg c2">🎨</div><div class="cbody"><div class="meta"><span class="tag">Portfolio</span><span class="dt">Jan 10, 2025</span></div><h3>7 Portfolio Mistakes That Are Killing Your Freelance Career</h3><p>Your portfolio is your first impression. Here are the 7 most common mistakes — and how to fix them fast.</p><span class="clink">Read More →</span></div></a>
-    <a class="card" href="#"><div class="cimg c3">🌐</div><div class="cbody"><div class="meta"><span class="tag">Web Dev</span><span class="dt">Jan 5, 2025</span></div><h3>Why Every Small Business Needs a Website in 2025 (Not Just Instagram)</h3><p>Social media is rented land. Here's why owning your website is the smartest business move this year.</p><span class="clink">Read More →</span></div></a>
-    <a class="card" href="#"><div class="cimg c4">🎯</div><div class="cbody"><div class="meta"><span class="tag">Branding</span><span class="dt">Dec 28, 2024</span></div><h3>Personal Branding 101: How to Build a Brand That Opens Doors</h3><p>Your name is a brand. Learn how to define your niche, build your identity, and get noticed.</p><span class="clink">Read More →</span></div></a>
-    <a class="card" href="#"><div class="cimg c5">💼</div><div class="cbody"><div class="meta"><span class="tag">Career</span><span class="dt">Dec 20, 2024</span></div><h3>Fresher to Hired: Step-by-Step Guide to Landing Your First Tech Job</h3><p>No experience? No problem. Here's the exact roadmap freshers can follow to land their first job.</p><span class="clink">Read More →</span></div></a>
-    <a class="card" href="#"><div class="cimg c1">✍️</div><div class="cbody"><div class="meta"><span class="tag">Resume Tips</span><span class="dt">Dec 15, 2024</span></div><h3>One Page vs Two Page Resume: What Actually Works in 2025</h3><p>The debate is over. Here's the data-backed answer on resume length — and when to break the rules.</p><span class="clink">Read More →</span></div></a>
-    <a class="card" href="#"><div class="cimg c6">🚀</div><div class="cbody"><div class="meta"><span class="tag">Career</span><span class="dt">Dec 8, 2024</span></div><h3>How to Make the Most of Your Design Internship From Day 1</h3><p>Internships are what you make of them. Here's how to go from intern to full-time offer.</p><span class="clink">Read More →</span></div></a>
+    <a class="card" href="#">
+      <div class="cimg c2">🎨</div>
+      <div class="cbody">
+        <div class="meta"><span class="tag">Portfolio</span><span class="dt">Jan 10, 2025</span></div>
+        <h3>7 Portfolio Mistakes That Are Killing Your Freelance Career</h3>
+        <p>Your portfolio is your first impression. Here are the 7 most common mistakes — and how to fix them fast.</p>
+        <span class="clink">Read More →</span>
+      </div>
+    </a>
+    <a class="card" href="#">
+      <div class="cimg c3">🌐</div>
+      <div class="cbody">
+        <div class="meta"><span class="tag">Web Dev</span><span class="dt">Jan 5, 2025</span></div>
+        <h3>Why Every Small Business Needs a Website in 2025 (Not Just Instagram)</h3>
+        <p>Social media is rented land. Here's why owning your website is the smartest business move this year.</p>
+        <span class="clink">Read More →</span>
+      </div>
+    </a>
+    <a class="card" href="#">
+      <div class="cimg c4">🎯</div>
+      <div class="cbody">
+        <div class="meta"><span class="tag">Branding</span><span class="dt">Dec 28, 2024</span></div>
+        <h3>Personal Branding 101: How to Build a Brand That Opens Doors</h3>
+        <p>Your name is a brand. Learn how to define your niche, build your identity, and get noticed.</p>
+        <span class="clink">Read More →</span>
+      </div>
+    </a>
+    <a class="card" href="#">
+      <div class="cimg c5">💼</div>
+      <div class="cbody">
+        <div class="meta"><span class="tag">Career</span><span class="dt">Dec 20, 2024</span></div>
+        <h3>Fresher to Hired: Step-by-Step Guide to Landing Your First Tech Job</h3>
+        <p>No experience? No problem. Here's the exact roadmap freshers can follow to land their first job.</p>
+        <span class="clink">Read More →</span>
+      </div>
+    </a>
+    <a class="card" href="#">
+      <div class="cimg c1">✍️</div>
+      <div class="cbody">
+        <div class="meta"><span class="tag">Resume Tips</span><span class="dt">Dec 15, 2024</span></div>
+        <h3>One Page vs Two Page Resume: What Actually Works in 2025</h3>
+        <p>The debate is over. Here's the data-backed answer on resume length — and when to break the rules.</p>
+        <span class="clink">Read More →</span>
+      </div>
+    </a>
+    <a class="card" href="#">
+      <div class="cimg c6">🚀</div>
+      <div class="cbody">
+        <div class="meta"><span class="tag">Career</span><span class="dt">Dec 8, 2024</span></div>
+        <h3>How to Make the Most of Your Design Internship From Day 1</h3>
+        <p>Internships are what you make of them. Here's how to go from intern to full-time offer.</p>
+        <span class="clink">Read More →</span>
+      </div>
+    </a>
   </div>
 
+  <!-- ── Newsletter ── -->
   <div class="newsletter">
-    <h2>⚡ LEVEL UP YOUR INBOX</h2>
+    <h2>⚡ Level Up Your Inbox</h2>
     <p>Get weekly tips on resumes, portfolios & digital careers. No spam. Just power-ups.</p>
     <div class="nform">
-      <form action="YOUR_MAILCHIMP_URL_HERE" method="POST" target="_blank" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;width:100%;">
+      <form action="YOUR_MAILCHIMP_URL_HERE" method="POST" target="_blank" style="display:contents;">
         <input type="email" name="EMAIL" placeholder="Enter your email address" required/>
         <button type="submit">SUBSCRIBE →</button>
       </form>
@@ -261,12 +425,41 @@
   </div>
 </div>
 
+<!-- ── Footer ── -->
 <footer>
   <div class="fg">
-    <div class="fb"><a href="index.html" class="logo">&lt;bitbyte/&gt;</a><p>Build. Innovate. Dominate.<br>Game-changing digital services for modern professionals.</p></div>
-    <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="servise.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="internships.html">Internships</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-    <div><h4>Services</h4><ul><li><a href="servise.html">Resume Building</a></li><li><a href="servise.html">Portfolio Creation</a></li><li><a href="servise.html">Website Development</a></li><li><a href="servise.html">Posters & Branding</a></li></ul></div>
-    <div><h4>Legal</h4><ul><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms & Conditions</a></li><li><a href="refund.html">Refund Policy</a></li></ul></div>
+    <div class="fb">
+      <a href="index.html" class="logo">&lt;bitbyte/&gt;</a>
+      <p>Build. Innovate. Dominate.<br>Game-changing digital services for modern professionals.</p>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="servise.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="internships.html">Internships</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <ul>
+        <li><a href="servise.html">Resume Building</a></li>
+        <li><a href="servise.html">Portfolio Creation</a></li>
+        <li><a href="servise.html">Website Development</a></li>
+        <li><a href="servise.html">Posters & Branding</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms & Conditions</a></li>
+        <li><a href="refund.html">Refund Policy</a></li>
+      </ul>
+    </div>
   </div>
   <div class="fbot">
     <p>© 2025 bitbyte. All rights reserved. | Level Up Your Future</p>
@@ -274,5 +467,43 @@
   </div>
 </footer>
 
+<script>
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+
+  mobileNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      document.body.style.overflow = '';
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !mobileNav.contains(e.target)) {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', false);
+      document.body.style.overflow = '';
+    }
+  });
+
+  // ── Filter buttons ──
+  document.querySelectorAll('.fbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
 </body>
 </html>
